@@ -15,7 +15,6 @@ function App({msalInstance}) {
     </>
   );
 }
-
 const Pages = () => {
   return (
     <Routes>
@@ -25,5 +24,4 @@ const Pages = () => {
     </Routes>
   );
 }
-
 export default App;

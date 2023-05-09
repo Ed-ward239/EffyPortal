@@ -1,0 +1,28 @@
+.p{
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.p:hover{
+    cursor: pointer;
+}
+
+.fileBtn{
+    border-radius: 5%;
+    background-color: #4EB5AB;
+    border-radius: 12px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+    border: none;
+    transition: 0.5s all ease-in-out;
+    cursor: pointer;
+}
+.fileBtn:hover{
+    transform: scale(1.1);
+    transition: 0.5s all ease-in-out;
+    cursor: pointer;
+}

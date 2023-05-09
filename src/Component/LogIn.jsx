@@ -13,7 +13,7 @@ export default function LogIn() {
   }
   
   return (
-    <div>
+    <div className="headerDiv">
         <div className="header"><h2>EFFY Portal</h2></div>
             <button onClick={handleSignIn}>Log In</button>
     </div>

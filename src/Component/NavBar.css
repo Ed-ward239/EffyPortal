@@ -1,7 +1,6 @@
 * {
     margin: 0;
     /*border: 1px solid red;*/
-    padding: 0;
   }
   .navbar {
     display: flex;
@@ -23,8 +22,17 @@
     margin-left: 3rem;
   }
   
+  .pfpIcon{
+    width: 3rem;
+    height: 3rem;
+    margin-right: 11rem;
+  }
   .iconBtn{
     width: 5px;
+    justify-content: space-around;
+  }
+  .iconBtn:hover{
+    background-color: none;
   }
 
 

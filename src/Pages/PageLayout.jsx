@@ -3,6 +3,7 @@ import NavBar from "../Component/NavBar";
 import LogIn from "../Component/LogIn";
 import { useIsAuthenticated } from "@azure/msal-react";
 import { useNavigate } from 'react-router-dom';
+import Particles from '../Particles';
 
 const PageLayout = () => {
     const isAuthenticated = useIsAuthenticated();
@@ -12,6 +13,7 @@ const PageLayout = () => {
         </>
     )
 };
+
 
 const BodyPage = () =>{
     const navigate = useNavigate(); 
@@ -30,6 +32,7 @@ const BodyPage = () =>{
                 <button className="carnivalBox" onClick={clickCarnival}>Carnival</button>
                 <button className="nclBox" onClick={clickNCL}>NCL</button>
             </div>
+            <Particles/>
         </div>
     )
 }
