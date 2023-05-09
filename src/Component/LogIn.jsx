@@ -1,7 +1,6 @@
 import React from "react";
 import { useMsal } from '@azure/msal-react';
 import './LogIn.css';
-import Particle from "../Particles";
 
 export default function LogIn() {
   const { instance } = useMsal();

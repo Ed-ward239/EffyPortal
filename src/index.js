@@ -3,15 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Particle from './Particles';
 import { BrowserRouter } from 'react-router-dom';
 import { PublicClientApplication, EventType } from '@azure/msal-browser';
 
 const pca = new PublicClientApplication({
   auth: {
-    clientId: '69dd816b-8ada-40b9-9cce-a194ccea1c50',
-    authority: 'https://login.microsoftonline.com/8a91349d-6169-4e6a-9a2b-caad5be3c848',
-    knownAuthorities: ['https://login.microsoftonline.com/8a91349d-6169-4e6a-9a2b-caad5be3c848'],
+    clientId: 'c1c55ec8-2ddf-4f4b-bab0-d11a1d54be82',
+    authority: 'https://login.microsoftonline.com/63ea54b8-c60c-4d02-afba-441f22cd7bbe',
+    knownAuthorities: ['https://login.microsoftonline.com/63ea54b8-c60c-4d02-afba-441f22cd7bbe'],
     redirectUri: '/',
   }
 })

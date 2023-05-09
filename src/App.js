@@ -1,5 +1,3 @@
-import NavBar from './Component/NavBar';
-import Particle from './Particles';
 import Home from './Pages/PageLayout'
 import NCL from './Pages/NCL';
 import Carnival from './Pages/Carnival';

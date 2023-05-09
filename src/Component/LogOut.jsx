@@ -6,7 +6,7 @@ const SignOutBtn = () => {
         instance.logoutRedirect();
     }
     return (
-        <button onClick={handleSignOut}>Log out</button>
+        <p onClick={handleSignOut}>Log out</p>
     )
 }
 export default SignOutBtn;

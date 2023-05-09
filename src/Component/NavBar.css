@@ -1,6 +1,7 @@
 * {
     margin: 0;
     /*border: 1px solid red;*/
+    padding: 0;
   }
   .navbar {
     display: flex;
@@ -22,78 +23,9 @@
     margin-left: 3rem;
   }
   
-  .navbar-items {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-right: 5rem;
+  .iconBtn{
+    width: 5px;
   }
-  
-  .navbar-items a {
-    background-color: transparent;
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.486);
-    font-size: 4rem;
-  }
-  
-
-  .navbarMenu {
-    display: flex;
-    position: absolute;
-    right: 16%;
-    background-color: #4EB5AB;
-    width: 800px;
-    padding: 10px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-    transform: translateX(90px);
-  }
-  
-  .navbarMenu.show {
-    opacity: 3;
-    visibility: visible;
-    transform: translateX(0);
-    display: flex;
-    justify-content: space-evenly;
-  }
-  
-  .navbarMenu a {
-    font-size: medium;
-    padding: 5px 10px;
-    text-align: center;
-    color: white;
-    justify-content: space-evenly;
-  }
-
-  .navbarMenu a:hover{
-    cursor: pointer;
-    color: gray;
-  }
-  
-  .MenuIcon {
-    margin-right: 10px;
-    background-color: transparent;
-  }
-  .BurgerMenu{
-    color: transparent;
-    font-weight: lighter;
-    font-size: medium;
-  }
-  
-
-
-
-
-
-
-
-
-
-
-
 
 
   @media screen and (max-width: 400px) {
