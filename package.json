@@ -1,6 +1,5 @@
 {
   "name": "efft_portal",
-  "homepage": "https://unique-liger-f8ab61.netlify.app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
