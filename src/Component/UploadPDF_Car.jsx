@@ -25,14 +25,15 @@ function FileUpload() {
     onDrop,
     accept: ".pdf",
   });
-
   return (
-    <div {...getRootProps()}>
+    <>
+      <div className="pdfBox" {...getRootProps()}>
       <input {...getInputProps()} />
-      <p className="ddText">Drag & drop a PDF file here<button className="fileBtn">Select File</button></p>
+      <p className="ddText">Drag a PDF file here<button className="fileBtn">Select File</button></p>
       {pdfText && <p>{pdfText}</p>}
     </div>
+    </>
+
   );
 }
-
 export default FileUpload;

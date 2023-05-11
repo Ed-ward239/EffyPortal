@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import IconButton from "@mui/material/IconButton";
 import Logout from "@mui/icons-material/Logout";
 import SignOut from "./LogOut";
 import PersonIcon from '@mui/icons-material/Person';
@@ -37,17 +36,18 @@ export default function Navbar() {
       </div>
       <div className="pfpIcon">
       <React.Fragment>
-          <IconButton
+            <PersonIcon 
             className="iconBtn"
             onClick={handleClickMenu}
             size="medium"
-            sx={{ ml: 2 }}
+            sx={{ width: 32, height: 32, ml: 2 }}>
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
-          >
-            <PersonIcon sx={{ width: 32, height: 32 }}></PersonIcon>
-          </IconButton>
+            &gt;
+            </PersonIcon>
+            {<WelcomeName/>}
+
       <Menu
         anchorEl={anchorEl}
         id="account-menu"
@@ -59,7 +59,7 @@ export default function Navbar() {
           sx: {
             overflow: "visible",
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-            mt: 1.5,
+            mt: 2.5,
             "&:before": {
               content: '""',
               display: "block",
@@ -82,7 +82,6 @@ export default function Navbar() {
         </MenuItem>
       </Menu>
     </React.Fragment>
-        {<WelcomeName/>}
       </div>
     </nav>
   );

@@ -1,14 +1,16 @@
 import React from 'react';
 import Navbar from '../Component/NavBar'
-import Particle from '../Particles';
 import "./Carnival.css";
-//import Upload from '../Component/UploadPDF';
+import Table from '../Component/Table';
 
 function Carnival() {
     return (
         <div>
-            <Particle/>
             <Navbar/>
+            <h3 className='pageHeader'>
+                <span>CARNIVAL</span> <span>DATA</span>
+            </h3>
+            <Table/>
         </div>
     )
 }
