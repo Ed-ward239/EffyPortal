@@ -1,46 +1,33 @@
-.p{
+.ddText{
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    color: black;
+    margin-left: 1rem;
 }
 
-.p:hover{
+.ddText:hover{
     cursor: pointer;
 }
 
 .fileBtn{
-    border-radius: 5%;
-    background-color: #4EB5AB;
-    border-radius: 12px;
-    color: white;
+    border-radius: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border: none;
-    transition: 0.5s all ease-in-out;
     cursor: pointer;
-    margin-top: 1rem;
-    height: 1.5rem;
-    font-size: medium;
-}
-.fileBtn:hover{
-    transform: scale(1.1);
-    transition: 0.5s all ease-in-out;
-    cursor: pointer;
+    height: 2rem;
+    width: 9rem;
 }
 
 .pdfBox{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: gray;
-    border-radius: 20px;
-    width: 20rem;
-    height: 30rem;
+    background-color: rgba(102, 102, 102, 0.356);
+    border-radius: 40px;
+    width: 25rem;
+    height: 25rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    margin-left: auto;
-    margin-right: 1rem;
-    margin-top: 3rem;
 }

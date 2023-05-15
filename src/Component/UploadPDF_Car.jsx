@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import pdfjsLib from "pdfjs-dist";
 import "./UploadPDF.css";
+import { FaSave } from 'react-icons/fa';
+import { Button } from "@mui/material";
+
 
 function FileUpload() {
   const [pdfText, setPdfText] = useState("");
@@ -26,14 +29,12 @@ function FileUpload() {
     accept: ".pdf",
   });
   return (
-    <>
-      <div className="pdfBox" {...getRootProps()}>
-      <input {...getInputProps()} />
-      <p className="ddText">Drag a PDF file here<button className="fileBtn">Select File</button></p>
-      {pdfText && <p>{pdfText}</p>}
+    <div className="pdfBox" {...getRootProps()}>
+        <input {...getInputProps()} />
+        <Button className="fileBtn" variant="outlined" startIcon={<FaSave/>}>Select File</Button>
+        <p className="ddText">Drag a PDF file here...</p>
+        {pdfText && <p>{pdfText}</p>}
     </div>
-    </>
-
   );
 }
 export default FileUpload;

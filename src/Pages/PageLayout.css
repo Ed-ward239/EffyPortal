@@ -15,6 +15,9 @@
 .carnivalBox{
     background-color: #ff6961;
     height: 100px;
+    width: 150px;
+    color: white;
+    font-size: 25px;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
@@ -22,6 +25,9 @@
 .nclBox{
     background-color: #167db4;
     height: 100px;
+    width: 150px;
+    color: white;
+    font-size: 25px;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
