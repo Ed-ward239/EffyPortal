@@ -9,6 +9,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Logout from "@mui/icons-material/Logout";
 import SignOut from "./LogOut";
 import PersonIcon from '@mui/icons-material/Person';
+import Effy from '../Image/Effy.png'
 
 
 export default function Navbar() {
@@ -32,7 +33,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-logo" onClick={handleClick}>
-        EFFY Portal
+        <img alt="Effy Jewelery" src={Effy}/>
       </div>
       <div className="pfpIcon">
       <React.Fragment>

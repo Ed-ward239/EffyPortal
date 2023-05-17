@@ -13,30 +13,41 @@
 }
 
 .carnivalBox{
-    background-color: #ff6961;
-    height: 100px;
+    background-color: white;
+    background-image: url("../Image/Carnival.png");
+    background-repeat: no-repeat;
+    background-size: 104%;
+    background-position: center;
+    height: 90px;
     width: 150px;
     color: white;
     font-size: 25px;
-    border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    border-radius: 20%;
 }
 
 .nclBox{
-    background-color: #167db4;
-    height: 100px;
+    background-image: url("../Image/NCL.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60%;
+    height: 90px;
     width: 150px;
     color: white;
     font-size: 25px;
     border-radius: 15px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .functionalBoxes{
-    width: 80%;
+    width: 60%;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     margin: auto;
     padding: 10%;
+    background-color: rgba(128, 128, 128, 0.316);
+    border-radius: 30px;
+    margin-top: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+
 }

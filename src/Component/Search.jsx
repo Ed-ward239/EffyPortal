@@ -1,10 +1,10 @@
 import React from 'react';
-import './Search.css';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 function Search(){
     return (
+      <>
         <Box
           className='searchBox'
           component="form"
@@ -16,6 +16,8 @@ function Search(){
         >
           <TextField label="Search Voyage#" variant="outlined" />
         </Box>
+      </>
+
       );
 }
 export default Search;

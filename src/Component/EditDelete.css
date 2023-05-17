@@ -1,0 +1,8 @@
+.editDelete{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+}

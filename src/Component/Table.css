@@ -1,42 +1,42 @@
 /*{
-    border: 1px solid red;
+   /* border: 1px solid red;
 }*/
-.tableDiv{
-    width: 98%;
-    height: 100%;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    display: grid;
-    gap: 10px;
-    border-radius: 20px;
-    margin-right: 1rem;
-    margin-left: 1rem;
-    margin-top: 1rem;
-    border: 1px solid red;
-}
-
-.search_Export{
-    grid-column: col-start / span12;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
-    border: 1px solid red;
-  }
 
 .tableContainer{
-    grid-column: col-start / span 5;
+    border: 0.5px solid rgb(136, 136, 136);
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    align-items: center;
     color: white;
-    width: 60%;
-    border-radius: 20px;
-    margin-top: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border: 1px solid red;
+    width: 100% !important;
+    border-top-left-radius: 30px !important;
+    border-top-right-radius: 30px !important;
+    box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
+    height: 100%;
 }
 
-  .upload{
-    border: 1px solid red;
+.editDelete{
+    display: flex;
+    justify-content: center;   
+    align-items: center;
+}
+
+.pagination{
+    background-color: #1212126c;
+    box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
+    border: 0.5px solid rgb(170, 170, 170);
     flex-direction: row;
-    justify-content: center;
-    position: relative;
-    grid-column: col-start 10 / span 3;
-  }
+    height: 3.5rem;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.tableNpagination{
+    flex-direction: column;
+    width: 75%;
+}
+

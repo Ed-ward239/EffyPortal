@@ -8,7 +8,7 @@
     align-items: center;  
     height: 8vh;
     background-color: #4EB5AB;
-    margin-top: 2rem;
+    margin-top: 1rem;
     border-radius: 40px;
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -21,6 +21,9 @@
     font-size: 2rem;
     background-color: transparent;
     margin-left: 3rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
   }
   
   .pfpIcon{

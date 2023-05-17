@@ -4,6 +4,8 @@ import LogIn from "../Component/LogIn";
 import { useIsAuthenticated } from "@azure/msal-react";
 import { useNavigate } from 'react-router-dom';
 import Particles from '../Particles';
+import { Button } from '@mui/material';
+
 
 const PageLayout = () => {
     const isAuthenticated = useIsAuthenticated();
@@ -16,7 +18,8 @@ const PageLayout = () => {
 
 
 const BodyPage = () =>{
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
+
     function clickCarnival(event) {
         event.preventDefault();
         navigate('/Carnival');
@@ -29,8 +32,8 @@ const BodyPage = () =>{
         <div className='container'>
             <NavBar/>
             <div className='functionalBoxes'>
-                <button className="carnivalBox" onClick={clickCarnival}>Carnival</button>
-                <button className="nclBox" onClick={clickNCL}>NCL</button>
+                <Button className="carnivalBox" variant="outlined" onClick={clickCarnival}></Button>
+                <Button className="nclBox" variant="outlined" onClick={clickNCL}></Button>
             </div>
             <Particles/>
         </div>
