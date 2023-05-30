@@ -19,8 +19,37 @@ import './Table.css';
 import EditDelete from './EditDelete';
 import { colors } from '@mui/material';
 //import Username from './WelcomeName';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Chip from '@mui/material/Chip';
 
 
+function BasicSelect(){
+  const [status, setStatus] = React.useState("");
+  const handleChangeChip = (event) => {
+    setStatus(event.target.value);
+  };
+  return (
+    <Box sx={{ minWidth: 20 }}>
+      <FormControl fullWidth>
+        <InputLabel>Status</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={status}
+          label="status"
+          onChange={handleChangeChip}
+        >
+          <MenuItem value={10}><Chip label="Paid"variant="outlined" color="success" size="small"/></MenuItem>
+          <MenuItem value={20}><Chip label="Pending"variant="outlined" color="warning" size="small"/></MenuItem>
+          <MenuItem value={30}><Chip label="Unpaid"variant="outlined" color="error" size="small"/></MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
+  );
+}
 
 function Row(props) {
   const { row } = props;
@@ -242,7 +271,7 @@ function CollapsibleTable() {
       <Table className="table" aria-label="collapsible table" stickyHeader>
         <TableHead className='tableHeader'>
           <TableRow>
-            <TableCell />
+            <TableCell/>
             <TableCell align="center">SHIP NAME</TableCell>
             <TableCell align="center">VOYAGE #</TableCell>
             <TableCell align="center">DATE</TableCell>
