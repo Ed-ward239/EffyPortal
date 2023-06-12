@@ -12,7 +12,6 @@ export default function LogIn() {
     instance.loginRedirect({
       scopes: ['user.read']
     });
-    console.log("Btn Clicked");
   }
   
   return (

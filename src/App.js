@@ -18,7 +18,7 @@ function App({msalInstance}) {
 const Pages = () => {
   return (
     <Routes>
-      <Route path="/EffyPortal" element={<Home/>}/>
+      <Route path="/" element={<Home/>}/>
       <Route path="/Carnival" element={<Carnival/>}/>
       <Route path="/NCL" element={<NCL/>}/>
     </Routes>

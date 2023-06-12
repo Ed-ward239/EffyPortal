@@ -1,33 +1,5 @@
-.ddText{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: black;
-    margin-left: 1rem;
-}
-
-.ddText:hover{
-    cursor: pointer;
-}
-
-.fileBtn{
-    border-radius: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    height: 2rem;
-    width: 9rem;
-}
-
-.pdfBox{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(102, 102, 102, 0.356);
-    border-radius: 30px;
-    width: 20rem;
-    height: 10rem;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+.uploadPDF{
+    width: auto;
+    border-radius: 30px !important;
+    margin-left: 10px !important;
 }

@@ -5,7 +5,7 @@
 .pageHeader{
     font-size: 28px;
     background-color: white;
-    border: 1px solid red;
+    border: .5px solid red;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,17 +33,6 @@
     animation: typewriter 4s steps(44) 1s 1 normal both;
 }
 
-.tableDiv{
-  width: 98%;
-  height: 800px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  display: grid;
-  border-radius: 20px;
-  margin-right: 1rem;
-  margin-left: 1rem;
-  margin-top: 1rem;
-}
-
 @keyframes typewriter {
     from {
       width: 0;
@@ -61,21 +50,40 @@
     }
   }
 
-  .carnivalContainer{
+  .tableDiv{
+    width: 98%;
+    height: 805px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    border-radius: 30px;
+    margin-right: 1rem;
+    margin-left: 1rem;
     margin-top: 1rem;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .tableNupload{
+  .carnivalContainer{
+    width: 20%;
+    height: 130px;
+    display: inline-block;
+    justify-content: center !important;
+    background-color: rgba(105, 105, 105, 0.172);
+    border-radius: 30px;
+    text-align: center;
+    margin-right: 1rem;
+    position: relative;
+    padding-top: 1rem;
+    
+  }
+
+  .addBtn{
     display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    width: 100%;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    height: 680px;
+    justify-content: space-around;
+    align-items: center;
+    font-size: medium;
+    height: 2rem;
+    width: 8rem;
+    border-radius: 30px !important;
   }

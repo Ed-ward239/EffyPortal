@@ -1,6 +1,7 @@
-/*{
-   /* border: 1px solid red;
-}*/
+*{
+    text-decoration: none;
+    font-weight: 300;
+}
 
 .tableContainer{
     border: 0.5px solid rgb(136, 136, 136);
@@ -9,7 +10,7 @@
     flex-direction: column;
     align-items: center;
     color: white;
-    width: 100% !important;
+    width: 98% !important;
     border-top-left-radius: 30px !important;
     border-top-right-radius: 30px !important;
     box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
@@ -23,6 +24,7 @@
 }
 
 .pagination{
+    width: 98%;
     background-color: #1212126c;
     box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
     border: 0.5px solid rgb(170, 170, 170);
@@ -37,5 +39,67 @@
 
 .tableNpagination{
     flex-direction: column;
-    width: 75%;
+    width: 100%;
+    display: block;
+    margin-left: 1rem;
+}
+
+.table{
+    z-index: 0;
+}
+
+.tableHeader{
+    justify-content: space-evenly;
+}
+
+.mainData{
+    font-weight: lighter !important;
+}
+
+.subDataBox{
+    width: 100%;
+}
+
+.subData{
+    font-weight: lighter;
+    display: grid;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 50px;
+    position: relative;
+    width: 100%;
+}
+
+.subDataRow1{
+    display: flex;
+    justify-content: space-around;
+    align-items: left;
+    position: relative;
+    flex-direction: row;
+}
+.subDataRow1:nth-child(-n + 2){
+    background-color: skyblue !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+.subDataRow2{
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+}
+
+.subDataRow3{
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+}
+
+.subDataRow4{
+    display: flex;
+    justify-content: space-around;
+    position: relative;
 }

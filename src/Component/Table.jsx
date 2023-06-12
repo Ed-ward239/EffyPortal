@@ -55,6 +55,7 @@ function Row(props) {
             value={selectedValues[row.paidStatus] || ''}
             onChange={(event) => handleSelectChange(event, row.paidStatus)}
             variant="outlined"
+            label="Status"
           >
             <MenuItem value={0}></MenuItem>
             <MenuItem value={1}><Chip label="Paid" variant="outlined" color="success" size="small" /></MenuItem>
@@ -204,7 +205,7 @@ function CollapsibleTable() {
     <div className='tableNpagination'>
     <TableContainer className="tableContainer" component={Paper} sx={{ maxHeight: 600}}>
       <Table className="table" aria-label="collapsible table" stickyHeader>
-        <TableHead className='tableHeader'>
+        <TableHead className='tableHeader' stickyHeader>
           <TableRow>
             <TableCell/>
             <TableCell align="center">SHIP NAME</TableCell>

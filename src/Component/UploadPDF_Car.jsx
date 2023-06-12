@@ -2,12 +2,8 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import pdfjsLib from "pdfjs-dist";
 import "./UploadPDF.css";
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
-import { green } from '@mui/material/colors';
-import Fab from '@mui/material/Fab';
-import CheckIcon from '@mui/icons-material/Check';
-import SaveIcon from '@mui/icons-material/Save';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import Button from '@mui/material/Button';
 
 
 function FileUpload() {
@@ -16,28 +12,16 @@ function FileUpload() {
   const [success, setSuccess] = React.useState(false);
   const timer = React.useRef();
 
-  const buttonSx = {
-    ...(success && {
-      bgcolor: green[500],
-      '&:hover': {
-        bgcolor: green[700],
-      },
-    }),
-  };
-
-  React.useEffect(() => {
-    return () => {
-      clearTimeout(timer.current);
-    };
-  }, []);
-
-  const handleButtonClick = () => {
+  const handleUpload = () => {
     if (!loading) {
       setSuccess(false);
       setLoading(true);
       timer.current = window.setTimeout(() => {
-        setSuccess(true);
-        setLoading(false);
+        if (success ===  true)
+        {
+          setSuccess(true);
+          setLoading(false);
+        }
       }, 2000);
     }
   };
@@ -64,32 +48,53 @@ function FileUpload() {
 
   return (
     <div className="pdfBox" {...getRootProps()}>
-        <input {...getInputProps()} />
-              <Box sx={{ m: 1, position: 'relative' }}>
-        <Fab
-          aria-label="save"
-          color="primary"
-          sx={buttonSx}
-          onClick={handleButtonClick}
-        >
-          {success ? <CheckIcon /> : <SaveIcon />}
-        </Fab>
-        {loading && (
-          <CircularProgress
-            size={68}
-            sx={{
-              color: green[500],
-              position: 'absolute',
-              top: -6,
-              left: -6,
-              zIndex: 1,
-            }}
-          />
-        )}
-      </Box>
-        <p className="ddText">Drag a PDF file here...</p>
+      <input {...getInputProps()} />
+      <Button className="uploadPDF" variant="outlined" startIcon={<PlaylistAddIcon/>} onClick={handleUpload}>Upload PDF</Button> 
         {pdfText && <p>{pdfText}</p>}
     </div>
   );
 }
 export default FileUpload;
+
+
+
+
+
+/*    async function parsePDF(file) {
+        try {
+          const pdfBytes = await file.arrayBuffer();
+          const pdfDoc = await PDFDocument.load(pdfBytes);
+      
+          const form = pdfDoc.getForm();
+          const fields = form.getFields();
+      
+          return fields.map((field) => field.getFullName());
+        } catch (error) {
+          console.error('Error parsing PDF:', error);
+          return [];
+        }
+      }
+      
+
+      function PDFFieldParser() {
+        const [fields, setFields] = useState([]);
+      
+        const handleFileChange = async (event) => {
+          const file = event.target.files[0];
+          const extractedFields = await parsePDF(file);
+          setFields(extractedFields);
+        };
+      
+        return (
+          <div>
+            <input type="file" onChange={handleFileChange} accept=".pdf" />
+            {fields.length > 0 && (
+              <ul>
+                {fields.map((field, index) => (
+                  <li key={index}>{field}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        );
+      } */
