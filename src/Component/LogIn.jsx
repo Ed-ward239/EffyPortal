@@ -21,6 +21,7 @@ export default function LogIn() {
             <button className="signInBtn" onClick={handleSignIn}><LoginIcon/> Log In</button>
       </div>
       <Particle/>
+      <div className="devWatermark">Developed by Edward Lee</div>
     </>
 
   );
