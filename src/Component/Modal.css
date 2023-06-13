@@ -13,23 +13,21 @@
   }
   
   .modal {
-    display: block;
-    justify-content: center;
-    align-items: center;
     border-radius: 10px 10px 0 0;
     padding: 2rem;
     background-color: white;
-    width: 50em;
+    width: 65em;
     height: 45em;
-    flex-direction: column;
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    overflow: auto;
+    grid: auto / auto auto;
+    justify-content: center;
+    flex-direction: row;
+    border: 1px solid red;
   }
-  
 
-  .form-group label {
-    margin-bottom: 0.2rem;
-    text-align: left;
-  }
-  
   .error {
     background-color: #f8d7da;
     color: #df4759;
@@ -43,12 +41,12 @@
     margin-right: 10px !important;
   }
 
-  .buttons{
+  .buttonsDiv{
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: white;
-    width: 54em;
+    width: 69em;
     height: 5em;
     border-radius: 0 0 10px 10px;
   }
