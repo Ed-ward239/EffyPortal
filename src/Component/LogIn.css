@@ -84,10 +84,9 @@
 
 .devWatermark{
     display: flex;
-    justify-content: end;
-    align-items: end;
+    align-items: center;
+    justify-content: center;
     margin-top: 23rem;
     color: rgba(128, 128, 128, 0.6);
-    margin-right: .5rem;
 }
 

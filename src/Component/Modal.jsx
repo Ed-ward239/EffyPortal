@@ -21,7 +21,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
 
   const [formState, setFormState] = useState(
     defaultValue || {
-      shipName: "",
+      ShipName: "",
       voyageNum: "",
       date: "",
       effyShare:"",
@@ -157,6 +157,33 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           <TextField label="Revenue S&S" variant="outlined" />
         </Box>
         <Box
+          className='revCC'
+          component="form"
+          sx={{ m: 1, width: '25ch' }}
+          noValidate
+          autoComplete="off"
+          >
+          <TextField label="Revenue CC" variant="outlined" />
+        </Box>
+        <Box
+          className='ssFee'
+          component="form"
+          sx={{ m: 1, width: '25ch' }}
+          noValidate
+          autoComplete="off"
+          >
+          <TextField label="S&S Fee" variant="outlined" />
+        </Box>
+        <Box
+          className='ccFee'
+          component="form"
+          sx={{ m: 1, width: '25ch' }}
+          noValidate
+          autoComplete="off"
+          >
+          <TextField label="CC Fee" variant="outlined" />
+        </Box>
+        <Box
           className='revEU'
           component="form"
           sx={{ m: 1, width: '25ch' }}
@@ -175,15 +202,6 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           <TextField label="Discount" variant="outlined" />
         </Box>
         <Box
-          className='revCC'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="Revenue CC" variant="outlined" />
-        </Box>
-        <Box
           className='carnivalShare'
           component="form"
           sx={{ m: 1, width: '25ch' }}
@@ -191,24 +209,6 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           autoComplete="off"
           >
           <TextField label="Carnival Share" variant="outlined" />
-        </Box>
-        <Box
-          className='ssFee'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="S&S Fee" variant="outlined" />
-        </Box>
-        <Box
-          className='cashAdv'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="Cash Advance" variant="outlined" />
         </Box>
         <Box
           className='execFolio'
@@ -228,15 +228,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           >
           <TextField label="Office Supplies" variant="outlined" />
         </Box>
-        <Box
-          className='ccFee'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="CC Fee" variant="outlined" />
-        </Box>
+
         <Box
           className='cashPaid'
           component="form"
@@ -245,6 +237,15 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           autoComplete="off"
           >
           <TextField label="Cash Paid" variant="outlined" />
+        </Box>
+        <Box
+          className='cashAdv'
+          component="form"
+          sx={{ m: 1, width: '25ch' }}
+          noValidate
+          autoComplete="off"
+          >
+          <TextField label="Cash Advance" variant="outlined" />
         </Box>
         </form>
       </Box>

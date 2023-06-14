@@ -59,6 +59,8 @@ export default FileUpload;
 
 
 
+// Pdf to text
+
 
 /*    async function parsePDF(file) {
         try {

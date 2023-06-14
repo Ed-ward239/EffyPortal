@@ -15,12 +15,8 @@
   }
   
   .navbar-logo {
-    font-weight: bold;
-    color: white;
     cursor: pointer;
-    font-size: 2rem;
-    background-color: transparent;
-    margin-left: 3rem;
+    margin-left: 5rem;
     align-items: center;
     justify-content: center;
     display: flex;

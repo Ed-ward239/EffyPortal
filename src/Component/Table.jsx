@@ -16,7 +16,9 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import './Table.css';
-import EditDelete from './EditDelete';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
+//import EditDelete from './EditDelete';
 //import Username from './WelcomeName';
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -109,7 +111,8 @@ function Row(props) {
                 ))}
               </Table>
             </Box>
-            <EditDelete/>
+            <IconButton className='deleteBtn' color='warning'><DeleteForeverIcon/></IconButton>
+            <IconButton className='editBtn'><EditIcon/></IconButton>
           </Collapse>
         </TableCell>
       </TableRow>
@@ -188,7 +191,7 @@ const rows = [
   createData('VALOR', 'VA20211120005', '2021-11-12', '18,399.08', 0, 'Lucy'),
 ];
 
-function CollapsibleTable() {
+export const CollapsibleTable = ({ row_s, deleteRow, editRow }) => {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
@@ -239,13 +242,6 @@ function CollapsibleTable() {
   );
 }
 export default CollapsibleTable;
-
-
-
-
-
-
-
 
 
 

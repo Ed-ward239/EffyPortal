@@ -16,16 +16,16 @@
     border-radius: 10px 10px 0 0;
     padding: 2rem;
     background-color: white;
-    width: 65em;
-    height: 45em;
+    width: 21em;
+    height: 90%;
     display: flex;
     flex-wrap: wrap;
     flex-flow: row wrap;
     overflow: auto;
-    grid: auto / auto auto;
     justify-content: center;
     flex-direction: row;
-    border: 1px solid red;
+    margin-right: none ;
+    margin-left: 79%;
   }
 
   .error {
@@ -46,7 +46,9 @@
     align-items: center;
     justify-content: center;
     background-color: white;
-    width: 69em;
+    width: 25em;
     height: 5em;
     border-radius: 0 0 10px 10px;
+    margin-left: 79%;
+    box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
   }
