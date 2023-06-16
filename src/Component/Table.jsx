@@ -75,7 +75,7 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
               {row.details.map((detailsRow) => (
                 <TableBody align="center">
-                  <TableRow key={detailsRow.revSS}>
+                  <TableRow>
                     <TableCell align="right">Revenue S&S: </TableCell>
                     <TableCell align='center'>{detailsRow.revSS}</TableCell>
                     <TableCell align="right">Revenue CC: </TableCell>
