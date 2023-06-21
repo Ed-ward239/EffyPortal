@@ -208,7 +208,7 @@ export const CollapsibleTable = ({ row_s, deleteRow, editRow }) => {
     <div className='tableNpagination'>
     <TableContainer className="tableContainer" component={Paper} sx={{ maxHeight: 600}}>
       <Table className="table" aria-label="collapsible table" stickyHeader>
-        <TableHead className='tableHeader' stickyHeader>
+        <TableHead className='tableHeader'>
           <TableRow>
             <TableCell/>
             <TableCell align="center">SHIP NAME</TableCell>
@@ -294,7 +294,7 @@ function Row(props) {
 
 
 
-
+// PDF parsing function
 
 
       async function parsePDF(file) {
