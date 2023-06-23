@@ -1,9 +1,10 @@
 .exportBtn{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     font-size: medium;
-    height: 2rem;
-    width: 8rem;
+    height: auto;
+    width: 7rem;
     border-radius: 30px !important;
+    margin-top: 1rem !important;
 }

@@ -43,25 +43,26 @@ function Carnival() {
             <div className='tableDiv'>
                 <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} />
                 <div className='carnivalContainer'>
-                    <Search/>
-                    <Button 
-                        className="addBtn" 
-                        variant="outlined" 
-                        startIcon={<PlaylistAddIcon/>} 
-                        onClick={() => setModalOpen(true)}>Add</Button>    
-                    {modalOpen && (
-                        <Modal
-                            closeModal={() => {
-                            setModalOpen(false);
-                            setRowToEdit(null);
-                        }}
-                        onSubmit={handleSubmit}
-                        defaultValue={rowToEdit !== null && rows[rowToEdit]}
-                     />
-                    )}
-                    <ExportCSV/>
+                    <div className="searchNBtns">
+                        <Search/>
+                        <Button 
+                            className="addBtn" 
+                            variant="outlined" 
+                            startIcon={<PlaylistAddIcon/>} 
+                            onClick={() => setModalOpen(true)}>Add</Button>    
+                        {modalOpen && (
+                            <Modal
+                                closeModal={() => {
+                                setModalOpen(false);
+                                setRowToEdit(null);
+                            }}
+                                onSubmit={handleSubmit}
+                                defaultValue={rowToEdit !== null && rows[rowToEdit]}
+                            />
+                        )}
+                        <ExportCSV/>
+                    </div>
                 </div>
-               
             </div>
         </div>
     )

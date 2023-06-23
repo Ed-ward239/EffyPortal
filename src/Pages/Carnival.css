@@ -65,17 +65,21 @@
   }
 
   .carnivalContainer{
-    width: 20%;
-    height: 130px;
     display: inline-block;
-    justify-content: center !important;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 21.5%;
     background-color: rgba(105, 105, 105, 0.172);
     border-radius: 30px;
-    text-align: center;
-    margin-right: 1rem;
-    position: relative;
-    padding-top: 1rem;
-    
+    margin: 1rem;
+  }
+
+  .searchNBtns{
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
   }
 
   .addBtn{
@@ -83,7 +87,8 @@
     justify-content: space-around;
     align-items: center;
     font-size: medium;
-    height: 2rem;
-    width: 8rem;
+    height: auto;
+    width: 7rem;
     border-radius: 30px !important;
+    margin-top: 1rem !important;
   }

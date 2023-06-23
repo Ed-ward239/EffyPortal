@@ -22,6 +22,7 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-icons": "^4.8.0",
+    "react-oauth2-code-pkce": "^1.14.0",
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
     "react-tsparticles": "^2.9.3",
