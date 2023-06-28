@@ -12,7 +12,7 @@ function Search(){
             '& > :not(style)': { m: 0, width: '22.5ch' },
           }}
           noValidate
-          autoComplete="on"
+          autoComplete="off"
         >
           <TextField label="Search Voyage#" variant="outlined" />
         </Box>

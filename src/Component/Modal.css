@@ -13,7 +13,7 @@
   }
   
   .modal {
-    border-radius: 10px 10px 0 0;
+    border-radius: 15px 15px 0 0;
     padding: 2rem;
     background-color: white;
     width: 21em;
@@ -48,7 +48,7 @@
     background-color: white;
     width: 25em;
     height: 5em;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 15px 15px;
     margin-left: 79%;
     box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
   }

@@ -20,7 +20,7 @@ export default function Navbar() {
     // Logo Home Btn
     function handleClick(event) {
         event.preventDefault();
-        navigate('/EffyPortal');
+        navigate('/');
     }
     // Menu bar onClick Functions
     const handleClickMenu = (event) => {

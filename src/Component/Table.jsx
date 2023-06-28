@@ -82,6 +82,8 @@ function Row(props) {
                     <TableCell align='center'>{detailsRow.revCC}</TableCell>
                     <TableCell align="right">Exec. Folio: </TableCell>
                     <TableCell align='center'>{detailsRow.execFolio}</TableCell>
+                    <TableCell align="right">Parole Fee: </TableCell>
+                    <TableCell align='center'>{detailsRow.paroleFee}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="right">EU Revenue: </TableCell>
@@ -90,6 +92,8 @@ function Row(props) {
                     <TableCell align='center'>{detailsRow.carnivalShare}</TableCell>
                     <TableCell align="right">Office Supplies: </TableCell>
                     <TableCell align='center'>{detailsRow.officeSup}</TableCell>
+                    <TableCell align="right">Cash Paid: </TableCell>
+                    <TableCell align='center'>{detailsRow.cashPaid}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="right">Discount: </TableCell>
@@ -98,21 +102,23 @@ function Row(props) {
                     <TableCell align='center'>{detailsRow.ssFee}</TableCell>
                     <TableCell align="right">CC Fee: </TableCell>
                     <TableCell align='center'>{detailsRow.ccFee}</TableCell>
+                    <TableCell align="right">Cash Advance: </TableCell>
+                    <TableCell align='center'>{detailsRow.cashAdv}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="right">Meal Charge: </TableCell>
                     <TableCell align='center'>{detailsRow.mealCharge}</TableCell>
-                    <TableCell align="right">Cash Advance: </TableCell>
-                    <TableCell align='center'>{detailsRow.cashAdv}</TableCell>
-                    <TableCell align="right">Cash Paid: </TableCell>
-                    <TableCell align='center'>{detailsRow.cashPaid}</TableCell>
+
+
                   </TableRow>
                 </TableBody>
                 ))}
               </Table>
             </Box>
-            <IconButton className='deleteBtn' color='warning'><DeleteForeverIcon/></IconButton>
-            <IconButton className='editBtn'><EditIcon/></IconButton>
+            <div className='editDelete'>
+              <IconButton className='deleteBtn' color='warning'><DeleteForeverIcon /></IconButton>
+              <IconButton className='editBtn'><EditIcon /></IconButton>
+            </div>
           </Collapse>
         </TableCell>
       </TableRow>
@@ -144,6 +150,7 @@ function createData(shipName, voyageNum, date, effyShare, paidStatus, editedBy){
         officeSup: 21323,
         ccFee: 30294,
         cashPaid: 230213,
+        paroleFee: 434,
       },
     ],
   };
@@ -173,6 +180,7 @@ Row.propTypes = {
         officeSup: PropTypes.number.isRequired,
         ccFee: PropTypes.number.isRequired,
         cashPaid: PropTypes.number.isRequired,
+        paroleFee: PropTypes.number.isRequired,
       }),
     ).isRequired,
   }).isRequired,
@@ -194,7 +202,7 @@ const rows = [
 export const CollapsibleTable = ({ row_s, deleteRow, editRow }) => {
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(7);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -230,7 +238,7 @@ export const CollapsibleTable = ({ row_s, deleteRow, editRow }) => {
     </TableContainer>
     <TablePagination 
           className='pagination'
-          rowsPerPageOptions={[10, 25, 50, 100, 150]}
+          rowsPerPageOptions={[25, 50, 100, 200]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}

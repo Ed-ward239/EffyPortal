@@ -1,10 +1,10 @@
 .exportBtn{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center !important;
+    align-items: center !important;
     font-size: medium;
     height: auto;
-    width: 7rem;
+    width: 6rem;
     border-radius: 30px !important;
     margin-top: 1rem !important;
 }

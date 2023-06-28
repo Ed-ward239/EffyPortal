@@ -13,6 +13,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { WelcomeName } from "./WelcomeName";
 //import { WelcomeName } from "./WelcomeName";
 
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
@@ -103,7 +104,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           <TextField label="Voyage#" variant="outlined" />
         </Box>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DatePicker']} sx={{ marginLeft: 4, width: '20ch' }}>
+          <DemoContainer components={['DatePicker']} sx={{ marginLeft: 1, width: '25ch' }}>
             <DatePicker label="Date" />
           </DemoContainer>
         </LocalizationProvider>
@@ -116,7 +117,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
           >
           <TextField label="Effy Share" variant="outlined" />
         </Box>
-        <Box sx={{ marginLeft: 4, width: '20ch' }}>
+        <Box sx={{ marginLeft: 1, width: '25ch' }}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
                 <Select
@@ -145,7 +146,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
               variant="outlined"           
               disabled
               id="outlined-disabled"
-              defaultValue="Edward" />
+              defaultValue={WelcomeName} />
         </Box>
         <Box
           className='revSS'

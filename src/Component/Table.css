@@ -11,8 +11,8 @@
     align-items: center;
     color: white;
     width: 98% !important;
-    border-top-left-radius: 30px !important;
-    border-top-right-radius: 30px !important;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
     box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
     height: 100%;
 }
@@ -30,8 +30,8 @@
     border: 0.5px solid rgb(170, 170, 170);
     flex-direction: row;
     height: 3.5rem;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
     display: flex;
     justify-content: right;
     align-items: center;
@@ -102,4 +102,10 @@
     display: flex;
     justify-content: space-around;
     position: relative;
+}
+
+.editDelete{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

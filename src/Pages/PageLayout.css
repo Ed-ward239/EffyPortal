@@ -22,7 +22,7 @@
     width: 150px;
     color: white;
     font-size: 25px;
-    border-radius: 20%;
+    border-radius: 15px !important;
 }
 
 .nclBox{
@@ -34,7 +34,7 @@
     width: 150px;
     color: white;
     font-size: 25px;
-    border-radius: 15px;
+    border-radius: 15px !important;
 }
 
 .functionalBoxes{
@@ -45,7 +45,7 @@
     margin: auto;
     padding: 10%;
     background-color: rgba(128, 128, 128, 0.316);
-    border-radius: 30px;
+    border-radius: 15px;
     margin-top: 5rem;
     margin-left: auto;
     margin-right: auto;
