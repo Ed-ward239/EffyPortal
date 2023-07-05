@@ -39,7 +39,7 @@ export default function LogIn() {
     setCodeVerifier(codeVerifier);
 
     // Construct the authentication request URL with code challenge
-    const authorizationUrl = `https://auth-provider.com/auth?response_type=code&code_challenge=${challenge}&code_challenge_method=S256&client_id=c1c55ec8-2ddf-4f4b-bab0-d11a1d54be82&redirect_uri=http://localhost:3000/callback`;
+    const authorizationUrl = `https://login.microsoftonline.com/auth?response_type=code&code_challenge=${challenge}&code_challenge_method=S256&client_id=c1c55ec8-2ddf-4f4b-bab0-d11a1d54be82&redirect_uri=http://localhost:3000/callback`;
 
     // Redirect the user to the authentication provider
     window.location.href = authorizationUrl;
