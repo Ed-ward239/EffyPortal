@@ -43,6 +43,7 @@ function Carnival() {
             <div className='tableDiv'>
                 <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} />
                 <div className='carnivalContainer'>
+                    
                     <div className="searchNBtns">
                         <Search/>
                         <Button 

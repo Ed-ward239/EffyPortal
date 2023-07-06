@@ -2,7 +2,6 @@
   "name": "efft_portal",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080",
   "dependencies": {
     "@azure/msal-browser": "^2.37.0",
     "@azure/msal-react": "^1.5.7",
