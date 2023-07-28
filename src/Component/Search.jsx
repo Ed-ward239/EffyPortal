@@ -9,7 +9,7 @@ function Search(){
           className='searchBox'
           component="form"
           sx={{
-            '& > :not(style)': { m: 0, width: '22.5ch' },
+            '& > :not(style)': { m: 0, width: '11vw' },
           }}
           noValidate
           autoComplete="off"

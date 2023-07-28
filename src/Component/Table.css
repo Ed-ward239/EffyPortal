@@ -1,10 +1,5 @@
-*{
-    text-decoration: none;
-    font-weight: 300;
-}
-
 .tableContainer{
-    border: 0.5px solid rgb(136, 136, 136);
+    border: 1px solid rgb(136, 136, 136);
     display: flex;
     justify-content: left;
     flex-direction: column;
@@ -14,13 +9,7 @@
     border-top-left-radius: 15px !important;
     border-top-right-radius: 15px !important;
     box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
-    height: 100%;
-}
-
-.editDelete{
-    display: flex;
-    justify-content: center;   
-    align-items: center;
+    height: 40vw;
 }
 
 .pagination{
@@ -48,64 +37,37 @@
     z-index: 0;
 }
 
-.tableHeader{
-    justify-content: space-evenly;
+.headerRow:nth-child(){
+  font-weight: 200px;
+} 
+
+.tableRows{
+  z-index: 0;
 }
 
-.mainData{
-    font-weight: lighter !important;
-}
-
-.subDataBox{
-    width: 100%;
-}
-
-.subData{
-    font-weight: lighter;
-    display: grid;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-    margin-left: 50px;
-    position: relative;
-    width: 100%;
-}
-
-.subDataRow1{
-    display: flex;
-    justify-content: space-around;
-    align-items: left;
-    position: relative;
-    flex-direction: row;
-}
-.subDataRow1:nth-child(-n + 2){
-    background-color: skyblue !important;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
-
-.subDataRow2{
-    display: flex;
-    justify-content: space-around;
-    position: relative;
-}
-
-.subDataRow3{
-    display: flex;
-    justify-content: space-around;
-    position: relative;
-}
-
-.subDataRow4{
-    display: flex;
-    justify-content: space-around;
-    position: relative;
-}
-
-.editDelete{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+.label {
+    border-radius: 3px;
+    padding: 0.3rem;
+    color: white;
+  }
+  
+  .label-pending {
+    background-color: transparent;
+    border: 1px solid orange;
+    border-radius: 20px;
+    color: orange;
+  }
+  
+  .label-paid {
+    background-color: transparent;
+    border: 1px solid green;
+    border-radius: 20px;
+    color: green;
+  }
+  
+  .label-unpaid {
+    background-color: transparent;
+    border: 1px solid red;
+    border-radius: 20px;
+    color: red;
+  }

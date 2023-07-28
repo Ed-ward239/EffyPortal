@@ -1,50 +1,37 @@
+// Draft_Testing
 import React, { useState } from "react";
-import UploadPDF from '../Component/UploadPDF_Car';
+
 import "./Modal.css";
-import { Button } from "@mui/material";
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Chip from '@mui/material/Chip';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { WelcomeName } from "./WelcomeName";
-//import { WelcomeName } from "./WelcomeName";
+import UploadPDF from "./UploadPDF_Car";
 
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
-  const [status, setStatus] = React.useState("");
-  const [errors, setErrors] = useState("");
-
   const [formState, setFormState] = useState(
     defaultValue || {
-      ShipName: "",
+      shipName: "",
       voyageNum: "",
       date: "",
-      effyShare:"",
-      status: "",
+      effyShare: "",
+      statusPaid: "unpaid",
       editedBy: "",
       revSS: "",
       revCC:"",      
       execFolio: "",
-      revEU: "",
+      euRev: "",
       carnivalShare: "",
-      officeSupp:"",
+      officeSup:"",
       discount: "",
       ssFee: "",
       ccFee: "",
       mealCharge:"",
       cashAdv: "",
       cashPaid: "",
+      paroleFee: "",
     }
   );
+  const [errors, setErrors] = useState("");
+
   const validateForm = () => {
-    if (formState.shipName && formState.voyageNum && formState.date && 
-        formState.effyShare && formState.revSS && formState.revCC) {
+    if (formState.shipName && formState.voyageNum && formState.date && formState.effyShare && formState.statusPaid && formState.editedBy) {
       setErrors("");
       return true;
     } else {
@@ -60,8 +47,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   };
 
   const handleChange = (e) => {
-    setStatus(e.target.value);
-    setFormState(e.target.value);
+    setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
@@ -78,186 +64,84 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
         if (e.target.className === "modal-container") closeModal();
       }}
     >
-      <Box className="modal" 
-        sx={{
-          display: 'flex',
-          flexWrap: 'nowrap',
-        }}>
+      <div className="modal">
+        <div className="modalHeaderTxt">Carnival Data Entry</div>
+        <div className="formGrp">
         <form>
-        {errors && <div className="error">{`Please include: ${errors}`}</div>}
-        <Box
-          className='shipName'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="Ship Name" variant="outlined" />
-        </Box>
-        <Box
-          className='voyageNum'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          Validate
-          autoComplete="off"
-          >
-          <TextField label="Voyage#" variant="outlined" />
-        </Box>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DatePicker']} sx={{ marginLeft: 1, width: '25ch' }}>
-            <DatePicker label="Date" />
-          </DemoContainer>
-        </LocalizationProvider>
-        <Box
-          className='effyShare'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="Effy Share" variant="outlined" />
-        </Box>
-        <Box sx={{ marginLeft: 1, width: '25ch' }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Status</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={status}
-                  label="Status"
-                  onChange={handleChange}
-                  >
-                  <MenuItem value={0}></MenuItem>
-                  <MenuItem value={1}><Chip label="Paid" variant="outlined" color="success" size="small" /></MenuItem>
-                  <MenuItem value={2}><Chip label="Pending" variant="outlined" color="warning" size="small" /></MenuItem>
-                  <MenuItem value={3}><Chip label="Unpaid" variant="outlined" color="error" size="small" /></MenuItem>
-                </Select>
-             </FormControl>
-        </Box>
-        <Box
-          className='editBy'
-          component="form"
-          sx={{ m: 1, width: '25ch', color: "red"}}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField 
-              label="Edit By" 
-              variant="outlined"           
-              disabled
-              id="outlined-disabled"
-              defaultValue={WelcomeName} />
-        </Box>
-        <Box
-          className='revSS'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="Revenue S&S" variant="outlined" />
-        </Box>
-        <Box
-          className='revCC'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="Revenue CC" variant="outlined" />
-        </Box>
-        <Box
-          className='ssFee'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="S&S Fee" variant="outlined" />
-        </Box>
-        <Box
-          className='ccFee'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="CC Fee" variant="outlined" />
-        </Box>
-        <Box
-          className='revEU'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="EU Share" variant="outlined" />
-        </Box>
-        <Box
-          className='discount'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="Discount" variant="outlined" />
-        </Box>
-        <Box
-          className='carnivalShare'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="Carnival Share" variant="outlined" />
-        </Box>
-        <Box
-          className='execFolio'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="Exec. Folio" variant="outlined" />
-        </Box>
-        <Box
-          className='officeSupp'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="Office Supplies" variant="outlined" />
-        </Box>
-
-        <Box
-          className='cashPaid'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="Cash Paid" variant="outlined" />
-        </Box>
-        <Box
-          className='cashAdv'
-          component="form"
-          sx={{ m: 1, width: '25ch' }}
-          noValidate
-          autoComplete="off"
-          >
-          <TextField label="Cash Advance" variant="outlined" />
-        </Box>
-        </form>
-      </Box>
-      
-          <div className="buttonsDiv">
-            <Button type="submit" className="submitBtn" variant="outlined" onClick={handleSubmit}>
-                Submit
-            </Button>
+          <div className="form-group">
+            <input name="shipName" placeholder="Ship Name" onChange={handleChange} value={formState.shipName} />
+          </div>
+          <div className="form-group">
+            <input name="voyageNum" placeholder="Voyage #" onChange={handleChange} value={formState.voyageNum} />
+          </div>
+          <div className="form-group">
+            <input name="date" placeholder="Date (mm/dd/yyyy)" onChange={handleChange} value={formState.date} />
+          </div>
+          <div className="form-group">
+            <input name="effyShare" placeholder="Effy Share" onChange={handleChange} value={formState.effyShare} />
+          </div>
+          <div className="form-group">
+            <input name="editedBy" placeholder="Edited By" onChange={handleChange} value={formState.editedBy} />{/* Lock user fill/typing */}
+          </div> 
+          <div className="form-group">
+            <input name="revSS" placeholder="Revenue S&S" onChange={handleChange} value={formState.revSS} />
+          </div> 
+          <div className="form-group">
+            <input name="revCC" placeholder="Revenue CC" onChange={handleChange} value={formState.revCC} />
+          </div>
+          <div className="form-group">
+            <input name="ssFee" placeholder="S&S Fee" onChange={handleChange} value={formState.ssFee} />
+          </div>
+          <div className="form-group">
+            <input name="ccFee" placeholder="CC Fee" onChange={handleChange} value={formState.ccFee} />
+          </div>
+          <div className="form-group">
+            <input name="euRev" placeholder="EU Share" onChange={handleChange} value={formState.euRev} />
+          </div>
+          <div className="form-group">
+            <input name="discount" placeholder="Discount" onChange={handleChange} value={formState.discount} />
+          </div>
+          <div className="form-group">
+            <input name="carnivalShare" placeholder="Carnival Share" onChange={handleChange} value={formState.carnivalShare} />
+          </div>
+          <div className="form-group">
+            <input name="execFolio" placeholder="Exec. Folio" onChange={handleChange} value={formState.execFolio} />
+          </div>
+          <div className="form-group">
+            <input name="mealCharge" placeholder="Meal Charge" onChange={handleChange} value={formState.mealCharge} />
+          </div>
+          <div className="form-group">
+            <input name="officeSup" placeholder="Office Supplies" onChange={handleChange} value={formState.officeSup} />
+          </div>
+          <div className="form-group">
+            <input name="cashPaid" placeholder="Cash Paid on Board" onChange={handleChange} value={formState.cashPaid} />
+          </div>
+          <div className="form-group">
+            <input name="cashAdv" placeholder="Cash Advance" onChange={handleChange} value={formState.cashAdv} />
+          </div>
+          <div className="form-group">
+            <input name="paroleFee" placeholder="Parole Fee" onChange={handleChange} value={formState.paroleFee} />
+          </div>
+          <div className="form-group-status">
+            <label htmlFor="statusPaid">Status</label>
+            <select 
+              name="statusPaid"
+              onChange={handleChange}
+              value={formState.statusPaid}
+            >
+              <option value="paid">Paid</option>
+              <option value="pending">Pending</option>
+              <option value="unpaid">Unpaid</option>
+            </select>
+          </div>
+          {errors && <div className="error">{`Please include: ${errors}`}</div>}
+          <div className="btns">
+            <button type="submit" className="submitBtn" onClick={handleSubmit}>Submit</button>
             <UploadPDF/>
           </div>
+        </form>
+        </div>
+      </div>
     </div>
   );
-}
-export default Modal;
+};

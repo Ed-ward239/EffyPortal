@@ -6,25 +6,27 @@
     display: flex;
     justify-content: space-between;
     align-items: center;  
-    height: 8vh;
+    height: 4vw;
     background-color: #4EB5AB;
     margin-top: 1rem;
-    border-radius: 40px;
+    border-radius: 50px;
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
   
   .navbar-logo {
     cursor: pointer;
-    margin-left: 5rem;
+    margin-left: 10rem;
     align-items: center;
     justify-content: center;
     display: flex;
+    height: 3vw;
+    width: 5vw;
   }
   
   .pfpIcon{
-    width: 15rem;
-    height: 3rem;
+    width: 15%;
+    height: 15%;
     margin-right: 5rem;
     align-items: center;
     display: flex;
