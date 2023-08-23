@@ -181,7 +181,7 @@ class Table extends React.Component {
                 onClick={() => {
                   editButton(tableMeta.rowData);
                 }}
-                className="button muted-button"
+                className="editBtn"
               >
                 Edit
               </button>
@@ -197,8 +197,9 @@ class Table extends React.Component {
         console.log(changedColumn, filterList);
       },
       filterType: "dropdown",
-      responsive: "vertical",
+      responsive: "scrollMaxHeight",
       rowsPerPage: 10,
+      rowsPerPageOptions: [5, 10, 100, 500, 1000],
       print: false,
       tableBodyHeight: '750px',
       downloadOptions: {
@@ -208,16 +209,13 @@ class Table extends React.Component {
     };
 
     return (
-      <div className="tables">
+      <div className="table">
         <button
           type="button"
-          className="button"
+          className="addBtn"
           onClick={() => {
             addButton();
-          }}
-        >
-          Add
-        </button>
+          }}>Add</button>
 
         <MUIDataTable className="dataTable" data={data} columns={columns} options={options} />
 

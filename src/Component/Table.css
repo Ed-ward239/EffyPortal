@@ -13,9 +13,26 @@
 }
 
 .dataTable{
-    z-index: 0;
-    height: 38vw;
-    width: 95vw;
+  z-index: 0;
+  height: 37vw;
+  width: 95vw;
+}
+
+.table{
+  padding: .3rem;
+  border: 1px solid red;
+  height: 39vw;
+}
+
+.addBtn{
+  background-color: transparent;
+  border-radius: 30px;
+  border: 2px solid skyblue;
+  color: skyblue;
+}
+
+.editBtn{
+  background-color: transparent;
 }
 
 .label {
