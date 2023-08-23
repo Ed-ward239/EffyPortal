@@ -1,218 +1,267 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
-import Table from "@mui/material/Table";
-import TablePagination from "@mui/material/TablePagination";
-import TableHead from "@mui/material/TableHead";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import "./Table.css";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
-//import EditDelete from './EditDelete';
-//import Username from './WelcomeName';
+import React, { Fragment } from "react";
+import AddModal from "../Component/AddModal";
+import EditModal from "../Component/EditModal";
+import Modal from "@mui/material/Modal";
+import MUIDataTable from "mui-datatables";
 
-export const CollapsibleTable = ({ rows, deleteRow, editRow }) => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [selectedIndex, setSelectedIndex] = React.useState("");
+const styles = () => ({
+  root: {
+    flexGrow: 1
+  },
+  menuButton: {
+    marginRight: 36
+  },
+  title: {
+    flexGrow: 1,
+    display: "block",
+    color: "#fff"
+  }
+});
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+class Table extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const handleExpand = (index) => {
-    if(selectedIndex === index) {
-      setSelectedIndex("")
-    }else{
-      setSelectedIndex(index)
-    }
+    this.open = false;
+    this.state = { open: false, edit: false };
+    this.array = [];
+    this.currentUser = [];
+    this.editing = false;
   }
 
-  return (
-    <>
-      <div className="tableNpagination">
-        <TableContainer
-          className="tableContainer"
-        >
-          <Table className="table" aria-label="collapsible table" stickyHeader>
-            <TableHead sx={{"& th": {backgroundColor: "#a5a5a5", fontWeight: "bold", fontSize: "15px" }}}>
-              <TableRow className="headerRow">
-                <TableCell />
-                <TableCell align="center">SHIP NAME</TableCell>
-                <TableCell align="center">VOYAGE #</TableCell>
-                <TableCell align="center">DATE</TableCell>
-                <TableCell align="center">EFFY SHARE ($)</TableCell>
-                <TableCell align="center">STATUS</TableCell>
-                <TableCell align="center">EDITED BY</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row, idx, index) => {
-                const statusText =
-                  row.statusPaid.charAt(0).toUpperCase() +
-                  row.statusPaid.slice(1);
-                return (
-                  <React.Fragment>
-                    <TableRow hover className="tableRows" sx={{"& th": {fontWeight: "medium"}}}>
-                      <TableCell>
-                        <IconButton
-                          aria-label="expand row"
-                          size="medium"
-                          onClick={() => {handleExpand(!index)}}
-                        >
-                          {index === selectedIndex ? (
-                            <KeyboardArrowUpIcon />
-                          ) : (
-                            <KeyboardArrowDownIcon />
-                          )}
-                        </IconButton>
-                      </TableCell>
-                      <TableCell align="center">{row.shipName}</TableCell>
-                      <TableCell align="center">{row.voyageNum}</TableCell>
-                      <TableCell align="center">{row.date}</TableCell>
-                      <TableCell align="center">{row.effyShare}</TableCell>
-                      <TableCell align="center">
-                        <span className={`label label-${row.statusPaid}`}>
-                          {statusText}
-                        </span>
-                      </TableCell>
-                      <TableCell align="center">{row.editedBy}</TableCell>
-                    </TableRow>
-                    <TableCell
-                      style={{ paddingBottom: 0, paddingTop: 0 }}
-                      colSpan={7}
-                    >
-                      <Collapse in={index === selectedIndex} timeout="auto" unmountOnExit>
-                        <Box className="collapseBox" sx={{ margin: 1 }}>
-                          <h3 variant="h6" gutterBottom component="div">
-                            Details ($)
-                          </h3>
-                          <Table size="small" aria-label="purchases">
-                            <TableBody align="center">
-                              <TableRow>
-                                <TableCell align="right">Revenue S&S: </TableCell>
-                                <TableCell align="center">{row.revSS}</TableCell>
-                                <TableCell align="right">Revenue CC: </TableCell>
-                                <TableCell align="center">{row.revCC}</TableCell>
-                                <TableCell align="right">Exec. Folio: </TableCell>
-                                <TableCell align="center">{row.execFolio}</TableCell>
-                                <TableCell align="right">Parole Fee: </TableCell>
-                                <TableCell align="center">{row.paroleFee}</TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell align="right">EU Revenue: </TableCell>
-                                <TableCell align="center">{row.euRev}</TableCell>
-                                <TableCell align="right">Carnival Share: </TableCell>
-                                <TableCell align="center">{row.carnivalShare}</TableCell>
-                                <TableCell align="right">Office Supplies: </TableCell>
-                                <TableCell align="center">{row.officeSup}</TableCell>
-                                <TableCell align="right">Cash Paid: </TableCell>
-                                <TableCell align="center">{row.cashPaid}</TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell align="right">Discount: </TableCell>
-                                <TableCell align="center">{row.discount}</TableCell>
-                                <TableCell align="right">S&S Fee: </TableCell>
-                                <TableCell align="center">{row.ssFee}</TableCell>
-                                <TableCell align="right">CC Fee: </TableCell>
-                                <TableCell align="center">{row.ccFee}</TableCell>
-                                <TableCell align="right">Cash Advance: </TableCell>
-                                <TableCell align="center">{row.cashAdv}</TableCell>
-                              </TableRow>
-                              <tr>
-                                <td align="right">Meal Charge: </td>
-                                <td align="center">{row.mealCharge}</td>
-                                <td align="right">
-                                  <IconButton className="editBtn">
-                                    <EditIcon onClick={() => editRow(idx)} />
-                                  </IconButton>
-                                </td>
-                                <td align="right">
-                                  <IconButton
-                                    className="deleteBtn"
-                                    color="warning"
-                                  >
-                                    <DeleteForeverIcon
-                                      onClick={() => deleteRow(idx)}
-                                    />
-                                  </IconButton>
-                                </td>
-                              </tr>
-                            </TableBody>
-                          </Table>
-                        </Box>
-                      </Collapse>
-                    </TableCell>
-                  </React.Fragment>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          className="pagination"
-          rowsPerPageOptions={[5, 25, 50, 100, 200]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </div>
-    </>
-  );
-};
+  loadContentFromServer() {
+    const url = "https://jsonplaceholder.typicode.com/users";
 
-/*
-// PDF parsing function
+    fetch(url)
+      .then((response) => response.json())
+      .then((json) => {
+        this.setState({ results: json });
+      });
+  }
 
+  componentDidMount() {
+    this.loadContentFromServer();
+  }
 
-      async function parsePDF(file) {
-        try {
-          const pdfBytes = await file.arrayBuffer();
-          const pdfDoc = await PDFDocument.load(pdfBytes);
-      
-          const form = pdfDoc.getForm();
-          const fields = form.getFields();
-      
-          return fields.map((field) => field.getFullName());
-        } catch (error) {
-          console.error('Error parsing PDF:', error);
-          return [];
+  render() {
+    const classes = styles();
+    const array = this.array;
+    var data = [];
+    var open = false;
+    var editing = false;
+    var currentUser = [];
+
+    const handleOpen = () => {
+      this.setState({ open: true });
+    };
+
+    const handleClose = () => {
+      this.setState({ open: false });
+    };
+
+    open = this.state.open;
+
+    if (!!this.state.results) {
+      this.array = this.state.results.map((result) => [
+        result.id,
+        result.username,
+        result.address.zipcode,
+        result.name,
+        result.address.zipcode,
+        result.address.suite,
+        result.name,
+        result.address.geo.lat,
+        result.address.geo.lng,
+        result.phone,
+        result.id,
+        result.website,
+        result.company.name,
+        result.address.street,
+        result.address.city,
+        result.address.zipcode,
+        result.address.suite,
+        result.name,
+        result.address.geo.lat,
+        "",
+        ""
+      ]);
+    }
+
+    if (!!this.state.array) {
+      data = this.state.array;
+    } else {
+      data = this.array;
+    }
+
+    // CRUD operations
+    const addUser = (user) => {
+      user.id = data.length + 1;
+      const addUser = [user.id, user.name, user.username, user.email, ""];
+      this.setState({ array: data.concat([addUser]) });
+      handleClose();
+    };
+
+    const addButton = () => {
+      this.setState({ edit: false });
+      handleOpen();
+    };
+
+    const deleteUser = (id) => {
+      this.setState({ edit: false });
+      this.setState({ array: data.filter((user) => user.id !== id) });
+    };
+
+    const updateUser = (id, updatedUser) => {
+      this.setState({ edit: false });
+      const editUser = [
+        updatedUser.id,
+        updatedUser.name,
+        updatedUser.username,
+        updatedUser.email,
+        updatedUser.name,
+        updatedUser.address.zipcode,
+        updatedUser.address.suite,
+        updatedUser.name,
+        updatedUser.address.geo.lat,
+        updatedUser.address.geo.lng,
+        updatedUser.phone,
+        updatedUser.id,
+        updatedUser.website,
+        updatedUser.company.name,
+        updatedUser.address.street,
+        updatedUser.address.city,
+        updatedUser.address.zipcode,
+        updatedUser.address.suite,
+        updatedUser.name,
+        updatedUser.address.geo.lat,
+        "",
+        ""
+      ];
+      this.setState({
+        array: data.map((user) => (user[0] === id ? editUser : user))
+      });
+      handleClose();
+    };
+
+    const editButton = (user) => {
+      this.setState({ edit: true });
+      this.setState({
+        arrayEdit: {
+          id: user[0],
+          name: user[1],
+          username: user[2],
+          email: user[3],
+          name1: user[4],
+          zipcode: user[5],
+          suite: user[6],
+          name: user[7],
+          action: ""
+        }
+      });
+      handleOpen();
+    };
+
+    editing = this.state.edit;
+    currentUser = this.state.arrayEdit;
+
+    const columns = [
+      { name: "ID" },
+      { name: "Ship Name" },
+      { name: "Voyage #" },
+      { name: "Date" },
+      { name: "Effy Share" },
+      { name: "Status" },
+      { name: "Editor" },
+      { name: "Revenue SS" },
+      { name: "Revenue CC" },
+      { name: "EU Revenue" },
+      { name: "Carnival Share" },
+      { name: "Office Supplies" },
+      { name: "Discount" },
+      { name: "Exec. Folio" },
+      { name: "SS Fee" },
+      { name: "CC Fee" },
+      { name: "Meal Charge" },
+      { name: "Parole Fee" },
+      { name: "Cash Advance" },
+      { name: "Cash Paid Onboard" },
+      {
+        name: "Action",
+        options: {
+          filter: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return (
+              <button
+                onClick={() => {
+                  editButton(tableMeta.rowData);
+                }}
+                className="button muted-button"
+              >
+                Edit
+              </button>
+            );
+          }
         }
       }
-      
+    ];
 
-      function PDFFieldParser() {
-        const [fields, setFields] = useState([]);
-      
-        const handleFileChange = async (event) => {
-          const file = event.target.files[0];
-          const extractedFields = await parsePDF(file);
-          setFields(extractedFields);
-        };
-      
-        return (
-          <div>
-            <input type="file" onChange={handleFileChange} accept=".pdf" />
-            {fields.length > 0 && (
-              <ul>
-                {fields.map((field, index) => (
-                  <li key={index}>{field}</li>
-                ))}
-              </ul>
+    const options = {
+      filter: true,
+      onFilterChange: (changedColumn, filterList) => {
+        console.log(changedColumn, filterList);
+      },
+      filterType: "dropdown",
+      responsive: "vertical",
+      rowsPerPage: 10,
+      print: false,
+      downloadOptions: {
+        filename: "HFC-Voyages.csv",
+        separator: ","
+      }
+    };
+
+    return (
+      <div className={classes.root}>
+        <button
+          type="button"
+          className="button"
+          onClick={() => {
+            addButton();
+          }}
+        >
+          Add
+        </button>
+
+        <MUIDataTable data={data} columns={columns} options={options} />
+
+        <Modal
+          open={open}
+          onClose={handleClose}
+        >
+          <div className="modal">
+            {editing ? (
+              <Fragment>
+                <h2 id="simple-modal-title">Edit Data</h2>
+                <div id="simple-modal-description">
+                  <EditModal
+                    editing={editing}
+                    currentUser={currentUser}
+                    updateUser={updateUser}
+                  />
+                </div>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <h2 id="simple-modal-title">Add Data</h2>
+                <div id="simple-modal-description">
+                  <AddModal addUser={addUser} />
+                </div>
+              </Fragment>
             )}
           </div>
-        );
-      } */
+        </Modal>
+      </div>
+    );
+  }
+}
+export default Table;

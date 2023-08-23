@@ -1,10 +1,10 @@
 // Draft_Testing
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./Modal.css";
 import UploadPDF from "./UploadPDF_Car";
 
-export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
+const AddModal = ({ closeModal, onSubmit, defaultValue }) => {
   const [formState, setFormState] = useState(
     defaultValue || {
       shipName: "",
@@ -143,5 +143,6 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+} 
+export default AddModal;
