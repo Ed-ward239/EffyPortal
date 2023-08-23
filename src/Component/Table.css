@@ -9,40 +9,13 @@
     border-top-left-radius: 15px !important;
     border-top-right-radius: 15px !important;
     box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
-    height: 40vw;
+    height: 35vw;
 }
 
-.pagination{
-    width: 98%;
-    background-color: #1212126c;
-    box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
-    border: 0.5px solid rgb(170, 170, 170);
-    flex-direction: row;
-    height: 3.5rem;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-}
-
-.tableNpagination{
-    flex-direction: column;
-    width: 100%;
-    display: block;
-    margin-left: 1rem;
-}
-
-.table{
+.dataTable{
     z-index: 0;
-}
-
-.headerRow:nth-child(){
-  font-weight: 200px;
-} 
-
-.tableRows{
-  z-index: 0;
+    height: 38vw;
+    width: 95vw;
 }
 
 .label {

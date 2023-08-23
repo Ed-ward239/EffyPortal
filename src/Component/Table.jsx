@@ -3,20 +3,7 @@ import AddModal from "../Component/AddModal";
 import EditModal from "../Component/EditModal";
 import Modal from "@mui/material/Modal";
 import MUIDataTable from "mui-datatables";
-
-const styles = () => ({
-  root: {
-    flexGrow: 1
-  },
-  menuButton: {
-    marginRight: 36
-  },
-  title: {
-    flexGrow: 1,
-    display: "block",
-    color: "#fff"
-  }
-});
+import "./Table.css";
 
 class Table extends React.Component {
   constructor(props) {
@@ -44,7 +31,6 @@ class Table extends React.Component {
   }
 
   render() {
-    const classes = styles();
     const array = this.array;
     var data = [];
     var open = false;
@@ -214,6 +200,7 @@ class Table extends React.Component {
       responsive: "vertical",
       rowsPerPage: 10,
       print: false,
+      tableBodyHeight: '750px',
       downloadOptions: {
         filename: "HFC-Voyages.csv",
         separator: ","
@@ -221,7 +208,7 @@ class Table extends React.Component {
     };
 
     return (
-      <div className={classes.root}>
+      <div className="tables">
         <button
           type="button"
           className="button"
@@ -232,7 +219,7 @@ class Table extends React.Component {
           Add
         </button>
 
-        <MUIDataTable data={data} columns={columns} options={options} />
+        <MUIDataTable className="dataTable" data={data} columns={columns} options={options} />
 
         <Modal
           open={open}
