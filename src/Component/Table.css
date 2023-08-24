@@ -8,31 +8,36 @@
     width: 98% !important;
     border-top-left-radius: 15px !important;
     border-top-right-radius: 15px !important;
-    box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
+    box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 5px 5px 15px;
     height: 35vw;
+    margin-top: 5px;
 }
 
 .dataTable{
-  z-index: 0;
-  height: 37vw;
-  width: 95vw;
-}
-
-.table{
-  padding: .3rem;
-  border: 1px solid red;
-  height: 39vw;
+  height: 100% !important;
+  max-height: 100% !important;
+  border-radius: 15px !important;
+  box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
+  border: 1px solid grey;
+  width: 98%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
 }
 
 .addBtn{
   background-color: transparent;
-  border-radius: 30px;
-  border: 2px solid skyblue;
-  color: skyblue;
+  border-radius: 30px !important;
+  width: 90px !important;
+  height: 25px !important;
+  margin-left: 20px !important;
 }
 
 .editBtn{
   background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .label {

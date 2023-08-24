@@ -11,9 +11,7 @@ function Carnival() {
             <div className='pageHeader'>
                 <div className='carnivalTxt'>CARNIVAL DATA</div>
             </div>
-            <div className='tableDiv'>
                 <Table/>
-            </div>
         </div>
     )
 }

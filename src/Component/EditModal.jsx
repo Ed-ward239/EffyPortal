@@ -79,6 +79,7 @@ const EditModal = (props) => {
             <option value="unpaid">Unpaid</option>
           </select>
         </div>
+        <button type="submit" className="submitBtn" onClick={handleInputChange}>Submit</button>
       </form>
     );
   };

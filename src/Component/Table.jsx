@@ -1,4 +1,8 @@
 import React, { Fragment } from "react";
+import Button from '@mui/material/Button';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import IconButton from '@mui/material/IconButton';
 import AddModal from "../Component/AddModal";
 import EditModal from "../Component/EditModal";
 import Modal from "@mui/material/Modal";
@@ -140,7 +144,7 @@ class Table extends React.Component {
           name1: user[4],
           zipcode: user[5],
           suite: user[6],
-          name: user[7],
+          name2: user[7],
           action: ""
         }
       });
@@ -177,14 +181,12 @@ class Table extends React.Component {
           filter: true,
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
-              <button
+              <IconButton
                 onClick={() => {
                   editButton(tableMeta.rowData);
                 }}
-                className="editBtn"
-              >
-                Edit
-              </button>
+                className="editBtn"> <EditNoteIcon/>       
+              </IconButton>
             );
           }
         }
@@ -198,10 +200,11 @@ class Table extends React.Component {
       },
       filterType: "dropdown",
       responsive: "scrollMaxHeight",
+      elevation: 1,
       rowsPerPage: 10,
       rowsPerPageOptions: [5, 10, 100, 500, 1000],
       print: false,
-      tableBodyHeight: '750px',
+      tableBodyHeight: '800px',
       downloadOptions: {
         filename: "HFC-Voyages.csv",
         separator: ","
@@ -210,24 +213,16 @@ class Table extends React.Component {
 
     return (
       <div className="table">
-        <button
-          type="button"
-          className="addBtn"
-          onClick={() => {
-            addButton();
-          }}>Add</button>
+        <Button className="addBtn" variant="outlined" startIcon={<PlaylistAddIcon/>}
+          onClick={() => {addButton();}}>Add</Button>
 
         <MUIDataTable className="dataTable" data={data} columns={columns} options={options} />
-
-        <Modal
-          open={open}
-          onClose={handleClose}
-        >
+        <Modal open={open} onClose={handleClose}>
           <div className="modal">
             {editing ? (
               <Fragment>
-                <h2 id="simple-modal-title">Edit Data</h2>
-                <div id="simple-modal-description">
+                <h2 id="editModalTitle">Edit Data</h2>
+                <div id="editModalDiv">
                   <EditModal
                     editing={editing}
                     currentUser={currentUser}
@@ -237,10 +232,7 @@ class Table extends React.Component {
               </Fragment>
             ) : (
               <Fragment>
-                <h2 id="simple-modal-title">Add Data</h2>
-                <div id="simple-modal-description">
                   <AddModal addUser={addUser} />
-                </div>
               </Fragment>
             )}
           </div>
