@@ -16,6 +16,9 @@ const EditModal = (props) => {
     };
   
     return (
+      <div className="modal">
+      <div className="modalBackground">
+      <h3 className="modalHeaderTxt">Edit Data</h3>
       <form>
         <div className="form-group">
           <input name="shipName" placeholder="Ship Name" onChange={handleInputChange} value={user.id}/>
@@ -81,6 +84,8 @@ const EditModal = (props) => {
         </div>
         <button type="submit" className="submitBtn" onClick={handleInputChange}>Submit</button>
       </form>
+      </div>
+      </div>
     );
   };
   

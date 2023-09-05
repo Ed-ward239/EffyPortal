@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Button from '@mui/material/Button';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -53,7 +53,6 @@ class Table extends React.Component {
 
     if (!!this.state.results) {
       this.array = this.state.results.map((result) => [
-        result.id,
         result.username,
         result.address.zipcode,
         result.name,
@@ -104,7 +103,6 @@ class Table extends React.Component {
     const updateUser = (id, updatedUser) => {
       this.setState({ edit: false });
       const editUser = [
-        updatedUser.id,
         updatedUser.name,
         updatedUser.username,
         updatedUser.email,
@@ -137,7 +135,6 @@ class Table extends React.Component {
       this.setState({ edit: true });
       this.setState({
         arrayEdit: {
-          id: user[0],
           name: user[1],
           username: user[2],
           email: user[3],
@@ -145,6 +142,7 @@ class Table extends React.Component {
           zipcode: user[5],
           suite: user[6],
           name2: user[7],
+          id: user[8],
           action: ""
         }
       });
@@ -155,7 +153,6 @@ class Table extends React.Component {
     currentUser = this.state.arrayEdit;
 
     const columns = [
-      { name: "ID" },
       { name: "Ship Name" },
       { name: "Voyage #" },
       { name: "Date" },
@@ -199,12 +196,13 @@ class Table extends React.Component {
         console.log(changedColumn, filterList);
       },
       filterType: "dropdown",
-      responsive: "scrollMaxHeight",
-      elevation: 1,
+      serverSide: true,
+      elevation: 10,
       rowsPerPage: 10,
       rowsPerPageOptions: [5, 10, 100, 500, 1000],
       print: false,
-      tableBodyHeight: '800px',
+      fixedSelectColumn: true,
+      tableBodyHeight: '620px',
       downloadOptions: {
         filename: "HFC-Voyages.csv",
         separator: ","
@@ -220,20 +218,13 @@ class Table extends React.Component {
         <Modal open={open} onClose={handleClose}>
           <div className="modal">
             {editing ? (
-              <Fragment>
-                <h2 id="editModalTitle">Edit Data</h2>
-                <div id="editModalDiv">
                   <EditModal
                     editing={editing}
                     currentUser={currentUser}
                     updateUser={updateUser}
                   />
-                </div>
-              </Fragment>
             ) : (
-              <Fragment>
                   <AddModal addUser={addUser} />
-              </Fragment>
             )}
           </div>
         </Modal>

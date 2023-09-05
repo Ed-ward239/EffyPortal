@@ -2,6 +2,11 @@
     border: 1px solid red;
 }*/
 
+.pageHeader:hover{
+  cursor: none;
+  transition: ease-in-out;
+}
+
 .pageHeader {
   --border-width: 7px;
   position: relative;
