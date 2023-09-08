@@ -35,7 +35,7 @@ class Table extends React.Component {
   }
 
   render() {
-    const array = this.array;
+   // const array = this.array;
     var data = [];
     var open = false;
     var editing = false;
@@ -95,10 +95,10 @@ class Table extends React.Component {
       handleOpen();
     };
 
-    const deleteUser = (id) => {
+   /* const deleteUser = (id) => {
       this.setState({ edit: false });
       this.setState({ array: data.filter((user) => user.id !== id) });
-    };
+    };*/
 
     const updateUser = (id, updatedUser) => {
       this.setState({ edit: false });
