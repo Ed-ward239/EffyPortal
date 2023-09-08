@@ -1,34 +1,10 @@
 // Draft_Testing
 import React, { useState } from "react";
-
+import Button from '@mui/material/Button';
 import "./Modal.css";
 import UploadPDF from "./UploadPDF_Car";
 
-const AddModal = ({ closeModal, defaultValue, props }) => {
-  const [formState ] = useState(
-    defaultValue || {
-      shipName: "",
-      voyageNum: "",
-      date: "",
-      effyShare: "",
-      statusPaid: "unpaid",
-      editedBy: "",
-      revSS: "",
-      revCC:"",      
-      execFolio: "",
-      euRev: "",
-      carnivalShare: "",
-      officeSup:"",
-      discount: "",
-      ssFee: "",
-      ccFee: "",
-      mealCharge:"",
-      cashAdv: "",
-      cashPaid: "",
-      paroleFee: "",
-    }
-  );
-
+const AddModal = ({ props }) => {
   const initFormState = []
   const [ row, setRow ] = useState(initFormState)
 
@@ -48,65 +24,65 @@ const AddModal = ({ closeModal, defaultValue, props }) => {
             setRow(initFormState)
           }}>
           <div className="form-group">
-            <input name="shipName" placeholder="Ship Name" onChange={handleInputChange} value={formState.shipName} />
+            <input name="shipName" placeholder="Ship Name" onChange={handleInputChange} value={row.shipName} />
           </div>
           <div className="form-group">
-            <input name="voyageNum" placeholder="Voyage #" onChange={handleInputChange} value={formState.voyageNum} />
+            <input name="voyageNum" placeholder="Voyage #" onChange={handleInputChange} value={row.voyageNum} />
           </div>
           <div className="form-group">
-            <input name="date" placeholder="Date (mm/dd/yyyy)" onChange={handleInputChange} value={formState.date} />
+            <input name="date" placeholder="Date (mm/dd/yyyy)" onChange={handleInputChange} value={row.date} />
           </div>
           <div className="form-group">
-            <input name="effyShare" placeholder="Effy Share" onChange={handleInputChange} value={formState.effyShare} />
+            <input name="effyShare" placeholder="Effy Share" onChange={handleInputChange} value={row.effyShare} />
           </div>
           <div className="form-group">
-            <input name="editedBy" placeholder="Edited By" onChange={handleInputChange} value={formState.editedBy} />{/* Lock user fill/typing */}
+            <input name="editedBy" placeholder="Edited By" onChange={handleInputChange} value={row.editedBy} />{/* Lock user fill/typing */}
           </div> 
           <div className="form-group">
-            <input name="revSS" placeholder="Revenue S&S" onChange={handleInputChange} value={formState.revSS} />
+            <input name="revSS" placeholder="Revenue S&S" onChange={handleInputChange} value={row.revSS} />
           </div> 
           <div className="form-group">
-            <input name="revCC" placeholder="Revenue CC" onChange={handleInputChange} value={formState.revCC} />
+            <input name="revCC" placeholder="Revenue CC" onChange={handleInputChange} value={row.revCC} />
           </div>
           <div className="form-group">
-            <input name="ssFee" placeholder="S&S Fee" onChange={handleInputChange} value={formState.ssFee} />
+            <input name="ssFee" placeholder="S&S Fee" onChange={handleInputChange} value={row.ssFee} />
           </div>
           <div className="form-group">
-            <input name="ccFee" placeholder="CC Fee" onChange={handleInputChange} value={formState.ccFee} />
+            <input name="ccFee" placeholder="CC Fee" onChange={handleInputChange} value={row.ccFee} />
           </div>
           <div className="form-group">
-            <input name="euRev" placeholder="EU Share" onChange={handleInputChange} value={formState.euRev} />
+            <input name="euRev" placeholder="EU Share" onChange={handleInputChange} value={row.euRev} />
           </div>
           <div className="form-group">
-            <input name="discount" placeholder="Discount" onChange={handleInputChange} value={formState.discount} />
+            <input name="discount" placeholder="Discount" onChange={handleInputChange} value={row.discount} />
           </div>
           <div className="form-group">
-            <input name="carnivalShare" placeholder="Carnival Share" onChange={handleInputChange} value={formState.carnivalShare} />
+            <input name="carnivalShare" placeholder="Carnival Share" onChange={handleInputChange} value={row.carnivalShare} />
           </div>
           <div className="form-group">
-            <input name="execFolio" placeholder="Exec. Folio" onChange={handleInputChange} value={formState.execFolio} />
+            <input name="execFolio" placeholder="Exec. Folio" onChange={handleInputChange} value={row.execFolio} />
           </div>
           <div className="form-group">
-            <input name="mealCharge" placeholder="Meal Charge" onChange={handleInputChange} value={formState.mealCharge} />
+            <input name="mealCharge" placeholder="Meal Charge" onChange={handleInputChange} value={row.mealCharge} />
           </div>
           <div className="form-group">
-            <input name="officeSup" placeholder="Office Supplies" onChange={handleInputChange} value={formState.officeSup} />
+            <input name="officeSup" placeholder="Office Supplies" onChange={handleInputChange} value={row.officeSup} />
           </div>
           <div className="form-group">
-            <input name="cashPaid" placeholder="Cash Paid on Board" onChange={handleInputChange} value={formState.cashPaid} />
+            <input name="cashPaid" placeholder="Cash Paid on Board" onChange={handleInputChange} value={row.cashPaid} />
           </div>
           <div className="form-group">
-            <input name="cashAdv" placeholder="Cash Advance" onChange={handleInputChange} value={formState.cashAdv} />
+            <input name="cashAdv" placeholder="Cash Advance" onChange={handleInputChange} value={row.cashAdv} />
           </div>
           <div className="form-group">
-            <input name="paroleFee" placeholder="Parole Fee" onChange={handleInputChange} value={formState.paroleFee} />
+            <input name="paroleFee" placeholder="Parole Fee" onChange={handleInputChange} value={row.paroleFee} />
           </div>
           <div className="form-group-status">
             <label htmlFor="statusPaid">Status</label>
             <select 
               name="statusPaid"
               onChange={handleInputChange}
-              value={formState.statusPaid}
+              value={row.statusPaid}
             >
               <option value="paid">Paid</option>
               <option value="pending">Pending</option>
@@ -114,7 +90,7 @@ const AddModal = ({ closeModal, defaultValue, props }) => {
             </select>
           </div>
           <div className="btns">
-            <button type="submit" className="submitBtn">Submit</button>
+            <Button className="submitBtn" variant="outlined">Submit</Button>
             <UploadPDF/>
           </div>
         </form>

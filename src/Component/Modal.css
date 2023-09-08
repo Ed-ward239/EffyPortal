@@ -95,7 +95,7 @@
   color: rgb(72, 142, 255);
   padding: 0.5rem;
   width: 7rem;
-  border-radius: 30px;
+  border-radius: 30px !important;
   cursor: pointer;
   margin-right: 5rem;
 }
