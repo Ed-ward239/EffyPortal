@@ -153,29 +153,143 @@ class Table extends React.Component {
     currentUser = this.state.arrayEdit;
 
     const columns = [
-      { name: "Ship Name" },
-      { name: "Voyage #" },
-      { name: "Date" },
-      { name: "Effy Share" },
-      { name: "Status" },
-      { name: "Editor" },
-      { name: "Revenue SS" },
-      { name: "Revenue CC" },
-      { name: "EU Revenue" },
-      { name: "Carnival Share" },
-      { name: "Office Supplies" },
-      { name: "Discount" },
-      { name: "Exec. Folio" },
-      { name: "SS Fee" },
-      { name: "CC Fee" },
-      { name: "Meal Charge" },
-      { name: "Parole Fee" },
-      { name: "Cash Advance" },
-      { name: "Cash Paid Onboard" },
+      { name: "Ship Name",
+        options: {
+          filter: true,
+          //display: 'excluded',
+          sortThirdClickReset: true,
+          sortDescFirst: true,
+      } },
+      { name: "Voyage #",
+        options: {
+          filter: true,
+          //display: 'excluded',
+          sortThirdClickReset: true,
+          sortDescFirst: true,
+      } },
+      { name: "Date",
+        options: {
+          filter: true,
+          //display: 'excluded',
+          sortThirdClickReset: true,
+          sortDescFirst: true,
+      } },
+      { name: "Effy Share",
+        options: {
+          filter: true,
+          //display: 'excluded',
+          sortThirdClickReset: true,
+          sortDescFirst: true,
+      } },
+      { name: "Status",
+        options: {
+          filter: true,
+          //display: 'excluded',
+          sortThirdClickReset: true,
+          sortDescFirst: true,
+      } },
+      { name: "Editor",
+        options: {
+          filter: true,
+          //display: 'excluded',
+          sortThirdClickReset: true,
+          sortDescFirst: true,
+      } },
+      { name: "Revenue SS",
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    }  },
+      { name: "Revenue CC" ,
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    } },
+      { name: "EU Revenue" ,
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    } },
+      { name: "Carnival Share",
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    }  },
+      { name: "Office Supplies",
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    }  },
+      { name: "Discount",
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    }  },
+      { name: "Exec. Folio",
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    }  },
+      { name: "SS Fee",
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    }  },
+      { name: "CC Fee",
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    }  },
+      { name: "Meal Charge",
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    }  },
+      { name: "Parole Fee",
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    }  },
+      { name: "Cash Advance",
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    }  },
+      { name: "Cash Paid Onboard",
+      options: {
+        filter: true,
+        //display: 'excluded',
+        sortThirdClickReset: true,
+        sortDescFirst: true,
+    }  },
       {
         name: "Action",
         options: {
-          filter: true,
+          sort: false,
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
               <IconButton
@@ -191,6 +305,10 @@ class Table extends React.Component {
     ];
 
     const options = {
+      sort: true,
+      options: {
+        sortDirection: 'desc'
+      },
       filter: true,
       onFilterChange: (changedColumn, filterList) => {
         console.log(changedColumn, filterList);
@@ -214,8 +332,17 @@ class Table extends React.Component {
         <Button className="addBtn" variant="outlined" startIcon={<PlaylistAddIcon/>}
           onClick={() => {addButton();}}>Add</Button>
 
-        <MUIDataTable className="dataTable" data={data} columns={columns} options={options} />
-        <Modal open={open} onClose={handleClose}>
+        <MUIDataTable 
+          className="dataTable" 
+          data={data} 
+          columns={columns} 
+          options={options} 
+        />
+        <Modal 
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={open} 
+          onClose={handleClose}>
           <div className="modal">
             {editing ? (
                   <EditModal
