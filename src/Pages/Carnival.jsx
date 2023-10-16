@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../Component/NavBar'
+import Navbar from '../Component/NavBar';
 //import Button from '@mui/material/Button';
 import "./Carnival.css";
 import Table from "../Component/Table";
