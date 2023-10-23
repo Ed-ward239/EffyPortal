@@ -30,7 +30,7 @@ const AddModal = ({ props }) => {
             <input name="voyageNum" placeholder="Voyage #" onChange={handleInputChange} value={row.voyageNum} />
           </div>
           <div className="form-group">
-            <input name="date" placeholder="Date (mm/dd/yyyy)" onChange={handleInputChange} value={row.date} />
+            <input name="date" placeholder="Date (yyyy/mm/dd)" onChange={handleInputChange} value={row.date} />
           </div>
           <div className="form-group">
             <input name="effyShare" placeholder="Effy Share" onChange={handleInputChange} value={row.effyShare} />

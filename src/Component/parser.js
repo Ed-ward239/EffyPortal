@@ -5,6 +5,8 @@ const PDFParser = require("pdf2json");
 // Get all the filenames from the patients folder
 const files = fs.readdirSync("patients");
 
+
+const parser = () => {
 // All of the parse patients
 let patients = [];
 
@@ -32,14 +34,23 @@ let patients = [];
 
                 // Return the parsed data
                 resolve({
-                    name: /Name\s(.*?)Address/i.exec(raw)[1].trim(),
-                    address: /Address\s(.*?)Phone/i.exec(raw)[1].trim(),
-                    phone: /Phone\s(.*?)Birthday/i.exec(raw)[1].trim(),
-                    birthday: /Birthday\s(.*?)Email\sAddress/i.exec(raw)[1].trim(),
-                    emailAddress: /Email\sAddress\s(.*?)Blood\stype/i.exec(raw)[1].trim(),
-                    bloodType: /Blood\stype\s(.*?)Height/i.exec(raw)[1].trim(),
-                    height: /Height\s(.*?)Weight/i.exec(raw)[1].trim(),
-                    weight: /Weight\s(.*?)--/i.exec(raw)[1].trim()
+                    shipName: /SHIP: CARNIVAL\s(.*?)FLEET/i.exec(raw)[1].trim(),
+                    voyageNum: /VOYAGE:\s(.*?)EFFY/i.exec(raw)[1].trim(),
+                    date: trimDate(resolve.voyageNum),
+                    effyShare: /(FROM) EFFY\s(.*?)PAYMENT/i.exec(raw)[1].trim(),
+                    revSS: /PLUS SAIL AND SIGN REVENUE\s(.*?))LESS/i.exec(raw)[1].trim(),
+                    revCC: /PLUS DIRECT CC REVENUE\s(.*?))LESS/i.exec(raw)[1].trim(),
+                    execFolio: /LESS EXECUTIVE FOLIO CHARGES\s(.*?))LESS/i.exec(raw)[1].trim(),
+                    euRev: /LESS EUROPE REVENUE\s(.*?))LESS/i.exec(raw)[1].trim(),
+                    carnivalShare: /LESS CCL SHARE OF REVENUE\s(.*?))LESS/i.exec(raw)[1].trim(),
+                    officeSup: /LESS OFFICE SUPPLIES\s(.*?))LESS/i.exec(raw)[1].trim(),
+                    discount: /PLUS CCL CREW SALES DISCOUNT\s(.*?))LESS/i.exec(raw)[1].trim(),
+                    ssFee: /LESS SAIL AND SIGN CC PROCESSING F\s(.*?))LESS/i.exec(raw)[1].trim(),
+                    ccFee: /LESS DIRECT CREDIT CARD PROCESSIN\s(.*?))LESS/i.exec(raw)[1].trim(),
+                    paroleFee: /LESS PAROLE FEE\s(.*?))LESS/i.exec(raw)[1].trim(),
+                    cashAdv: /LESS CASH VISA\s(.*?))LESS/i.exec(raw)[1].trim(),
+                    cashPaid: /LESS CASH ADVANCE PAID ONBOARD\s(.*?))LESS/i.exec(raw)[1].trim(),
+                    mealCharge: /LESS MEALS CHARGE\s(.*?))NET/i.exec(raw)[1].trim()
                 });
 
             });
@@ -54,4 +65,23 @@ let patients = [];
     // Save the extracted information to a json file
     fs.writeFileSync("patients.json", JSON.stringify(patients));
 
-})();  
+    // Date trimming (Accept 2 type of voyage numbers and convert to date)
+    function trimDate(inputStr) {
+        let year, month, day;
+      
+        if (inputStr.length === 13) {
+          year = inputStr.substring(2, 6);
+          month = inputStr.substring(6, 8);
+          day = inputStr.substring(8, 10);
+        } else if (inputStr.length === 10) {
+          month = inputStr.substring(4, 6);
+          day = inputStr.substring(6, 8);
+          year = '20' + inputStr.substring(8, 11);
+        } else {
+          return "Invalid input length";
+        }
+        return `${month}-${day}-${year}`;
+      }
+})(); 
+}
+export default parser; 

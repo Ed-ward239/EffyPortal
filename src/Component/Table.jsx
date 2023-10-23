@@ -100,6 +100,7 @@ class Table extends React.Component {
       this.setState({ array: data.filter((user) => user.id !== id) });
     };*/
 
+    // Update Table data
     const updateUser = (id, updatedUser) => {
       this.setState({ edit: false });
       const editUser = [
@@ -131,6 +132,7 @@ class Table extends React.Component {
       handleClose();
     };
 
+    // Edit button
     const editButton = (user) => {
       this.setState({ edit: true });
       this.setState({
@@ -151,7 +153,8 @@ class Table extends React.Component {
 
     editing = this.state.edit;
     currentUser = this.state.arrayEdit;
-
+    
+    // Table Column names
     const columns = [
       { name: "Ship Name",
         options: {
@@ -303,7 +306,7 @@ class Table extends React.Component {
         }
       }
     ];
-
+    // Table options
     const options = {
       sort: true,
       options: {

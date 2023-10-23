@@ -27,7 +27,7 @@ const EditModal = (props) => {
           <input name="voyageNum" placeholder="Voyage #" onChange={handleInputChange} value={row.username}/>
         </div>
         <div className="form-group">
-          <input name="date" placeholder="Date (mm/dd/yyyy)" onChange={handleInputChange} value={row.email}/>
+          <input name="date" placeholder="Date (yyyy/mm/dd)" onChange={handleInputChange} value={row.email}/>
         </div>
         <div className="form-group">
           <input name="effyShare" placeholder="Effy Share" onChange={handleInputChange} value={row.name}/>
