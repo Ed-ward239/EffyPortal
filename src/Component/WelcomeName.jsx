@@ -2,7 +2,7 @@ import { useMsal } from "@azure/msal-react";
 import { useState, useEffect } from "react";
 import './WelcomeName.css';
 
-export const WelcomeName = () => {
+function WelcomeName(){
     const { instance } = useMsal();
     const [username, setUsername] = useState('');
     const firstName = username.substring(0, username.indexOf("@"));
@@ -19,4 +19,5 @@ export const WelcomeName = () => {
             <p className="userName">{capitalName}</p>
         </>
     )
-};
+}
+export default WelcomeName;

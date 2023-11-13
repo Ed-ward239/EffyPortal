@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import "./NavBar.css";
-import { WelcomeName } from "./WelcomeName";
+import WelcomeName from "./WelcomeName";
 import { useNavigate } from 'react-router-dom';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";

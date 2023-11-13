@@ -3,7 +3,7 @@
 
 .modal {
   background-color: rgba(255, 255, 255, 0.067);
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(4px);
   height: 100%;
   width: 100%;
   display: flex;
@@ -14,66 +14,53 @@
 .modalBackground{
   background-color: white;
   border-radius: 15px;
-  height: 30vw;
-  width: 58vw;
+  height: 60vh;
+  width: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   margin: auto;
+  margin: none;
+  padding: none;
 }
 
 .modal .btn {
   display: block;
 }
 
-.formGrp{
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-
+.inputs {
+  display: flex; /* Enable Flexbox */
+  flex-wrap: wrap; /* Allow the items to wrap to the next line */
+  justify-content: space-around; /* Space out items */
+  align-items: center; /* Align items vertically */
+  gap: 20px; /* Space between each item */
+  width: 90%;
+  height: 30vh;
+  margin: 2rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.form-group {
-  padding-top: 1.5rem;
-  margin-bottom: 1rem;
-  margin-left: 11px;
-  width: 12rem;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
+.inputs input,
+.inputs select {
+  flex: 1 1 auto; /* Allow inputs to grow and shrink as needed */
+  max-width: calc(25% - 20px); /* Subtracting the total gap size (10px on each side) */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  margin-top: 15px; /* Space between rows */
+  height: 30px;
 }
 
-.form-group input,
-.form-group-status select {
-  border: 1px solid black;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  font-size: 1rem;
-  align-items: center;
+.statusPaidLabel {
+  margin-top: 27px;
+  margin-bottom: auto;
 }
 
-.form-group-status{
-  position: relative;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem;
-}
-
-.form-group-status label{
-  font-weight: 2;
-}
-
-.form-group-status select{
-  display: flex;
-  margin-left: 0.5rem;
-  width: 7.5rem;
-  text-align: center;
-}
-.form-group-status option{
-  text-align: center;
+@media (max-width: 768px) { /* Adjust max-width as needed for smaller screens */
+  .inputs input,
+  .inputs select {
+    max-width: calc(50% - 20px); /* Adjust size for smaller screens */
+  }
 }
 
 .error {
@@ -93,11 +80,9 @@
   font-size: medium;
   background-color: transparent;
   color: rgb(72, 142, 255);
-  padding: 0.5rem;
   width: 7rem;
   border-radius: 30px !important;
   cursor: pointer;
-  margin-right: 5rem;
 }
 
 .btns{
@@ -105,9 +90,9 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  margin-top: 1.5rem;
-  margin-left: auto;
-  margin-right: auto;
+  padding-top: 1rem;
+  padding-right: auto;
+  flex-direction: column;
 }
 
 .modalHeaderTxt{
@@ -115,7 +100,6 @@
   font-size: 30px;
   animation: glitch 1s linear infinite;
 }
-
 
 @keyframes glitch{
   2%,64%{
