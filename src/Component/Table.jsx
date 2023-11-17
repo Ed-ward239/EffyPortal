@@ -83,7 +83,7 @@ class Table extends React.Component {
     }
 
     // CRUD operations
-    const addUser = (user) => {
+    const handleAddModal = (user) => {
       user.id = data.length + 1;
       const addUser = [user.id, user.name, user.username, user.email, ""];
       this.setState({ array: data.concat([addUser]) });
@@ -354,7 +354,7 @@ class Table extends React.Component {
                     updateUser={updateUser}
                   />
             ) : (
-                  <AddModal addUser={addUser} />
+                  <AddModal addModal={handleAddModal} />
             )}
           </div>
         </Modal>

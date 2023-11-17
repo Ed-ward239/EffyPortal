@@ -56,6 +56,20 @@
   margin-bottom: auto;
 }
 
+.fileUpload{
+  font-size: 14px;
+  width: auto;
+  color:#7a8c9d;
+  border: 1px dashed grey;
+  margin-bottom: 20px;
+  padding: 5px;
+  display: flex;
+  text-align:center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+} 
+
 @media (max-width: 768px) { /* Adjust max-width as needed for smaller screens */
   .inputs input,
   .inputs select {

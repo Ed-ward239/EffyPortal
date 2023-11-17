@@ -1,31 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useMsal } from "@azure/msal-react";
 import "./Modal.css";
+import { useUsername } from "./useUsername";
 
-const EditModal = (props) => {
-    const initFormState = [];
-    const [row, setRow] = useState(props.currentUser);
+const EditModal = (editModal) => {
+    const initFormState = { editedBy: useUsername() };
+    const [row, setRow] = useState(editModal.currentUser);
   
     useEffect(() => {
-      setRow(props.currentUser);
-    }, [props]);
+      setRow(editModal.currentUser);
+    }, [editModal]);
   
     const handleInputChange = (event) => {
-      const { voyageNum, value } = event.target;
+      const { name, value } = event.target;
   
-      setRow({ ...row, [voyageNum]: value });
+      setRow({ ...row, [name]: value });
     };
-
-    const { instance } = useMsal();
-    const [username, setUsername] = useState('');
-    const firstName = username.substring(0, username.indexOf("@"));
-    const capitalName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
-    useEffect(() => {
-        const currentAccount = instance.getActiveAccount();
-        if(currentAccount){
-            setUsername(currentAccount.username);
-        }
-    }, [instance]);
   
     return (
       <div className="modal">
@@ -34,8 +23,8 @@ const EditModal = (props) => {
         <form 
           onSubmit={e => {
             e.preventDefault()
-            if(!row.voyageNum || !row.voyageNum) return
-            props.AddModal(row)
+            if(!row.name) return
+            editModal.EditModal(row)
             setRow(initFormState)
           }}>
           <div className="inputs">
@@ -43,7 +32,7 @@ const EditModal = (props) => {
             <input name="voyageNum" placeholder="Voyage #" onChange={handleInputChange} value={row.voyageNum} />
             <input name="date" placeholder="Date (mm/dd/yyyy)" onChange={handleInputChange} value={row.date} />
             <input name="effyShare" placeholder="Effy Share" onChange={handleInputChange} value={row.effyShare} />
-            <input name="editedBy" placeholder="Edited By" onChange={handleInputChange} value={capitalName} readOnly /> 
+            <input name="editedBy" placeholder="Edited By" onChange={handleInputChange} value={row.editedBy} readOnly /> 
             <input name="revSS" placeholder="Revenue S&S" onChange={handleInputChange} value={row.revSS} /> 
             <input name="revCC" placeholder="Revenue CC" onChange={handleInputChange} value={row.revCC} />
             <input name="ssFee" placeholder="S&S Fee" onChange={handleInputChange} value={row.ssFee} />

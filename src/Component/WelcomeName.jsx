@@ -1,23 +1,12 @@
-import { useMsal } from "@azure/msal-react";
-import { useState, useEffect } from "react";
+import React from 'react';
 import './WelcomeName.css';
+import { useUsername } from './useUsername';
 
-function WelcomeName(){
-    const { instance } = useMsal();
-    const [username, setUsername] = useState('');
-    const firstName = username.substring(0, username.indexOf("@"));
-    const capitalName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
-    useEffect(() => {
-        const currentAccount = instance.getActiveAccount();
-        if(currentAccount){
-            setUsername(currentAccount.username);
-        }
-    }, [instance]);
-
+function WelcomeName() {
+    const capitalName = useUsername();
     return (
-        <>
-            <p className="userName">{capitalName}</p>
-        </>
-    )
+        <p className="userName">{capitalName}</p>
+    );
 }
+
 export default WelcomeName;
