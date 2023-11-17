@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Document, Page } from 'react-pdf';
 import { pdfjs } from 'pdfjs-dist';
 //import 'pdfjs-dist/web/pdf_viewer.css';
 //import Button from '@mui/material/Button';
@@ -13,11 +12,6 @@ const AddModal = ({ addModal }) => {
   const initFormState = { shipName:'', voyageNum:'', date: '', effyShare:'', editedBy, revSS:'', revCC:'', ssFee:'', ccFee:'', euVAT:'', discount:'', carnivalShare:'', execFolio:'', mealCharge:'', officeSup:'', paroleFee:'', cashAdv:'', cashPaid:''};
   const [ row, setRow ] = useState(initFormState);
   const [pdfContent, setPdfContent] = useState("");
-  const [numPages, setNumPages] = useState(null);
-
-  function onDocLoadSuccess({ numPages }){
-    setNumPages(numPages);
-  }
 
   const handleInputChange = (e) => {
     const {name, value } = e.target;
@@ -86,13 +80,8 @@ const AddModal = ({ addModal }) => {
             </select>
             </div>
           <div className="btns">
-            <input type="file" onChange={handleFileChange} accept=".pdf"/>
+            <input className="fileUpload" type="file" onChange={handleFileChange} accept=".pdf"/>
             <div>{pdfContent}</div>
-            <Document file={pdfContent} onLoadSuccess={onDocLoadSuccess}>
-              {Array.from(new Array(numPages), (el, index) => (
-                <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-              ))}
-            </Document>
             <button className="submitBtn">Submit</button>
           </div>
         </form>
