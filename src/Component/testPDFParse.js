@@ -11,12 +11,10 @@ pdfparse(pdffile)
     const lines = pdfdata.split("\n");
 
     // Retrieve the last word from the first line as ShipName
-    const shipNameLine = lines[0].trim();
-    const shipName = shipNameLine.split(" ").pop();
+    const shipName = lines[0].trim().split(" ").pop();
 
     // Retrieve the last string from the second line as VoyageNum
-    const voyageLine = lines[1].trim();
-    const voyageNum = voyageLine.split(" ").pop();
+    const voyageNum = lines[1].trim().split(" ").pop();
     // Date trimming (Accept 2 type of voyage numbers and convert to date)
     function trimDate(inputStr) {
       let year, month, day;

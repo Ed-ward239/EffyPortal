@@ -10,10 +10,15 @@ const EditModal = (editModal) => {
       setRow(editModal.currentUser);
     }, [editModal]);
   
-    const handleInputChange = (event) => {
-      const { name, value } = event.target;
-  
-      setRow({ ...row, [name]: value });
+    const handleInputChange = (e) => {
+      const { shipName, voyageNum, date, effyShare, editedBy, revSS, revCC,
+              ssFee, ccFee, euVAT, discount, carnivalShare, execFolio,
+              mealCharge, officeSup, paroleFee, cashAdv, cashPaid, value } = e.target;
+      setRow({ ...row, [shipName]: value, [voyageNum]: value,
+              [date]: value, [effyShare]: value, [editedBy]: value, [revSS]: value,
+              [revCC]: value, [ssFee]: value, [ccFee]: value, [euVAT]: value, [discount]: value,
+              [carnivalShare]: value, [execFolio]: value, [mealCharge]: value, [officeSup]: value,
+              [paroleFee]: value, [cashAdv]: value, [cashPaid]: value });
     };
   
     return (

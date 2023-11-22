@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Button from '@mui/material/Button';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -8,7 +8,6 @@ import EditModal from "../Component/EditModal";
 import Modal from "@mui/material/Modal";
 import MUIDataTable from "mui-datatables";
 import "./Table.css";
-
 class Table extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +34,7 @@ class Table extends React.Component {
   }
 
   render() {
-   // const array = this.array;
+    //const array = this.array;
     var data = [];
     var open = false;
     var editing = false;
@@ -71,7 +70,6 @@ class Table extends React.Component {
         result.address.suite,
         result.name,
         result.address.geo.lat,
-        "",
         ""
       ]);
     }
@@ -95,10 +93,10 @@ class Table extends React.Component {
       handleOpen();
     };
 
-   /* const deleteUser = (id) => {
-      this.setState({ edit: false });
-      this.setState({ array: data.filter((user) => user.id !== id) });
-    };*/
+    /* const deleteUser = (id) => {
+       this.setState({ edit: false });
+       this.setState({ array: data.filter((user) => user.id !== id) });
+     };*/
 
     // Update Table data
     const updateUser = (id, updatedUser) => {
@@ -153,142 +151,28 @@ class Table extends React.Component {
 
     editing = this.state.edit;
     currentUser = this.state.arrayEdit;
-    
+
     // Table Column names
     const columns = [
-      { name: "Ship Name",
-        options: {
-          filter: true,
-          //display: 'excluded',
-          sortThirdClickReset: true,
-          sortDescFirst: true,
-      } },
-      { name: "Voyage #",
-        options: {
-          filter: true,
-          //display: 'excluded',
-          sortThirdClickReset: true,
-          sortDescFirst: true,
-      } },
-      { name: "Date",
-        options: {
-          filter: true,
-          //display: 'excluded',
-          sortThirdClickReset: true,
-          sortDescFirst: true,
-      } },
-      { name: "Effy Share",
-        options: {
-          filter: true,
-          //display: 'excluded',
-          sortThirdClickReset: true,
-          sortDescFirst: true,
-      } },
-      { name: "Status",
-        options: {
-          filter: true,
-          //display: 'excluded',
-          sortThirdClickReset: true,
-          sortDescFirst: true,
-      } },
-      { name: "Editor",
-        options: {
-          filter: true,
-          //display: 'excluded',
-          sortThirdClickReset: true,
-          sortDescFirst: true,
-      } },
-      { name: "Revenue SS",
-      options: {
-        filter: true,
-        //display: 'excluded',
-        sortThirdClickReset: true,
-        sortDescFirst: true,
-    }  },
-      { name: "Revenue CC" ,
-      options: {
-        filter: true,
-        //display: 'excluded',
-        sortThirdClickReset: true,
-        sortDescFirst: true,
-    } },
-    //   { name: "EU Revenue" ,
-    //   options: {
-    //     filter: true,
-    //     //display: 'excluded',
-    //     sortThirdClickReset: true,
-    //     sortDescFirst: true,
-    // } },
-    //   { name: "Carnival Share",
-    //   options: {
-    //     filter: true,
-    //     //display: 'excluded',
-    //     sortThirdClickReset: true,
-    //     sortDescFirst: true,
-    // }  },
-    //   { name: "Office Supplies",
-    //   options: {
-    //     filter: true,
-    //     //display: 'excluded',
-    //     sortThirdClickReset: true,
-    //     sortDescFirst: true,
-    // }  },
-    //   { name: "Discount",
-    //   options: {
-    //     filter: true,
-    //     //display: 'excluded',
-    //     sortThirdClickReset: true,
-    //     sortDescFirst: true,
-    // }  },
-    //   { name: "Exec. Folio",
-    //   options: {
-    //     filter: true,
-    //     //display: 'excluded',
-    //     sortThirdClickReset: true,
-    //     sortDescFirst: true,
-    // }  },
-    //   { name: "SS Fee",
-    //   options: {
-    //     filter: true,
-    //     //display: 'excluded',
-    //     sortThirdClickReset: true,
-    //     sortDescFirst: true,
-    // }  },
-    //   { name: "CC Fee",
-    //   options: {
-    //     filter: true,
-    //     //display: 'excluded',
-    //     sortThirdClickReset: true,
-    //     sortDescFirst: true,
-    // }  },
-    //   { name: "Meal Charge",
-    //   options: {
-    //     filter: true,
-    //     //display: 'excluded',
-    //     sortThirdClickReset: true,
-    //     sortDescFirst: true,
-    // }  },
-    //   { name: "Parole Fee",
-    //   options: {
-    //     filter: true,
-    //     //display: 'excluded',
-    //     sortThirdClickReset: true,
-    //     sortDescFirst: true,
-    // }  },
-    //   { name: "Cash Advance",
-    //   options: {
-    //     filter: true,
-    //     //display: 'excluded',
-    //     sortThirdClickReset: true,
-    //     sortDescFirst: true,
-    // }  },
-    //   { name: "Cash Paid Onboard",
-    //   options: {
-    //     filter: true,
-    //     //display: 'excluded',
-    //     sortThirdClickReset: true,
-    //     sortDescFirst: true,
-    // }  },
+      { name: "Ship Name", options: { filter: true } },
+      { name: "Voyage #", options: { filter: true } },
+      { name: "Date", options: { filter: true } },
+      { name: "Effy Share", options: { filter: true } },
+      { name: "Status", options: { filter: true } },
+      { name: "Editor", options: { filter: true } },
+      { name: "Revenue SS", options: { filter: true } },
+      { name: "Revenue CC", options: { filter: true } },
+      { name: "EU Revenue", options: { filter: true } },
+      { name: "Carnival Share", options: { filter: true } },
+      { name: "Office Supplies", options: { filter: true } },
+      { name: "Discount", options: { filter: true } },
+      { name: "Exec. Folio", options: { filter: true } },
+      { name: "SS Fee", options: { filter: true } },
+      { name: "CC Fee", options: { filter: true } },
+      { name: "Meal Charge", options: { filter: true } },
+      { name: "Parole Fee", options: { filter: true } },
+      { name: "Cash Advance", options: { filter: true } },
+      { name: "Cash Paid Onboard", options: { filter: true } },
       {
         name: "Action",
         options: {
@@ -299,7 +183,7 @@ class Table extends React.Component {
                 onClick={() => {
                   editButton(tableMeta.rowData);
                 }}
-                className="editBtn"> <EditNoteIcon/>       
+                className="editBtn"> <EditNoteIcon />
               </IconButton>
             );
           }
@@ -309,16 +193,9 @@ class Table extends React.Component {
     // Table options
     const options = {
       sort: true,
-      options: {
-        sortDirection: 'desc'
-      },
       filter: true,
-      onFilterChange: (changedColumn, filterList) => {
-        console.log(changedColumn, filterList);
-      },
       filterType: "dropdown",
-      serverSide: true,
-      elevation: 10,
+      elevation: 20,
       rowsPerPage: 10,
       rowsPerPageOptions: [5, 10, 100, 500, 1000],
       print: false,
@@ -332,29 +209,34 @@ class Table extends React.Component {
 
     return (
       <div className="table">
-        <Button className="addBtn" variant="outlined" startIcon={<PlaylistAddIcon/>}
-          onClick={() => {addButton();}}>Add</Button>
+        <Button className="addBtn" variant="outlined" startIcon={<PlaylistAddIcon />}
+          onClick={() => { addButton(); }}>Add</Button>
 
-        <MUIDataTable 
-          className="dataTable" 
-          data={data} 
-          columns={columns} 
-          options={options} 
-        />
-        <Modal 
+        <MUIDataTable className="dataTable" data={data} columns={columns} options={options} />
+        <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          open={open} 
+          open={open}
           onClose={handleClose}>
           <div className="modal">
             {editing ? (
-                  <EditModal
-                    editing={editing}
-                    currentUser={currentUser}
-                    updateUser={updateUser}
-                  />
-            ) : (
-                  <AddModal addModal={handleAddModal} />
+              <Fragment>
+              {/*<h3 className="modalHeaderTxt">Carnival Data Entry</h3>
+              <div className="modalBackground">*/}
+              <EditModal
+                editing={editing}
+                currentUser={currentUser}
+                updateUser={updateUser}
+              />
+              {/* </div>*/}
+            </Fragment>
+          ) : (
+            <Fragment>
+              {/*<h3 className="modalHeaderTxt">Carnival Data Entry</h3>
+              <div className="modalBackground">*/}
+              <AddModal addModal={handleAddModal} />
+              {/* </div>*/}
+            </Fragment>
             )}
           </div>
         </Modal>
