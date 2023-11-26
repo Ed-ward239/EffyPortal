@@ -33,20 +33,20 @@ class Table extends React.Component {
     this.loadContentFromServer();
   }
 
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   render() {
     //const array = this.array;
     var data = [];
     var open = false;
     var editing = false;
     var currentUser = [];
-
-    const handleOpen = () => {
-      this.setState({ open: true });
-    };
-
-    const handleClose = () => {
-      this.setState({ open: false });
-    };
 
     open = this.state.open;
 
@@ -85,12 +85,12 @@ class Table extends React.Component {
       user.id = data.length + 1;
       const addUser = [user.id, user.name, user.username, user.email, ""];
       this.setState({ array: data.concat([addUser]) });
-      handleClose();
+      this.handleClose();
     };
 
     const addButton = () => {
       this.setState({ edit: false });
-      handleOpen();
+      this.handleOpen();
     };
 
     /* const deleteUser = (id) => {
@@ -127,7 +127,7 @@ class Table extends React.Component {
       this.setState({
         array: data.map((user) => (user[0] === id ? editUser : user))
       });
-      handleClose();
+      this.handleClose();
     };
 
     // Edit button
@@ -146,7 +146,7 @@ class Table extends React.Component {
           action: ""
         }
       });
-      handleOpen();
+      this.handleOpen();
     };
 
     editing = this.state.edit;
@@ -155,7 +155,7 @@ class Table extends React.Component {
     // Table Column names
     const columns = [
       { name: "Ship Name", options: { filter: true } },
-      { name: "Voyage #", options: { filter: true } },
+      { name: "Voyage#", options: { filter: true } },
       { name: "Date", options: { filter: true } },
       { name: "Effy Share", options: { filter: true } },
       { name: "Status", options: { filter: true } },
@@ -217,25 +217,25 @@ class Table extends React.Component {
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
           open={open}
-          onClose={handleClose}>
+          onClose={this.handleClose}>
           <div className="modal">
             {editing ? (
               <Fragment>
-              {/*<h3 className="modalHeaderTxt">Carnival Data Entry</h3>
-              <div className="modalBackground">*/}
+              <div className="modalBackground">
+              <h3 className="modalHeaderTxt">Edit Carnival Data</h3>
               <EditModal
                 editing={editing}
                 currentUser={currentUser}
                 updateUser={updateUser}
               />
-              {/* </div>*/}
+              </div>
             </Fragment>
           ) : (
             <Fragment>
-              {/*<h3 className="modalHeaderTxt">Carnival Data Entry</h3>
-              <div className="modalBackground">*/}
+              <div className="modalBackground">
+              <h3 className="modalHeaderTxt">Carnival Data Entry</h3>
               <AddModal addModal={handleAddModal} />
-              {/* </div>*/}
+              </div>
             </Fragment>
             )}
           </div>

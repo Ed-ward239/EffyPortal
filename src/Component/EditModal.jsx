@@ -22,9 +22,7 @@ const EditModal = (editModal) => {
     };
   
     return (
-      <div className="modal">
-      <div className="modalBackground">
-        <h3 className="modalHeaderTxt">Carnival Data Entry</h3>
+
         <form 
           onSubmit={e => {
             e.preventDefault()
@@ -67,8 +65,6 @@ const EditModal = (editModal) => {
             <button className="submitBtn">Submit</button>
           </div>
         </form>
-      </div>
-      </div>
     );
   };
   
