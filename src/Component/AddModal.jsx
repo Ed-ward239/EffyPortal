@@ -4,178 +4,149 @@ import { getDocument } from "pdfjs-dist/legacy/build/pdf";
 import "pdfjs-dist/build/pdf.worker.entry";
 import "./Modal.css";
 import { useUsername } from "./useUsername";
-
 //pdfjs.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
+//import { getDocument } from 'pdfjs-dist/es5/build/pdf';
 
-const AddModal = ({ props }) => {
-  const editedBy = useUsername();
-  const initFormState = { shipName: '', voyageNum: '', date: '', effyShare: '', editedBy,
-    revSS: '', revCC: '', ssFee: '', ccFee: '', execFolio: '', carnivalShare: '', euVAT: '',
-    discounts: '', mealCharge: '', officeSup: '', paroleFee: '', cashAdv: '', cashPaid: '',
-  };
-  const [row, setRow] = useState(initFormState);
-  // const [pdfContent, setPdfContent] = useState("");
+const extractTextFromPdf = async (file) => {
+  const fileReader = new FileReader();
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setRow({ ...row, [name]: value });
-  };
-
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader(file);
-
-    reader.onload = async (e) => {
-      const contents = e.target.result;
+  return new Promise((resolve, reject) => {
+    fileReader.onload = async (event) => {
       try {
-        const pdf = await getDocument({ data: contents }).promise;
-        const numPages = pdf.numPages;
-        let extractedText = "";
-        for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+        const typedArray = new Uint8Array(event.target.result);
+        const pdf = await getDocument(typedArray).promise;
+        let extractedText = '';
+
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
           const page = await pdf.getPage(pageNum);
           const textContent = await page.getTextContent();
           const pageText = textContent.items.map((item) => item.str).join(" ");
+          //console.log(pageText); // Check the text of each page
           extractedText += pageText + " ";
+          //console.log(extractedText)
         }
-        console.WriteLine(extractedText);
-        // Now process the extracted text
-        const lines = extractedText.split("\n");
-        const shipName = lines[0]?.trim().split(" ").pop();
-        // Retrieve the last string from the second line as VoyageNum
-        const voyageNum = lines[1]?.trim().split(" ").pop();
-        // Date trimming (Accept 2 type of voyage numbers and convert to date)
-        function trimDate(inputStr) {
-          let year, month, day;
-          if (inputStr.length === 13) {
-            year = inputStr.substring(2, 6);
-            month = inputStr.substring(6, 8);
-            day = inputStr.substring(8, 10);
-          } else if (inputStr.length === 10) {
-            month = inputStr.substring(4, 6);
-            day = inputStr.substring(6, 8);
-            year = "20" + inputStr.substring(8, 11);
-          } else {
-            return "Invalid input length";
-          }
-          return `${month}-${day}-${year}`;
-        }
-        const date = trimDate(voyageNum);
-        // Initialize the variables to store the data
-        let effyShare, revSS, revCC, carnivalShare, execFolio, ssFee, ccFee, euVAT,
-            discounts, mealCharge, paroleFee, cashAdv, officeSup, cashPaid;
-
-        // Get the last string of numbers from the line "NET AMOUNT DUE" as effyShare
-        const netAmountLine = lines.find((line) =>
-          line.includes("NET AMOUNT DUE")
-        );
-        const netAmountMatches = netAmountLine.match(/\d+\.\d+/g);
-        effyShare = netAmountMatches[netAmountMatches.length - 1];
-
-        // Go through all the lines between "REVENUE SETTLEMENT" and "NET AMOUNT"
-        const revenueSettlementIndex = lines.findIndex((line) =>
-          line.includes("REVENUE SETTLEMENT")
-        );
-        const netAmountIndex = lines.findIndex((line) =>
-          line.includes("NET AMOUNT DUE")
-        );
-        const transactionLines = lines.slice(
-          revenueSettlementIndex + 1,
-          netAmountIndex
-        );
-
-        transactionLines.forEach((line) => {
-          const amountMatch = line.match(/\(([\d.,]+)\)/);
-          const amount = amountMatch ? amountMatch[1].replace(/,/g, "") : null;
-
-          if (line.startsWith(" PLUS  SAIL AND SIGN"))
-            revSS = line.match(/[\d,]+\.?\d*/)[0].replace(/,/g, "");
-          if (line.startsWith(" PLUS  DIRECT CC REVENUE"))
-            revCC = line.match(/[\d,]+\.?\d*/)[0].replace(/,/g, "");
-          if (line.startsWith(" PLUS CCL CREW SALES DISCOUNT"))
-            discounts = line.match(/[\d,]+\.?\d*/)[0].replace(/,/g, "");
-          if (line.startsWith(" LESS  CCL SHARE OF REVENUE"))
-            carnivalShare = amount;
-          if (line.startsWith(" LESS  EXECUTIVE FOLIO")) execFolio = amount;
-          if (line.startsWith(" LESS  SAIL AND SIGN CC PROCESSING FEES"))
-            ssFee = amount;
-          if (line.startsWith(" LESS  DIRECT CREDIT CARD PROCESSING FEE"))
-            ccFee = amount;
-          if (line.startsWith(" LESS  MEAL CHARGE")) mealCharge = amount;
-          if (line.startsWith(" LESS  CASH VISA")) cashAdv = amount;
-          if (line.startsWith(" LESS PAROLE")) paroleFee = amount;
-          if (line.startsWith(" LESS EUROPE")) euVAT = amount;
-          if (line.startsWith(" LESS CASH PAID ON BOARD")) cashPaid = amount;
-          if (line.startsWith(" LESS OFFICE SUPPLIES")) officeSup = amount;
-          // Add more conditions here as necessary for other fields.
-          /*console.log(`Ship Name: ${shipName}`);
-            console.log(`Voyage#: ${voyageNum}`);
-            console.log(`Date: ${date}`);
-            console.log(`Effy Share: ${effyShare}`);
-            console.log(`revSS: ${revSS}`);
-            console.log(`revCC: ${revCC}`);
-            console.log(`euRev: ${euVAT}`);
-            console.log(`Carnival Share: ${carnivalShare}`);
-            console.log(`execFolio: ${execFolio}`);
-            console.log(`Discount: ${discounts}`);
-            console.log(`ssFee: ${ssFee}`);
-            console.log(`ccFee: ${ccFee}`);
-            console.log(`mealCharge: ${mealCharge}`);
-            console.log(`cashAdv: ${cashAdv}`);
-            console.log(`Office Supplies: ${officeSup}`);
-            console.log(`Parole Fee: ${paroleFee}`);
-            console.log(`Cash Paid Onboard: ${cashPaid}`); */
-        });
-        // Then update the state
-        setRow({ shipName, voyageNum, date, effyShare, revSS, revCC, carnivalShare,
-                 execFolio, ssFee, ccFee, euVAT, discounts, mealCharge, paroleFee,
-                 cashAdv, officeSup, cashPaid,
-        });
+        resolve(extractedText);
       } catch (error) {
-        //reader.readAsArrayBuffer(file);
-        reader.onerror = (error) => {
-          console.error("Error reading file: ", error);
-        }
+        reject(error);
       }
-    }
     };
 
+    fileReader.onerror = () => {
+      fileReader.abort();
+      reject(new DOMException("Problem parsing input file."));
+    };
+
+    fileReader.readAsArrayBuffer(file);
+  });
+};
+
+function sumOfExecFolio(str) {
+  const regex = /LESS EXECUTIVE FOLIO CHARGES[^()]*\(([\d,.]+)\)/g;
+  let total = 0;
+  let match;
+  while ((match = regex.exec(str)) !== null) {
+    total += parseFloat(match[1].replace(/,/g, ""));
+  }
+  return total === 0 ? "" : total.toFixed(2);
+}
+
+// Date trimming (Accept 2 type of voyage numbers and convert to date)
+function trimDate(inputStr) {
+  let year, month, day;
+  if (inputStr.length === 13) {
+    year = inputStr.substring(2, 6);
+    month = inputStr.substring(6, 8);
+    day = inputStr.substring(8, 10);
+  } else if (inputStr.length === 10) {
+    month = inputStr.substring(4, 6);
+    day = inputStr.substring(6, 8);
+    year = "20" + inputStr.substring(8, 11);
+  } else {
+    return "Invalid input length";
+  }
+  return `${month}-${day}-${year}`;
+}
+
+const AddModal = () => {
+  const editedBy = useUsername();
+  
+  const [ pdfData, setPdfData ] = useState({
+    shipName: '', voyageNum: '', date: '', effyShare: '', editedBy: editedBy, revSS: '',
+    revCC: '', ssFee: '', ccFee: '', euVAT: '', discounts: '', carnivalShare: '', execFolio: '',
+    mealCharge: '', officeSup: '', cashAdv: '', cashPaid: '', paroleFee: ''
+  });
+  
+  const handleFileChange = async (event) => {
+    const file =  event.target.files[0];
+    if (!file) return;
+    try{
+      const extractedData = await extractTextFromPdf(file);
+      console.log(extractedData);
+      function extractValue(regexPattern) {
+        const match = extractedData.match(regexPattern);
+        return match ? match[1] : '';
+      }
+
+      // Retrieve the last word from the first line as ShipName
+      const shipName = extractValue(/SHIP: CARNIVAL (\w+)/);
+      // Retrieve the last string from the second line as VoyageNum
+      const voyageNum = extractValue(/VOYAGE: (\w+)/);
+      // Retrieve the date from voyageNum
+      const date = trimDate(voyageNum);
+      // Initialize the variables to store the data using regular expression
+      const effyShare = extractValue(/FROM\) EFFY\s+(\d+,\d+\.\d+)/);
+      const revSS = extractValue(/PLUS SAIL AND SIGN REVENUE\s+(\d+,\d+\.\d+)/);
+      const revCC = extractValue(/PLUS DIRECT CC REVENUE\s+(\d+,\d+\.\d+)/);
+      const carnivalShare = extractValue(/LESS CCL SHARE OF REVENUE\s+\((\d+,\d+\.\d+)\)/);
+      const execFolio = sumOfExecFolio(extractedData);
+      const ssFee = extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE.*?\((\d+\.\d+)\)/);
+      const ccFee = extractValue(/LESS DIRECT CREDIT CARD PROCESSING FEE.*?\((\d+\.\d+)\)/);
+      const discounts = extractValue(/PLUS CCL CREW SALES DISCOUNT.*?\((\d+\.\d+)\)/);
+      const mealCharge = extractValue(/LESS MEAL CHARGE.*?\((\d+\.\d+)\)/);
+      const officeSup = extractValue(/LESS OFFICE SUPPLIES.*?\((\d+,\d+\.\d+)\)/);
+      const euVAT = extractValue(/LESS EU VAT.*?\((\d+,\d+\.\d+)\)/);
+      const paroleFee = extractValue(/LESS PAROLE FEE.*?\((\d+\.\d+)\)/);
+      const cashAdv = extractValue(/LESS CASH.*?\((\d+,\d+\.\d+)\)/);
+      const cashPaid = extractValue(/LESS CASH PAID ON BOARD.*?\((\d+,\d+\.\d+)\)/);
+      // Add more conditions here as necessary for other fields.
+      setPdfData({...pdfData, shipName, voyageNum, date, effyShare, editedBy, revSS, revCC, 
+                              discounts, carnivalShare, execFolio, ssFee, ccFee, mealCharge, cashAdv, 
+                              paroleFee, euVAT, cashPaid, officeSup})
+    }catch (error){
+      console.error('Error parsing the PDF: ', error);
+    }
+  };
+
     return (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (!row.voyageNum || !row.voyageNum) return;
-              props.addModal(row);
-              setRow(initFormState);
-            }}
-          >
+          <form>
             <div className="inputs">
-              <input name="shipName" placeholder="Ship Name" onChange={handleInputChange} value={row.shipName}/>
-              <input name="voyageNum" placeholder="Voyage #" onChange={handleInputChange} value={row.voyageNum}/>
-              <input name="date" placeholder="Date (mm/dd/yyyy)" onChange={handleInputChange} value={row.date}/>
-              <input name="effyShare" placeholder="Effy Share" onChange={handleInputChange} value={row.effyShare}/>
-              <input name="editedBy" placeholder="Edited By" value={row.editedBy} readOnly/>
-              <input name="revSS" placeholder="Revenue S&S" onChange={handleInputChange} value={row.revSS}/>
-              <input name="revCC" placeholder="Revenue CC" onChange={handleInputChange} value={row.revCC}/>
-              <input name="ssFee" placeholder="S&S Fee" onChange={handleInputChange} value={row.ssFee}/>
-              <input name="ccFee" placeholder="CC Fee" onChange={handleInputChange} value={row.ccFee}/>
-              <input name="euRev" placeholder="EU VAT" onChange={handleInputChange} value={row.euVAT}/>
-              <input name="discounts" placeholder="Discounts" onChange={handleInputChange} value={row.discounts}/>
-              <input name="carnivalShare" placeholder="Carnival Share" onChange={handleInputChange} value={row.carnivalShare}/>
-              <input name="execFolio" placeholder="Exec. Folio" onChange={handleInputChange} value={row.execFolio}/>
-              <input name="mealCharge" placeholder="Meal Charge" onChange={handleInputChange} value={row.mealCharge}/>
-              <input name="officeSup" placeholder="Office Supplies" onChange={handleInputChange} value={row.officeSup}/>
-              <input name="cashPaid" placeholder="Cash Paid on Board" onChange={handleInputChange} value={row.cashPaid}/>
-              <input name="cashAdv" placeholder="Cash Advance" onChange={handleInputChange} value={row.cashAdv}/>
-              <input name="paroleFee" placeholder="Parole Fee" onChange={handleInputChange} value={row.paroleFee}/>
+              <input name="shipName" placeholder="Ship Name" onChange={e => setPdfData({ ...pdfData, shipName: e.target.value})} value={pdfData.shipName}/>
+              <input name="voyageNum" placeholder="Voyage #" onChange={e => setPdfData({ ...pdfData, voyageNum: e.target.value})} value={pdfData.voyageNum}/>
+              <input name="date" placeholder="Date (mm/dd/yyyy)" onChange={e => setPdfData({ ...pdfData, date: e.target.value})} value={pdfData.date}/>
+              <input name="effyShare" placeholder="Effy Share" onChange={e => setPdfData({ ...pdfData, effyShare: e.target.value})} value={pdfData.effyShare}/>
+              <input name="editedBy" placeholder="Edited By" value={pdfData.editedBy} readOnly/>
+              <input name="revSS" placeholder="Revenue S&S" onChange={e => setPdfData({ ...pdfData, revSS: e.target.value})} value={pdfData.revSS}/>
+              <input name="revCC" placeholder="Revenue CC" onChange={e => setPdfData({ ...pdfData, revCC: e.target.value})} value={pdfData.revCC}/>
+              <input name="ssFee" placeholder="S&S Fee" onChange={e => setPdfData({ ...pdfData, ssFee: e.target.value})} value={pdfData.ssFee}/>
+              <input name="ccFee" placeholder="CC Fee" onChange={e => setPdfData({ ...pdfData, ccFee: e.target.value})} value={pdfData.ccFee}/>
+              <input name="euVAT" placeholder="EU VAT" onChange={e => setPdfData({ ...pdfData, euVAT: e.target.value})} value={pdfData.euVAT}/>
+              <input name="discounts" placeholder="Discounts" onChange={e => setPdfData({ ...pdfData, discounts: e.target.value})} value={pdfData.discounts}/>
+              <input name="carnivalShare" placeholder="Carnival Share" onChange={e => setPdfData({ ...pdfData, carnivalShare: e.target.value})} value={pdfData.carnivalShare}/>
+              <input name="execFolio" placeholder="Exec. Folio" onChange={e => setPdfData({ ...pdfData, execFolio: e.target.value})} value={pdfData.execFolio}/>
+              <input name="mealCharge" placeholder="Meal Charge" onChange={e => setPdfData({ ...pdfData, mealCharge: e.target.value})} value={pdfData.mealCharge}/>
+              <input name="officeSup" placeholder="Office Supplies" onChange={e => setPdfData({ ...pdfData, officeSup: e.target.value})} value={pdfData.officeSup}/>
+              <input name="cashPaid" placeholder="Cash Paid on Board" onChange={e => setPdfData({ ...pdfData, cashPaid: e.target.value})} value={pdfData.cashPaid}/>
+              <input name="cashAdv" placeholder="Cash Advance" onChange={e => setPdfData({ ...pdfData, cashAdv: e.target.value})} value={pdfData.cashAdv}/>
+              <input name="paroleFee" placeholder="Parole Fee" onChange={e => setPdfData({ ...pdfData, paroleFee: e.target.value})} value={pdfData.paroleFee}/>
               <label className="statusPaidLabel">Status</label>
               <select
                 name="statusPaid"
-                onChange={handleInputChange}
-                value={row.statusPaid}
+                onChange={e => setPdfData({ ...pdfData, paidStatus: e.target.value})}
+                value={pdfData.statusPaid}
               >
-                <option value="paid">Paid</option>
-                <option value="pending">Pending</option>
                 <option value="unpaid">Unpaid</option>
+                <option value="pending">Pending</option>
+                <option value="paid">Paid</option>
               </select>
             </div>
             <div className="btns">
@@ -242,20 +213,9 @@ export default AddModal;
 //           setPdfContent(`Date: ${date}`);
 
 //           // Initialize the variables to store the data
-//           let effyShare,
-//             revSS,
-//             revCC,
-//             discounts = null,
-//             carnivalShare,
-//             execFolio,
-//             euVAT = null,
-//             ssFee,
-//             ccFee,
-//             mealCharge = null,
-//             paroleFee = null,
-//             cashAdv = null,
-//             officeSup = null,
-//             cashPaid = null;
+//           let effyShare, revSS, revCC, discounts = null, carnivalShare,
+//             execFolio, euVAT = null, ssFee, ccFee, mealCharge = null, paroleFee = null,
+//             cashAdv = null, officeSup = null, cashPaid = null;
 
 //           // Get the last string of numbers from the line "NET AMOUNT DUE" as effyShare
 //           const netAmountLine = lines.find((line) =>
@@ -310,7 +270,7 @@ export default AddModal;
 //             setPdfContent(`Effy Share: ${effyShare}`);
 //             setPdfContent(`revSS: ${revSS}`);
 //             setPdfContent(`revCC: ${revCC}`);
-//             setPdfContent(`euRev: ${euVAT}`);
+//             setPdfContent(`euVAT: ${euVAT}`);
 //             setPdfContent(`Carnival Share: ${carnivalShare}`);
 //             setPdfContent(`execFolio: ${execFolio}`);
 //             setPdfContent(`Discount: ${discounts}`);
