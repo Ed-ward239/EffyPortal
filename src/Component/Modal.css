@@ -14,15 +14,14 @@
 .modalBackground{
   background-color: white;
   border-radius: 15px;
-  height: 60vh;
-  width: 100vh;
+  height: 65vh;
+  width: 70%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: auto;
-  margin: none;
-  padding: none;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .modal .btn {
@@ -30,16 +29,16 @@
 }
 
 .inputForm{
-  padding: 20px;
+  padding: 10px;
   font-family: 'Inter', sans-serif;
   display: flex; /* Enable Flexbox */
   flex-wrap: wrap; /* Allow the items to wrap to the next line */
-  justify-content: space-around; /* Space out items */
+  justify-content: space-between; /* Space out items */
   align-items: center; /* Align items vertically */
   gap: 20px; /* Space between each item */
   width: 90%;
-  height: 30vh;
-  margin: 2rem;
+  height: 40vh;
+  margin-top: 1.5rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -50,23 +49,22 @@
 
 .floating-label {
   color:#1e4c82; 
-  font-size:13px;
+  font-size:16px;
   font-weight:normal;
   position:absolute;
   pointer-events:none;
-  left:15px;
-  top:11px;
-  padding:0 5px;
+  left:10px;
+  top:9px;
   background:#fff;
   transition:0.2s ease all; 
   -moz-transition:0.2s ease all; 
   -webkit-transition:0.2s ease all;
 }
 .inputTxt, .inputSelect {
-  font-size:12px;
+  font-size:16px;
   display:block;
-  width:100%;
-  height:36px;
+  width: 100%;
+  height: 40px;
   padding: 0 20px;
   background: #fff;
   color: #323840;
@@ -80,10 +78,6 @@
       font-size:13px;
     }
   }
-}
-
-.inputSelect{
-  width: 10vh;
 }
 
 select.inputSelect {
@@ -144,10 +138,10 @@ select.inputSelect::-ms-expand {
     display: flex;
     align-items: center;
     font-weight: 400;
-    height:34px;
+    height: 38px;
     color: #323840;
     padding: 0 5px 0 20px;
-  font-size:12px;
+  font-size:14px;
     text-align: center;
     white-space: nowrap;
     border: 1px solid #3D85D8;
@@ -157,7 +151,7 @@ select.inputSelect::-ms-expand {
 
 .fileUpload{
   font-size: 14px;
-  width: auto;
+  width: 35vh;
   color:#7a8c9d;
   border: 1px dashed grey;
   margin-bottom: 20px;

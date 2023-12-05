@@ -106,7 +106,7 @@ const AddModal = () => {
       const officeSup = extractValue(/LESS OFFICE SUPPLIES.*?\((\d+,\d+\.\d+)\)/);
       const euVAT = extractValue(/LESS EU VAT.*?\((\d+,\d+\.\d+)\)/);
       const paroleFee = extractValue(/LESS PAROLE FEE.*?\((\d+\.\d+)\)/);
-      const cashAdv = extractValue(/LESS CASH.*?\((\d+,\d+\.\d+)\)/);
+      const cashAdv = extractValue(/LESS CASH VISA.*?\((\d+,\d+\.\d+)\)/);
       const cashPaid = extractValue(/LESS CASH PAID ON BOARD.*?\((\d+,\d+\.\d+)\)/);
       // Add more conditions here as necessary for other fields.
       setPdfData({...pdfData, shipName, voyageNum, date, effyShare, editor, revSS, revCC, 
@@ -116,128 +116,319 @@ const AddModal = () => {
       console.error('Error parsing the PDF: ', error);
     }
   };
+
+  const handleDrop = async (event) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (file && file.type === 'application/pdf') {
+      await handleFileChange({ target: { files: [file] } });
+    }
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault(); // Necessary to allow for drop
+  };
+
   // Return ReactJS format input text
     return (
       <>
         <form class="inputForm">
           <div class="txtInputGrp">
-            <input class="inputTxt" type="text" placeholder=" " name="shipName" label="Ship Name" onChange={e => setPdfData({ ...pdfData, shipName: e.target.value})} value={pdfData.shipName}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="shipName"
+              label="Ship Name"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, shipName: e.target.value })
+              }
+              value={pdfData.shipName}
+            />
             <label class="floating-label">Ship Name</label>
           </div>
           <div class="txtInputGrp">
-            <input class="inputTxt" type="text" placeholder=" " name="voyageNum" label="Voyage #" onChange={e => setPdfData({ ...pdfData, voyageNum: e.target.value})} value={pdfData.voyageNum}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="voyageNum"
+              label="Voyage #"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, voyageNum: e.target.value })
+              }
+              value={pdfData.voyageNum}
+            />
             <label class="floating-label">Voyage #</label>
           </div>
           <div class="txtInputGrp">
-            <input class="inputTxt" type="text" placeholder=" " name="date" label="Date (mm/dd/yyyy)" onChange={e => setPdfData({ ...pdfData, date: e.target.value})} value={pdfData.date}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="date"
+              label="Date (mm/dd/yyyy)"
+              onChange={(e) => setPdfData({ ...pdfData, date: e.target.value })}
+              value={pdfData.date}
+            />
             <label class="floating-label">Date</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="effyShare" label="Effy Share" onChange={e => setPdfData({ ...pdfData, effyShare: e.target.value})} value={pdfData.effyShare}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="effyShare"
+              label="Effy Share"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, effyShare: e.target.value })
+              }
+              value={pdfData.effyShare}
+            />
             <label class="floating-label">Effy Share</label>
           </div>
           <div class="txtInputGrp">
-              <input class="inputTxt" type="text" placeholder=" " name="editor" label="Editor" value={pdfData.editor} readOnly/>
-              <label class="floating-label">Editor</label>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="editor"
+              label="Editor"
+              value={pdfData.editor}
+              readOnly
+            />
+            <label class="floating-label">Editor</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="revSS" label="Revenue S&S" onChange={e => setPdfData({ ...pdfData, revSS: e.target.value})} value={pdfData.revSS}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="revSS"
+              label="Revenue S&S"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, revSS: e.target.value })
+              }
+              value={pdfData.revSS}
+            />
             <label class="floating-label">Revenue S&S</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="revCC" label="Revenue CC" onChange={e => setPdfData({ ...pdfData, revCC: e.target.value})} value={pdfData.revCC}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="revCC"
+              label="Revenue CC"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, revCC: e.target.value })
+              }
+              value={pdfData.revCC}
+            />
             <label class="floating-label">Revenue CC</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">-$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="ssFee" label="S&S Fee" onChange={e => setPdfData({ ...pdfData, ssFee: e.target.value})} value={pdfData.ssFee}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="ssFee"
+              label="S&S Fee"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, ssFee: e.target.value })
+              }
+              value={pdfData.ssFee}
+            />
             <label class="floating-label">S&S Fee</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">-$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="ccFee" label="CC Fee" onChange={e => setPdfData({ ...pdfData, ccFee: e.target.value})} value={pdfData.ccFee}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="ccFee"
+              label="CC Fee"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, ccFee: e.target.value })
+              }
+              value={pdfData.ccFee}
+            />
             <label class="floating-label">CC Fee</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">-$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="euVAT" label="EU VAT" onChange={e => setPdfData({ ...pdfData, euVAT: e.target.value})} value={pdfData.euVAT}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="euVAT"
+              label="EU VAT"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, euVAT: e.target.value })
+              }
+              value={pdfData.euVAT}
+            />
             <label class="floating-label">EU VAT</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="discounts" label="Discounts" onChange={e => setPdfData({ ...pdfData, discounts: e.target.value})} value={pdfData.discounts}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="discounts"
+              label="Discounts"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, discounts: e.target.value })
+              }
+              value={pdfData.discounts}
+            />
             <label class="floating-label">Discounts</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">-$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="carnivalShare" label="Carnival Share" onChange={e => setPdfData({ ...pdfData, carnivalShare: e.target.value})} value={pdfData.carnivalShare}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="carnivalShare"
+              label="Carnival Share"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, carnivalShare: e.target.value })
+              }
+              value={pdfData.carnivalShare}
+            />
             <label class="floating-label">Carnival Share</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">-$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="execFolio" label="Exec. Folio" onChange={e => setPdfData({ ...pdfData, execFolio: e.target.value})} value={pdfData.execFolio}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="execFolio"
+              label="Exec. Folio"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, execFolio: e.target.value })
+              }
+              value={pdfData.execFolio}
+            />
             <label class="floating-label">Exec. Folio</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">-$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="mealCharge" label="Meal Charge" onChange={e => setPdfData({ ...pdfData, mealCharge: e.target.value})} value={pdfData.mealCharge}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="mealCharge"
+              label="Meal Charge"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, mealCharge: e.target.value })
+              }
+              value={pdfData.mealCharge}
+            />
             <label class="floating-label">Meal Charge</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">-$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="officeSup" label="Office Supplies" onChange={e => setPdfData({ ...pdfData, officeSup: e.target.value})} value={pdfData.officeSup}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="officeSup"
+              label="Office Supplies"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, officeSup: e.target.value })
+              }
+              value={pdfData.officeSup}
+            />
             <label class="floating-label">Office Supplies</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">-$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="cashPaid" label="Cash Paid Onboard" onChange={e => setPdfData({ ...pdfData, cashPaid: e.target.value})} value={pdfData.cashPaid}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="cashPaid"
+              label="Cash Paid Onboard"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, cashPaid: e.target.value })
+              }
+              value={pdfData.cashPaid}
+            />
             <label class="floating-label">Cash Paid Onboard</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">-$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="cashAdv" label="Cash Advance" onChange={e => setPdfData({ ...pdfData, cashAdv: e.target.value})} value={pdfData.cashAdv}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="cashAdv"
+              label="Cash Advance"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, cashAdv: e.target.value })
+              }
+              value={pdfData.cashAdv}
+            />
             <label class="floating-label">Cash Advance</label>
           </div>
           <div class="txtInputGrp input-group">
             <span class="inputGrp">
               <div class="dollarSign">-$</div>
             </span>
-            <input class="inputTxt" type="text" placeholder=" " name="paroleFee" label="Parole Fee" onChange={e => setPdfData({ ...pdfData, paroleFee: e.target.value})} value={pdfData.paroleFee}/>
+            <input
+              class="inputTxt"
+              type="text"
+              placeholder=" "
+              name="paroleFee"
+              label="Parole Fee"
+              onChange={(e) =>
+                setPdfData({ ...pdfData, paroleFee: e.target.value })
+              }
+              value={pdfData.paroleFee}
+            />
             <label class="floating-label">Parole Fee</label>
           </div>
           <div class="txtInputGrp">
             <select
               class="inputSelect"
-              onChange={e => setPdfData({ ...pdfData, paidStatus: e.target.value})}
+              onChange={(e) =>
+                setPdfData({ ...pdfData, paidStatus: e.target.value })
+              }
               value={pdfData.statusPaid}
             >
               <option value=""></option>
@@ -248,13 +439,8 @@ const AddModal = () => {
             <label class="floating-label">Status</label>
           </div>
         </form>
-        <div className="btns">
-          <input
-            className="fileUpload"
-            type="file"
-            onChange={handleFileChange}
-            accept=".pdf"
-          />
+        <div className="btns" onDrop={handleDrop} onDragOver={handleDragOver} >
+          <input className="fileUpload" type="file" onChange={handleFileChange} accept=".pdf"/>
           <button className="submitBtn">Submit</button>
         </div>
       </>
