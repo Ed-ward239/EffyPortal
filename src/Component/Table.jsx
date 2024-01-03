@@ -20,7 +20,7 @@ class Table extends React.Component {
   }
 
   loadContentFromServer() {
-    const url = "https://jsonplaceholder.typicode.com/users";
+    const url = "http://localhost:8081/";
 
     fetch(url)
       .then((response) => response.json())
@@ -51,25 +51,26 @@ class Table extends React.Component {
     open = this.state.open;
 
     if (!!this.state.results) {
-      this.array = this.state.results.map((result) => [
-        result.username,
-        result.address.zipcode,
-        result.name,
-        result.address.zipcode,
-        result.address.suite,
-        result.name,
-        result.address.geo.lat,
-        result.address.geo.lng,
-        result.phone,
-        result.id,
-        result.website,
-        result.company.name,
-        result.address.street,
-        result.address.city,
-        result.address.zipcode,
-        result.address.suite,
-        result.name,
-        result.address.geo.lat,
+      this.array = this.state.results.map((res) => [
+        res.ship_name,
+        res.voyage_num,
+        res.date,
+        res.effy_share,
+        res.status_paid,
+        res.editor,
+        res.rev_ss,
+        res.rev_cc,
+        res.eu_vat,
+        res.carnival_share,
+        res.office_supp,
+        res.discounts,
+        res.exec_folio,
+        res.ss_fee,
+        res.cc_fee,
+        res.meal_charge,
+        res.parole_fee,
+        res.cash_adv,
+        res.cash_paid,
         ""
       ]);
     }
@@ -99,28 +100,28 @@ class Table extends React.Component {
      };*/
 
     // Update Table data
-    const updateUser = (id, updatedUser) => {
+    const updateUser = (id, updateData) => {
       this.setState({ edit: false });
       const editUser = [
-        updatedUser.name,
-        updatedUser.username,
-        updatedUser.email,
-        updatedUser.name,
-        updatedUser.address.zipcode,
-        updatedUser.address.suite,
-        updatedUser.name,
-        updatedUser.address.geo.lat,
-        updatedUser.address.geo.lng,
-        updatedUser.phone,
-        updatedUser.id,
-        updatedUser.website,
-        updatedUser.company.name,
-        updatedUser.address.street,
-        updatedUser.address.city,
-        updatedUser.address.zipcode,
-        updatedUser.address.suite,
-        updatedUser.name,
-        updatedUser.address.geo.lat,
+        updateData.ship_name,
+        updateData.voyage_num,
+        updateData.date,
+        updateData.effy_share,
+        updateData.status_paid,
+        updateData.editor,
+        updateData.rev_ss,
+        updateData.rev_cc,
+        updateData.eu_vat,
+        updateData.carnival_share,
+        updateData.office_supp,
+        updateData.discounts,
+        updateData.exec_folio,
+        updateData.ss_fee,
+        updateData.cc_fee,
+        updateData.meal_charge,
+        updateData.parole_fee,
+        updateData.cash_adv,
+        updateData.cash_paid,
         "",
         ""
       ];
@@ -162,10 +163,10 @@ class Table extends React.Component {
       { name: "Editor", options: { filter: true } },
       { name: "Revenue SS", options: { filter: true } },
       { name: "Revenue CC", options: { filter: true } },
-      { name: "EU Revenue", options: { filter: true } },
+      { name: "EU VAT", options: { filter: true } },
       { name: "Carnival Share", options: { filter: true } },
       { name: "Office Supplies", options: { filter: true } },
-      { name: "Discount", options: { filter: true } },
+      { name: "Discounts", options: { filter: true } },
       { name: "Exec. Folio", options: { filter: true } },
       { name: "SS Fee", options: { filter: true } },
       { name: "CC Fee", options: { filter: true } },

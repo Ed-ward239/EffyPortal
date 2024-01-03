@@ -464,22 +464,22 @@ export default AddModal;
 //         const buffer = e.target.result;
 //         try {
 //           const data = await pdfparse(buffer);
-//           // PDF text
+// PDF text
 //           const pdfdata = data.text.trim();
-//           // ... rest of your parsing logic ...
+// ... rest of your parsing logic ...
 
-//           // Example: Set Ship Name in state
+// Example: Set Ship Name in state
 //           const lines = pdfdata.split("\n");
 //           const shipNameLine = lines[0].trim();
 //           const shipName = shipNameLine.split(" ").pop();
 //           setPdfContent(`Ship Name: ${shipName}`);
 
-//           // Retrieve the last string from the second line as VoyageNum
+// Retrieve the last string from the second line as VoyageNum
 //           const voyageLine = lines[1].trim();
 //           const voyageNum = voyageLine.split(" ").pop();
 //           setPdfContent(`Voyage #: ${voyageNum}`);
 
-//           // Date trimming (Accept 2 type of voyage numbers and convert to date)
+// Date trimming (Accept 2 type of voyage numbers and convert to date)
 //           function trimDate(inputStr) {
 //             let year, month, day;
 //             if (inputStr.length === 13) {
@@ -498,12 +498,12 @@ export default AddModal;
 //           const date = trimDate(voyageNum);
 //           setPdfContent(`Date: ${date}`);
 
-//           // Initialize the variables to store the data
+// Initialize the variables to store the data
 //           let effyShare, revSS, revCC, discounts = null, carnivalShare,
 //             execFolio, euVAT = null, ssFee, ccFee, mealCharge = null, paroleFee = null,
 //             cashAdv = null, officeSup = null, cashPaid = null;
 
-//           // Get the last string of numbers from the line "NET AMOUNT DUE" as effyShare
+// Get the last string of numbers from the line "NET AMOUNT DUE" as effyShare
 //           const netAmountLine = lines.find((line) =>
 //             line.includes("NET AMOUNT DUE")
 //           );
@@ -511,7 +511,7 @@ export default AddModal;
 //           effyShare = netAmountMatches[netAmountMatches.length - 1];
 //           setPdfContent(`Effy Share: ${effyShare}`);
 
-//           // Go through all the lines between "REVENUE SETTLEMENT" and "NET AMOUNT"
+// Go through all the lines between "REVENUE SETTLEMENT" and "NET AMOUNT"
 //           const revenueSettlementIndex = lines.findIndex((line) =>
 //             line.includes("REVENUE SETTLEMENT")
 //           );
@@ -546,8 +546,8 @@ export default AddModal;
 //             if (line.startsWith(" LESS EUROPE")) euVAT = amount;
 //             if (line.startsWith(" LESS CASH PAID ON BOARD")) cashPaid = amount;
 //             if (line.startsWith(" LESS OFFICE SUPPLIES")) officeSup = amount;
-//             // Add more conditions here as necessary for other fields.
-//             // setPdfContent() to return
+// Add more conditions here as necessary for other fields.
+// setPdfContent() to return
 //             setPdfContent(`Ship Name: ${shipName}`);
 //             setPdfContent(`Voyage#: ${voyageNum}`);
 //             setPdfContent(`Date: ${date}`);
@@ -566,8 +566,8 @@ export default AddModal;
 //             setPdfContent(`Parole Fee: ${paroleFee}`);
 //             setPdfContent(`Cash Paid Onboard: ${cashPaid}`);
 //           });
-//           // Log other variables as they are captured
-//           // catch error
+// Log other variables as they are captured
+// catch error
 //         } catch (error) {
 //           console.error("Error parsing the pdf:", error);
 //           setPdfContent("Error parsing the PDF");
