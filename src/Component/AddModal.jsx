@@ -70,7 +70,7 @@ function trimDate(inputStr) {
 const AddModal = () => {
   const editor = useUsername();
   
-  const [ pdfData, setPdfData ] = useState({
+  const [ rows, setRows ] = useState({
     shipName: '', voyageNum: '', date: '', effyShare: '', editor: editor, revSS: '',
     revCC: '', ssFee: '', ccFee: '', euVAT: '', discounts: '', carnivalShare: '', execFolio: '',
     mealCharge: '', officeSup: '', cashAdv: '', cashPaid: '', paroleFee: ''
@@ -109,7 +109,7 @@ const AddModal = () => {
       const cashAdv = extractValue(/LESS CASH VISA.*?\((\d+,\d+\.\d+)\)/);
       const cashPaid = extractValue(/LESS CASH PAID ON BOARD.*?\((\d+,\d+\.\d+)\)/);
       // Add more conditions here as necessary for other fields.
-      setPdfData({...pdfData, shipName, voyageNum, date, effyShare, editor, revSS, revCC, 
+      setRows({...rows, shipName, voyageNum, date, effyShare, editor, revSS, revCC, 
                               discounts, carnivalShare, execFolio, ssFee, ccFee, mealCharge, cashAdv, 
                               paroleFee, euVAT, cashPaid, officeSup})
     }catch (error){
@@ -143,9 +143,9 @@ const AddModal = () => {
               name="shipName"
               label="Ship Name"
               onChange={(e) =>
-                setPdfData({ ...pdfData, shipName: e.target.value })
+                setRows({ ...rows, shipName: e.target.value })
               }
-              value={pdfData.shipName}
+              value={rows.shipName}
             />
             <label class="floating-label">Ship Name</label>
           </div>
@@ -157,9 +157,9 @@ const AddModal = () => {
               name="voyageNum"
               label="Voyage #"
               onChange={(e) =>
-                setPdfData({ ...pdfData, voyageNum: e.target.value })
+                setRows({ ...rows, voyageNum: e.target.value })
               }
-              value={pdfData.voyageNum}
+              value={rows.voyageNum}
             />
             <label class="floating-label">Voyage #</label>
           </div>
@@ -170,8 +170,8 @@ const AddModal = () => {
               placeholder=" "
               name="date"
               label="Date (mm/dd/yyyy)"
-              onChange={(e) => setPdfData({ ...pdfData, date: e.target.value })}
-              value={pdfData.date}
+              onChange={(e) => setRows({ ...rows, date: e.target.value })}
+              value={rows.date}
             />
             <label class="floating-label">Date</label>
           </div>
@@ -186,9 +186,9 @@ const AddModal = () => {
               name="effyShare"
               label="Effy Share"
               onChange={(e) =>
-                setPdfData({ ...pdfData, effyShare: e.target.value })
+                setRows({ ...rows, effyShare: e.target.value })
               }
-              value={pdfData.effyShare}
+              value={rows.effyShare}
             />
             <label class="floating-label">Effy Share</label>
           </div>
@@ -199,7 +199,7 @@ const AddModal = () => {
               placeholder=" "
               name="editor"
               label="Editor"
-              value={pdfData.editor}
+              value={rows.editor}
               readOnly
             />
             <label class="floating-label">Editor</label>
@@ -215,9 +215,9 @@ const AddModal = () => {
               name="revSS"
               label="Revenue S&S"
               onChange={(e) =>
-                setPdfData({ ...pdfData, revSS: e.target.value })
+                setRows({ ...rows, revSS: e.target.value })
               }
-              value={pdfData.revSS}
+              value={rows.revSS}
             />
             <label class="floating-label">Revenue S&S</label>
           </div>
@@ -232,9 +232,9 @@ const AddModal = () => {
               name="revCC"
               label="Revenue CC"
               onChange={(e) =>
-                setPdfData({ ...pdfData, revCC: e.target.value })
+                setRows({ ...rows, revCC: e.target.value })
               }
-              value={pdfData.revCC}
+              value={rows.revCC}
             />
             <label class="floating-label">Revenue CC</label>
           </div>
@@ -249,9 +249,9 @@ const AddModal = () => {
               name="ssFee"
               label="S&S Fee"
               onChange={(e) =>
-                setPdfData({ ...pdfData, ssFee: e.target.value })
+                setRows({ ...rows, ssFee: e.target.value })
               }
-              value={pdfData.ssFee}
+              value={rows.ssFee}
             />
             <label class="floating-label">S&S Fee</label>
           </div>
@@ -266,9 +266,9 @@ const AddModal = () => {
               name="ccFee"
               label="CC Fee"
               onChange={(e) =>
-                setPdfData({ ...pdfData, ccFee: e.target.value })
+                setRows({ ...rows, ccFee: e.target.value })
               }
-              value={pdfData.ccFee}
+              value={rows.ccFee}
             />
             <label class="floating-label">CC Fee</label>
           </div>
@@ -283,9 +283,9 @@ const AddModal = () => {
               name="euVAT"
               label="EU VAT"
               onChange={(e) =>
-                setPdfData({ ...pdfData, euVAT: e.target.value })
+                setRows({ ...rows, euVAT: e.target.value })
               }
-              value={pdfData.euVAT}
+              value={rows.euVAT}
             />
             <label class="floating-label">EU VAT</label>
           </div>
@@ -300,9 +300,9 @@ const AddModal = () => {
               name="discounts"
               label="Discounts"
               onChange={(e) =>
-                setPdfData({ ...pdfData, discounts: e.target.value })
+                setRows({ ...rows, discounts: e.target.value })
               }
-              value={pdfData.discounts}
+              value={rows.discounts}
             />
             <label class="floating-label">Discounts</label>
           </div>
@@ -317,9 +317,9 @@ const AddModal = () => {
               name="carnivalShare"
               label="Carnival Share"
               onChange={(e) =>
-                setPdfData({ ...pdfData, carnivalShare: e.target.value })
+                setRows({ ...rows, carnivalShare: e.target.value })
               }
-              value={pdfData.carnivalShare}
+              value={rows.carnivalShare}
             />
             <label class="floating-label">Carnival Share</label>
           </div>
@@ -334,9 +334,9 @@ const AddModal = () => {
               name="execFolio"
               label="Exec. Folio"
               onChange={(e) =>
-                setPdfData({ ...pdfData, execFolio: e.target.value })
+                setRows({ ...rows, execFolio: e.target.value })
               }
-              value={pdfData.execFolio}
+              value={rows.execFolio}
             />
             <label class="floating-label">Exec. Folio</label>
           </div>
@@ -351,9 +351,9 @@ const AddModal = () => {
               name="mealCharge"
               label="Meal Charge"
               onChange={(e) =>
-                setPdfData({ ...pdfData, mealCharge: e.target.value })
+                setRows({ ...rows, mealCharge: e.target.value })
               }
-              value={pdfData.mealCharge}
+              value={rows.mealCharge}
             />
             <label class="floating-label">Meal Charge</label>
           </div>
@@ -368,9 +368,9 @@ const AddModal = () => {
               name="officeSup"
               label="Office Supplies"
               onChange={(e) =>
-                setPdfData({ ...pdfData, officeSup: e.target.value })
+                setRows({ ...rows, officeSup: e.target.value })
               }
-              value={pdfData.officeSup}
+              value={rows.officeSup}
             />
             <label class="floating-label">Office Supplies</label>
           </div>
@@ -385,9 +385,9 @@ const AddModal = () => {
               name="cashPaid"
               label="Cash Paid Onboard"
               onChange={(e) =>
-                setPdfData({ ...pdfData, cashPaid: e.target.value })
+                setRows({ ...rows, cashPaid: e.target.value })
               }
-              value={pdfData.cashPaid}
+              value={rows.cashPaid}
             />
             <label class="floating-label">Cash Paid Onboard</label>
           </div>
@@ -402,9 +402,9 @@ const AddModal = () => {
               name="cashAdv"
               label="Cash Advance"
               onChange={(e) =>
-                setPdfData({ ...pdfData, cashAdv: e.target.value })
+                setRows({ ...rows, cashAdv: e.target.value })
               }
-              value={pdfData.cashAdv}
+              value={rows.cashAdv}
             />
             <label class="floating-label">Cash Advance</label>
           </div>
@@ -419,9 +419,9 @@ const AddModal = () => {
               name="paroleFee"
               label="Parole Fee"
               onChange={(e) =>
-                setPdfData({ ...pdfData, paroleFee: e.target.value })
+                setRows({ ...rows, paroleFee: e.target.value })
               }
-              value={pdfData.paroleFee}
+              value={rows.paroleFee}
             />
             <label class="floating-label">Parole Fee</label>
           </div>
@@ -429,9 +429,9 @@ const AddModal = () => {
             <select
               class="inputSelect"
               onChange={(e) =>
-                setPdfData({ ...pdfData, paidStatus: e.target.value })
+                setRows({ ...rows, paidStatus: e.target.value })
               }
-              value={pdfData.statusPaid}
+              value={rows.statusPaid}
             >
               <option value=""></option>
               <option value="1">Unpaid</option>
