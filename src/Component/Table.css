@@ -34,12 +34,12 @@
   box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
 }
 
-.editBtn{
+.edit_delete_btn{
   background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 22px !important;
+  margin: none;
 }
 
 .label {

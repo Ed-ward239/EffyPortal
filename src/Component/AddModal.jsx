@@ -117,6 +117,7 @@ const AddModal = () => {
     }
   };
 
+  // Pdf drag&drop
   const handleDrop = async (event) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
@@ -125,6 +126,7 @@ const AddModal = () => {
     }
   };
 
+  // Pdf Drag
   const handleDragOver = (event) => {
     event.preventDefault(); // Necessary to allow for drop
   };

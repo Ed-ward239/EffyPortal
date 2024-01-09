@@ -7,7 +7,12 @@ import AddModal from "../Component/AddModal";
 import EditModal from "../Component/EditModal";
 import Modal from "@mui/material/Modal";
 import MUIDataTable from "mui-datatables";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+
 import "./Table.css";
+
+
+
 class Table extends React.Component {
   constructor(props) {
     super(props);
@@ -18,8 +23,9 @@ class Table extends React.Component {
     this.currentUser = [];
     this.editing = false;
   }
-
+  
   loadContentFromServer() {
+    // Back-end server
     const url = "http://localhost:8081/";
 
     fetch(url)
@@ -81,26 +87,31 @@ class Table extends React.Component {
       data = this.array;
     }
 
-    // CRUD operations
-    const handleAddModal = (user) => {
-      user.id = data.length + 1;
-      const addUser = [user.id, user.name, user.username, user.email, ""];
+    // Calling RESTful endpoint from the backend
+    // Submit button from addModal
+    const handleAddModal = (data) => {
+      data.id = data.length + 1;
+      const addUser = [data.ship_name, data.voyage_num, data.date, data.effy_share, data.status_paid, data.editor, 
+                       data.rev_ss, data.rev_cc, data.eu_vat, data.carnival_share, data.office_supp, data.discounts, 
+                       data.exec_folio, data.ss_fee, data.cc_fee, data.meal_charge, data.parole_fee, data.cash_adv, data.cash_paid, ""];
       this.setState({ array: data.concat([addUser]) });
       this.handleClose();
     };
-
+    
+    // addButton call addModal.jsx
     const addButton = () => {
       this.setState({ edit: false });
       this.handleOpen();
     };
 
-    /* const deleteUser = (id) => {
+    // Delete Data 
+    const deleteRow = (id) => {
        this.setState({ edit: false });
-       this.setState({ array: data.filter((user) => user.id !== id) });
-     };*/
+       this.setState({ array: data.filter((data) => data.id !== id) });
+     };
 
     // Update Table data
-    const updateUser = (id, updateData) => {
+    const updateRow = (id, updateData) => {
       this.setState({ edit: false });
       const editUser = [
         updateData.ship_name,
@@ -126,24 +137,35 @@ class Table extends React.Component {
         ""
       ];
       this.setState({
-        array: data.map((user) => (user[0] === id ? editUser : user))
+        array: data.map((data) => (data[0] === id ? editUser : data))
       });
       this.handleClose();
     };
 
     // Edit button
-    const editButton = (user) => {
+    const editButton = (data) => {
       this.setState({ edit: true });
       this.setState({
         arrayEdit: {
-          name: user[1],
-          username: user[2],
-          email: user[3],
-          name1: user[4],
-          zipcode: user[5],
-          suite: user[6],
-          name2: user[7],
-          id: user[8],
+          ship_name: data[0],
+          voyage_num: data[1],
+          date: data[2],
+          effy_share: data[3],
+          status_paid: data[4],
+          editor: data[5],
+          rev_ss: data[6],
+          rev_cc: data[7],
+          eu_vat: data[8],
+          carnival_share: data[9],
+          office_supp: data[10],
+          discounts: data[11],
+          exec_folio: data[12],
+          ss_fee: data[13],
+          cc_fee: data[14],
+          meal_charge: data[15],
+          parole_fee: data[16],
+          cash_adv: data[17],
+          cash_paid: data[18],
           action: ""
         }
       });
@@ -155,37 +177,46 @@ class Table extends React.Component {
 
     // Table Column names
     const columns = [
-      { name: "Ship Name", options: { filter: true } },
-      { name: "Voyage#", options: { filter: true } },
-      { name: "Date", options: { filter: true } },
-      { name: "Effy Share", options: { filter: true } },
-      { name: "Status", options: { filter: true } },
-      { name: "Editor", options: { filter: true } },
-      { name: "Revenue SS", options: { filter: true } },
-      { name: "Revenue CC", options: { filter: true } },
-      { name: "EU VAT", options: { filter: true } },
-      { name: "Carnival Share", options: { filter: true } },
-      { name: "Office Supplies", options: { filter: true } },
-      { name: "Discounts", options: { filter: true } },
-      { name: "Exec. Folio", options: { filter: true } },
-      { name: "SS Fee", options: { filter: true } },
-      { name: "CC Fee", options: { filter: true } },
-      { name: "Meal Charge", options: { filter: true } },
-      { name: "Parole Fee", options: { filter: true } },
-      { name: "Cash Advance", options: { filter: true } },
-      { name: "Cash Paid Onboard", options: { filter: true } },
+      { name: "Ship Name", options: { filter: true, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Voyage#", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Date", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Effy Share", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Status", options: { filter: true, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Editor", options: { filter: true, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Revenue SS", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Revenue CC", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "EU VAT", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Carnival Share", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Office Supplies", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Discounts", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Exec. Folio", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "SS Fee", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "CC Fee", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Meal Charge", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Parole Fee", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Cash Advance", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
+      { name: "Cash Paid Onboard", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"center"}}) } },
       {
         name: "Action",
         options: {
+          filter: false,
           sort: false,
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
+            <p className="edit_delete_btn">
               <IconButton
                 onClick={() => {
                   editButton(tableMeta.rowData);
                 }}
-                className="editBtn"> <EditNoteIcon />
+                className="editBtn"> <EditNoteIcon/>
               </IconButton>
+              <IconButton
+                onClick={() => {
+                  deleteRow(tableMeta.voyage_num);
+                }}
+                className="deleteBtn"> <DeleteForeverIcon style={{color:'red'}}/>
+              </IconButton>
+            </p>  
             );
           }
         }
@@ -193,15 +224,17 @@ class Table extends React.Component {
     ];
     // Table options
     const options = {
+      searchPlaceholder: "Type Anything to Search",
       sort: true,
       filter: true,
-      filterType: "dropdown",
+      filterType: "multiselect",
       elevation: 20,
-      rowsPerPage: 10,
-      rowsPerPageOptions: [5, 10, 100, 500, 1000],
+      responsive: 'standard',
+      rowsPerPage: 50,
+      rowsPerPageOptions: [5, 50, 100, 500],
       print: false,
       fixedSelectColumn: true,
-      tableBodyHeight: '620px',
+      tableBodyHeight: '65vh',
       downloadOptions: {
         filename: "HFC-Voyages.csv",
         separator: ","
@@ -227,7 +260,7 @@ class Table extends React.Component {
               <EditModal
                 editing={editing}
                 currentUser={currentUser}
-                updateUser={updateUser}
+                updateRow={updateRow}
               />
               </div>
             </Fragment>
