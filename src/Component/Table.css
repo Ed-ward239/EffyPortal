@@ -37,9 +37,15 @@
 .edit_delete_btn{
   background-color: transparent;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
   margin: none;
+  padding: none;
+}
+
+.editBtn .deleteBtn{
+  margin: none;
+  padding: none;
 }
 
 .label {
