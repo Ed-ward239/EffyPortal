@@ -10,7 +10,6 @@ import MUIDataTable from "mui-datatables";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 import "./Table.css";
-
 class Table extends React.Component {
   constructor(props) {
     super(props);
@@ -110,10 +109,29 @@ class Table extends React.Component {
     };
 
     // Delete Data 
-    const deleteRow = (voyage_num) => {
-       this.setState({ edit: false });
-       this.setState({ array: data.filter((data) => data.voyage_num !== voyage_num) });
-     };
+    const handleDeleteRow = (voyage_num) => {
+      this.setState({ edit: false });
+      const url = `http://localhost:8081/del/${voyage_num}`;
+      fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(() => {
+        this.loadContentFromServer();
+        alert("Data deleted successfully");
+      })
+      .catch((error) => {
+        alert(`Error: ${error.message || "Something went wrong"}`);
+      });
+    };
 
     // Update Table data
     const updateRow = (voyage_num, updateData) => {
@@ -185,25 +203,169 @@ class Table extends React.Component {
 
     // Table Column names
     const columns = [
-      { name: "Ship Name", options: { filter: true, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Voyage#", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Date", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Effy Share", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Status", options: { filter: true, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Editor", options: { filter: true, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Revenue SS", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Revenue CC", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "EU VAT", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Carnival Share", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Office Supplies", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Discounts", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Exec. Folio", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "SS Fee", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "CC Fee", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Meal Charge", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Parole Fee", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Cash Advance", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
-      { name: "Cash Paid Onboard", options: { filter: false, setCellProps: () => ({style: {whiteSpace:'nowrap', align:"justify"}}) } },
+      {
+        name: "Ship Name",
+        options: {
+          filter: true,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Voyage#",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Date (MM/DD/YYY)",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (!value) return 'N/A'; // Handle invalid or undefined date values
+      
+            const date = new Date(value);
+            let month = '' + (date.getMonth() + 1), // Months are zero indexed
+                day = '' + (date.getDate() + 1), // Days are zero indexed
+                year = date.getFullYear();
+      
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+      
+            return [month, day, year].join('/'); // Adjusted to MM/DD/YYYY format
+          }
+        },
+      },
+      {
+        name: "Effy Share",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Status",
+        options: {
+          filter: true,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          customBodyRender: (value, tableMeta, updateValue) => {
+            let style;
+            switch (value) {
+              case 'Paid':
+                style = { color: 'green', border: '1px solid green', borderRadius: '15px', padding: '3px 10px'};
+                break;
+              case 'Pending':
+                style = { color: 'orange', border: '1px solid orange', borderRadius: '15px', padding: '3px 10px'};
+                break;
+              case 'Unpaid':
+                style = { color: 'red', border: '1px solid red', borderRadius: '15px', padding: '3px 10px'};
+                break;
+              default:
+                style = { border: '1px solid black', borderRadius: '15px', padding: '3px 10px'};
+            }
+            return <span style={style}>{value}</span>;
+          },
+        },
+      },
+      {
+        name: "Editor",
+        options: {
+          filter: true,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Revenue SS",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Revenue CC",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "EU VAT",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Carnival Share",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Office Supplies",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Discounts",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Exec. Folio",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "SS Fee",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "CC Fee",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Meal Charge",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Parole Fee",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Cash Advance",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
+      {
+        name: "Cash Paid Onboard",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+        },
+      },
       {
         name: "Action",
         options: {
@@ -211,26 +373,34 @@ class Table extends React.Component {
           sort: false,
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
-            <p className="edit_delete_btn">
-              <IconButton
-                value={value}
-                onClick={() => {
-                  editButton(tableMeta.rowData);
-                }}
-                onChange={e => {updateValue(e.target.value)}}
-                className="editBtn"> <EditNoteIcon/>
-              </IconButton>
-              <IconButton
-                onClick={() => {
-                  deleteRow(tableMeta.rowData);
-                }}
-                className="deleteBtn"> <DeleteForeverIcon style={{color:'red'}}/>
-              </IconButton>
-            </p>  
+              <p className="edit_delete_btn">
+                <IconButton
+                  value={value}
+                  onClick={() => {
+                    editButton(tableMeta.rowData);
+                  }}
+                  onChange={(e) => {
+                    updateValue(e.target.value);
+                  }}
+                  className="editBtn"
+                >
+                  {" "}
+                  <EditNoteIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    handleDeleteRow(tableMeta.rowData);
+                  }}
+                  className="deleteBtn"
+                >
+                  {" "}
+                  <DeleteForeverIcon style={{ color: "red" }} />
+                </IconButton>
+              </p>
             );
-          }
-        }
-      }
+          },
+        },
+      },
     ];
     // Table options
     const options = {
@@ -276,7 +446,7 @@ class Table extends React.Component {
               <h3 className="modalHeaderTxt">Carnival Data Entry</h3>
               <AddModal 
                 addModal={handleAddModal}
-                loadContentFromServer={this.loadContentFromServer}
+                closeModal={this.handleClose}
               />
               </div>
             </Fragment>

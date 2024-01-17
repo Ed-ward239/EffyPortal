@@ -52,22 +52,30 @@ function sumOfExecFolio(str) {
 
 // Date trimming (Accept 2 type of voyage numbers and convert to date)
 function trimDate(inputStr) {
-  let match;
   if (inputStr.length === 13) {
-    match = inputStr.match(/.{2}(\d{4})(\d{2})(\d{2})/);
+    // Assuming the format is two letters followed by YYYYMMDD and three additional characters
+    // Extract the year, month, and day using substring
+    let year = inputStr.substring(2, 6);
+    let month = inputStr.substring(6, 8);
+    let day = inputStr.substring(8, 10);
+
+    // Format and return the date
+    return month + "/" + day + "/" + year;
   } else if (inputStr.length === 10) {
-    match = inputStr.match(/(\d{4})(\d{2})20(\d{2})/);
+    // Assuming the format is two letters followed by MMDD20YY
+    // Extract the year, month, and day using substring
+    let month = inputStr.substring(4, 6);
+    let day = inputStr.substring(6, 8);
+    let year = "20" + inputStr.substring(8, 10);
+
+    // Format and return the date
+    return month + "/" + day + "/" + year;
   } else {
     return "Invalid input length";
   }
-  if (match) {
-    const [, year, month, day] = match;
-    return `${month}/${day}/${year}`;
-  }
-  return "Invalid input format";
 }
 
-const AddModal = () => {
+const AddModal = ({ closeModal }) => {
   const editor = useUsername();
   
   const [ rows, setRows ] = useState({
@@ -94,20 +102,20 @@ const AddModal = () => {
       // Retrieve the date from voyage_num
       const date = trimDate(voyage_num);
       // Initialize the variables to store the data using regular expression
-      const effy_share = extractValue(/FROM\) EFFY\s+(\d+,\d+\.\d+)/);
-      const rev_ss = extractValue(/PLUS SAIL AND SIGN REVENUE\s+(\d+,\d+\.\d+)/);
-      const rev_cc = extractValue(/PLUS DIRECT CC REVENUE\s+(\d+,\d+\.\d+)/);
-      const carnival_share = extractValue(/LESS CCL SHARE OF REVENUE\s+\((\d+,\d+\.\d+)\)/);
-      const exec_folio = sumOfExecFolio(extractedData);
-      const ss_fee = extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE.*?\((\d+\.\d+)\)/);
-      const cc_fee = extractValue(/LESS DIRECT CREDIT CARD PROCESSING FEE.*?\((\d+\.\d+)\)/);
-      const discounts = extractValue(/PLUS CCL CREW SALES DISCOUNT.*?\((\d+\.\d+)\)/);
-      const meal_charge = extractValue(/LESS MEAL CHARGE.*?\((\d+\.\d+)\)/);
-      const office_supp = extractValue(/LESS OFFICE SUPPLIES.*?\((\d+,\d+\.\d+)\)/);
-      const eu_vat = extractValue(/LESS EU VAT.*?\((\d+,\d+\.\d+)\)/);
-      const parole_fee = extractValue(/LESS PAROLE FEE.*?\((\d+\.\d+)\)/);
-      const cash_adv = extractValue(/LESS CASH VISA.*?\((\d+,\d+\.\d+)\)/);
-      const cash_paid = extractValue(/LESS CASH PAID ON BOARD.*?\((\d+,\d+\.\d+)\)/);
+      const effy_share = extractValue(/FROM\) EFFY\s+(\d+,\d+\.\d+)/).replace(',', '');
+      const rev_ss = extractValue(/PLUS SAIL AND SIGN REVENUE\s+(\d+,\d+\.\d+)/).replace(',', '');
+      const rev_cc = extractValue(/PLUS DIRECT CC REVENUE\s+(\d+,\d+\.\d+)/).replace(',', '');
+      const carnival_share = -(extractValue(/LESS CCL SHARE OF REVENUE\s+\((\d+,\d+\.\d+)\)/).replace(',', ''));
+      const exec_folio = -(sumOfExecFolio(extractedData).replace(',', ''));
+      const ss_fee = -(extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE.*?\((\d+\.\d+)\)/).replace(',', ''));
+      const cc_fee = -(extractValue(/LESS DIRECT CREDIT CARD PROCESSING FEE.*?\((\d+\.\d+)\)/).replace(',', ''));
+      const discounts = extractValue(/PLUS CCL CREW SALES DISCOUNT.*?\((\d+\.\d+)\)/).replace(',', '');
+      const meal_charge = -(extractValue(/LESS MEAL CHARGE.*?\((\d+\.\d+)\)/).replace(',', ''));
+      const office_supp = -(extractValue(/LESS OFFICE SUPPLIES.*?\((\d+,\d+\.\d+)\)/).replace(',', ''));
+      const eu_vat = -(extractValue(/LESS EU VAT.*?\((\d+,\d+\.\d+)\)/).replace(',', ''));
+      const parole_fee = -(extractValue(/LESS PAROLE FEE.*?\((\d+\.\d+)\)/).replace(',', ''));
+      const cash_adv = -(extractValue(/LESS CASH VISA.*?\((\d+,\d+\.\d+)\)/).replace(',', ''));
+      const cash_paid = -(extractValue(/LESS CASH PAID ON BOARD.*?\((\d+,\d+\.\d+)\)/).replace(',', ''));
       // Add more conditions here as necessary for other fields.
       setRows({...rows, ship_name, voyage_num, date, effy_share, editor, rev_ss, rev_cc, 
                               discounts, carnival_share, exec_folio, ss_fee, cc_fee, meal_charge, cash_adv, 
@@ -118,7 +126,8 @@ const AddModal = () => {
   };
 
   const handleSubmit_Add = (event) => {
-    fetch(`http://localhost:8081/post`, {
+    const url = `http://localhost:8081/post`
+    fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -127,7 +136,7 @@ const AddModal = () => {
     })
       .then(response => response.json())
       .then((data) => {
-        event.closeModal()
+        closeModal();
         alert("Data updated successfully");
       })
       .catch((error) => {
@@ -163,8 +172,8 @@ const AddModal = () => {
             <label className="floating-label">Voyage #</label>
           </div>
           <div className="txtInputGrp">
-            <input className="inputTxt" type="text" placeholder=" " name="date" label="Date (mm/dd/yyyy)" onChange={(e) => setRows({ ...rows, date: e.target.value })} value={rows.date}/>
-            <label className="floating-label">Date</label>
+            <input className="inputTxt" type="text" placeholder=" " name="date" label="Date (yyyy/mm/dd)" onChange={(e) => setRows({ ...rows, date: e.target.value })} value={rows.date}/>
+            <label className="floating-label">Date (yyyy/mm/dd)</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
@@ -193,21 +202,21 @@ const AddModal = () => {
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
-              <div className="dollarSign">-$</div>
+              <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="ss_fee" label="S&S Fee" onChange={(e) => setRows({ ...rows, ss_fee: e.target.value })} value={rows.ss_fee}/>
             <label className="floating-label">S&S Fee</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
-              <div className="dollarSign">-$</div>
+              <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="cc_fee" label="CC Fee" onChange={(e) => setRows({ ...rows, cc_fee: e.target.value })} value={rows.cc_fee}/>
             <label className="floating-label">CC Fee</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
-              <div className="dollarSign">-$</div>
+              <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="eu_vat" label="EU VAT" onChange={(e) => setRows({ ...rows, eu_vat: e.target.value })} value={rows.eu_vat}/>
             <label className="floating-label">EU VAT</label>
@@ -221,49 +230,49 @@ const AddModal = () => {
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
-              <div className="dollarSign">-$</div>
+              <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="carnival_share" label="Carnival Share" onChange={(e) => setRows({ ...rows, carnival_share: e.target.value })} value={rows.carnival_share}/>
             <label className="floating-label">Carnival Share</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
-              <div className="dollarSign">-$</div>
+              <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="exec_folio" label="Exec. Folio" onChange={(e) => setRows({ ...rows, exec_folio: e.target.value })} value={rows.exec_folio}/>
             <label className="floating-label">Exec. Folio</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
-              <div className="dollarSign">-$</div>
+              <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="meal_charge" label="Meal Charge" onChange={(e) => setRows({ ...rows, meal_charge: e.target.value })} value={rows.meal_charge}/>
             <label className="floating-label">Meal Charge</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
-              <div className="dollarSign">-$</div>
+              <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="office_supp" label="Office Supplies" onChange={(e) => setRows({ ...rows, office_supp: e.target.value })} value={rows.office_supp}/>
             <label className="floating-label">Office Supplies</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
-              <div className="dollarSign">-$</div>
+              <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="cash_paid" label="Cash Paid Onboard" onChange={(e) => setRows({ ...rows, cash_paid: e.target.value })} value={rows.cash_paid}/>
             <label className="floating-label">Cash Paid Onboard</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
-              <div className="dollarSign">-$</div>
+              <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="cash_adv" label="Cash Advance" onChange={(e) => setRows({ ...rows, cash_adv: e.target.value })} value={rows.cash_adv}/>
             <label className="floating-label">Cash Advance</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
-              <div className="dollarSign">-$</div>
+              <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="parole_fee" label="Parole Fee" onChange={(e) => setRows({ ...rows, parole_fee: e.target.value })} value={rows.parole_fee}/>
             <label className="floating-label">Parole Fee</label>
@@ -332,7 +341,7 @@ export default AddModal;
 //             } else {
 //               return "Invalid input length";
 //             }
-//             return `${month}-${day}-${year}`;
+//             return `${month}${day}${year}`;
 //           }
 //           const date = trimDate(voyage_num);
 //           setPdfContent(`Date: ${date}`);

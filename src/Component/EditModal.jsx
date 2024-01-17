@@ -73,8 +73,8 @@ const EditModal = (props) => {
           <label className="floating-label">Voyage #</label>
         </div>
         <div className="txtInputGrp">
-          <input className="inputTxt" type="text" placeholder=" " name="date" label="Date (mm/dd/yyyy)" onChange={handleInputChange} value={row.date}/>
-          <label className="floating-label">Date</label>
+          <input className="inputTxt" type="text" placeholder=" " name="date" label="Date (yyyy/mm/dd)" onChange={handleInputChange} value={row.date}/>
+          <label className="floating-label">Date (yyyy/mm/dd)</label>
         </div>
         <div className="txtInputGrp input-group">
           <span className="inputGrp">
