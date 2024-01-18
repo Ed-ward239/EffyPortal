@@ -8,6 +8,7 @@ import EditModal from "../Component/EditModal";
 import Modal from "@mui/material/Modal";
 import MUIDataTable from "mui-datatables";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 import "./Table.css";
 class Table extends React.Component {
@@ -425,7 +426,8 @@ class Table extends React.Component {
       <div className="table">
         <Button className="addBtn" variant="outlined" startIcon={<PlaylistAddIcon />}
           onClick={() => { addButton(); }}>Add</Button>
-
+        <Button className="refreshBtn" variant="outlined" startIcon={<RefreshIcon />}
+          onClick={() => { this.loadContentFromServer(); }}>Refresh</Button>
         <MUIDataTable className="dataTable" data={data} columns={columns} options={options} />
         <Modal open={open} onClose={this.handleClose}>
           <div className="modal">

@@ -60,7 +60,7 @@ function trimDate(inputStr) {
     let day = inputStr.substring(8, 10);
 
     // Format and return the date
-    return month + "/" + day + "/" + year;
+    return year + "/" + month + "/" + day;
   } else if (inputStr.length === 10) {
     // Assuming the format is two letters followed by MMDD20YY
     // Extract the year, month, and day using substring
@@ -69,9 +69,24 @@ function trimDate(inputStr) {
     let year = "20" + inputStr.substring(8, 10);
 
     // Format and return the date
-    return month + "/" + day + "/" + year;
+    return year + "/" + month + "/" + day;
   } else {
     return "Invalid input length";
+  }
+}
+
+function moneyFormat(value, isNegative = false) {
+  if (value && !isNaN(parseFloat(value.replace(/,/g, "")))) {
+    // Remove commas for thousands and convert to float
+    let number = parseFloat(value.replace(/,/g, ""));
+    // If the value is supposed to be negative, multiply by -1
+    if (isNegative) {
+      number *= -1;
+    }
+    // Return the number as a string formatted to two decimal places
+    return number.toFixed(2);
+  } else {
+    return null;
   }
 }
 
@@ -102,20 +117,20 @@ const AddModal = ({ closeModal }) => {
       // Retrieve the date from voyage_num
       const date = trimDate(voyage_num);
       // Initialize the variables to store the data using regular expression
-      const effy_share = extractValue(/FROM\) EFFY\s+(\d+,\d+\.\d+)/).replace(',', '');
-      const rev_ss = extractValue(/PLUS SAIL AND SIGN REVENUE\s+(\d+,\d+\.\d+)/).replace(',', '');
-      const rev_cc = extractValue(/PLUS DIRECT CC REVENUE\s+(\d+,\d+\.\d+)/).replace(',', '');
-      const carnival_share = -(extractValue(/LESS CCL SHARE OF REVENUE\s+\((\d+,\d+\.\d+)\)/).replace(',', ''));
-      const exec_folio = -(sumOfExecFolio(extractedData).replace(',', ''));
-      const ss_fee = -(extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE.*?\((\d+\.\d+)\)/).replace(',', ''));
-      const cc_fee = -(extractValue(/LESS DIRECT CREDIT CARD PROCESSING FEE.*?\((\d+\.\d+)\)/).replace(',', ''));
-      const discounts = extractValue(/PLUS CCL CREW SALES DISCOUNT.*?\((\d+\.\d+)\)/).replace(',', '');
-      const meal_charge = -(extractValue(/LESS MEAL CHARGE.*?\((\d+\.\d+)\)/).replace(',', ''));
-      const office_supp = -(extractValue(/LESS OFFICE SUPPLIES.*?\((\d+,\d+\.\d+)\)/).replace(',', ''));
-      const eu_vat = -(extractValue(/LESS EU VAT.*?\((\d+,\d+\.\d+)\)/).replace(',', ''));
-      const parole_fee = -(extractValue(/LESS PAROLE FEE.*?\((\d+\.\d+)\)/).replace(',', ''));
-      const cash_adv = -(extractValue(/LESS CASH VISA.*?\((\d+,\d+\.\d+)\)/).replace(',', ''));
-      const cash_paid = -(extractValue(/LESS CASH PAID ON BOARD.*?\((\d+,\d+\.\d+)\)/).replace(',', ''));
+      const effy_share = moneyFormat(extractValue(/FROM\) EFFY\s+(\d+,\d+\.\d+)/));
+      const rev_ss = moneyFormat(extractValue(/PLUS SAIL AND SIGN REVENUE\s+(\d+,\d+\.\d+)/));
+      const rev_cc = moneyFormat(extractValue(/PLUS DIRECT CC REVENUE\s+(\d+,\d+\.\d+)/));
+      const carnival_share = moneyFormat((extractValue(/LESS CCL SHARE OF REVENUE\s+\((\d+,\d+\.\d+)\)/)), true);
+      const exec_folio = moneyFormat((sumOfExecFolio(extractedData)), true);
+      const ss_fee = moneyFormat((extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE.*?\((\d+\.\d+)\)/)), true);
+      const cc_fee = moneyFormat((extractValue(/LESS DIRECT CREDIT CARD PROCESSING FEE.*?\((\d+\.\d+)\)/)), true);
+      const discounts = moneyFormat(extractValue(/PLUS CCL CREW SALES DISCOUNT.*?\((\d+\.\d+)\)/));
+      const meal_charge = moneyFormat((extractValue(/LESS MEAL CHARGE.*?\((\d+\.\d+)\)/)), true);
+      const office_supp = moneyFormat((extractValue(/LESS OFFICE SUPPLIES.*?\((\d+,\d+\.\d+)\)/)), true);
+      const eu_vat = moneyFormat((extractValue(/LESS EU VAT.*?\((\d+,\d+\.\d+)\)/)), true);
+      const parole_fee = moneyFormat((extractValue(/LESS PAROLE FEE.*?\((\d+\.\d+)\)/)), true);
+      const cash_adv = moneyFormat((extractValue(/LESS CASH VISA.*?\((\d+,\d+\.\d+)\)/)), true);
+      const cash_paid = moneyFormat((extractValue(/LESS CASH PAID ON BOARD.*?\((\d+,\d+\.\d+)\)/)), true);
       // Add more conditions here as necessary for other fields.
       setRows({...rows, ship_name, voyage_num, date, effy_share, editor, rev_ss, rev_cc, 
                               discounts, carnival_share, exec_folio, ss_fee, cc_fee, meal_charge, cash_adv, 
@@ -190,91 +205,91 @@ const AddModal = ({ closeModal }) => {
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="rev_ss" label="Revenue S&S" onChange={(e) => setRows({ ...rows, rev_ss: e.target.value })} value={rows.rev_ss}/>
+            <input className="inputTxt" type="text" placeholder=" " name="rev_ss" label="Revenue S&S" onChange={(e) => setRows({ ...rows, rev_ss: e.target.value })} value={rows.rev_ss || null}/>
             <label className="floating-label">Revenue S&S</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="rev_cc" label="Revenue CC" onChange={(e) => setRows({ ...rows, rev_cc: e.target.value })} value={rows.rev_cc}/>
+            <input className="inputTxt" type="text" placeholder=" " name="rev_cc" label="Revenue CC" onChange={(e) => setRows({ ...rows, rev_cc: e.target.value })} value={rows.rev_cc || null}/>
             <label className="floating-label">Revenue CC</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="ss_fee" label="S&S Fee" onChange={(e) => setRows({ ...rows, ss_fee: e.target.value })} value={rows.ss_fee}/>
+            <input className="inputTxt" type="text" placeholder=" " name="ss_fee" label="S&S Fee" onChange={(e) => setRows({ ...rows, ss_fee: e.target.value })} value={rows.ss_fee || null}/>
             <label className="floating-label">S&S Fee</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="cc_fee" label="CC Fee" onChange={(e) => setRows({ ...rows, cc_fee: e.target.value })} value={rows.cc_fee}/>
+            <input className="inputTxt" type="text" placeholder=" " name="cc_fee" label="CC Fee" onChange={(e) => setRows({ ...rows, cc_fee: e.target.value })} value={rows.cc_fee || null}/>
             <label className="floating-label">CC Fee</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="eu_vat" label="EU VAT" onChange={(e) => setRows({ ...rows, eu_vat: e.target.value })} value={rows.eu_vat}/>
+            <input className="inputTxt" type="text" placeholder=" " name="eu_vat" label="EU VAT" onChange={(e) => setRows({ ...rows, eu_vat: e.target.value })} value={rows.eu_vat || null}/>
             <label className="floating-label">EU VAT</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="discounts" label="Discounts" onChange={(e) => setRows({ ...rows, discounts: e.target.value })} value={rows.discounts}/>
+            <input className="inputTxt" type="text" placeholder=" " name="discounts" label="Discounts" onChange={(e) => setRows({ ...rows, discounts: e.target.value })} value={rows.discounts || null}/>
             <label className="floating-label">Discounts</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="carnival_share" label="Carnival Share" onChange={(e) => setRows({ ...rows, carnival_share: e.target.value })} value={rows.carnival_share}/>
+            <input className="inputTxt" type="text" placeholder=" " name="carnival_share" label="Carnival Share" onChange={(e) => setRows({ ...rows, carnival_share: e.target.value })} value={rows.carnival_share || null}/>
             <label className="floating-label">Carnival Share</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="exec_folio" label="Exec. Folio" onChange={(e) => setRows({ ...rows, exec_folio: e.target.value })} value={rows.exec_folio}/>
+            <input className="inputTxt" type="text" placeholder=" " name="exec_folio" label="Exec. Folio" onChange={(e) => setRows({ ...rows, exec_folio: e.target.value })} value={rows.exec_folio || null}/>
             <label className="floating-label">Exec. Folio</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="meal_charge" label="Meal Charge" onChange={(e) => setRows({ ...rows, meal_charge: e.target.value })} value={rows.meal_charge}/>
+            <input className="inputTxt" type="text" placeholder=" " name="meal_charge" label="Meal Charge" onChange={(e) => setRows({ ...rows, meal_charge: e.target.value })} value={rows.meal_charge || null}/>
             <label className="floating-label">Meal Charge</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="office_supp" label="Office Supplies" onChange={(e) => setRows({ ...rows, office_supp: e.target.value })} value={rows.office_supp}/>
+            <input className="inputTxt" type="text" placeholder=" " name="office_supp" label="Office Supplies" onChange={(e) => setRows({ ...rows, office_supp: e.target.value })} value={rows.office_supp || null}/>
             <label className="floating-label">Office Supplies</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="cash_paid" label="Cash Paid Onboard" onChange={(e) => setRows({ ...rows, cash_paid: e.target.value })} value={rows.cash_paid}/>
+            <input className="inputTxt" type="text" placeholder=" " name="cash_paid" label="Cash Paid Onboard" onChange={(e) => setRows({ ...rows, cash_paid: e.target.value })} value={rows.cash_paid || null}/>
             <label className="floating-label">Cash Paid Onboard</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="cash_adv" label="Cash Advance" onChange={(e) => setRows({ ...rows, cash_adv: e.target.value })} value={rows.cash_adv}/>
+            <input className="inputTxt" type="text" placeholder=" " name="cash_adv" label="Cash Advance" onChange={(e) => setRows({ ...rows, cash_adv: e.target.value })} value={rows.cash_adv || null}/>
             <label className="floating-label">Cash Advance</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="parole_fee" label="Parole Fee" onChange={(e) => setRows({ ...rows, parole_fee: e.target.value })} value={rows.parole_fee}/>
+            <input className="inputTxt" type="text" placeholder=" " name="parole_fee" label="Parole Fee" onChange={(e) => setRows({ ...rows, parole_fee: e.target.value })} value={rows.parole_fee || null}/>
             <label className="floating-label">Parole Fee</label>
           </div>
           <div className="txtInputGrp">

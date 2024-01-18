@@ -3,14 +3,14 @@ import "./Modal.css";
 import { useUsername } from "./useUsername";
 
 const EditModal = (props) => {
-  const editorName = useUsername();
+  const editor = useUsername();
   const [row, setRow] = useState({
     ship_name: '',
     voyage_num: '',
     date: '',
     effy_share: '',
     status_paid: '',
-    editor: editorName,
+    editor: editor,
     rev_ss: '',
     rev_cc: '',
     eu_vat: '',
@@ -48,15 +48,28 @@ const EditModal = (props) => {
       });
   };
 
+  function formatDate(isoDateString) {
+    const date = new Date(isoDateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // months are 0-indexed
+    const day = (date.getDate() + 1).toString().padStart(2, '0');
+    
+    return `${year}/${month}/${day}`;
+  }
+  
   useEffect(() => {
-    setRow(props.currentData);
-  }, [props.currentData]);
+    if (props.currentData) {
+      const formattedDate = formatDate(props.currentData.date);
+      setRow({ ...props.currentData, date: formattedDate, editor: editor });
+    }
+  }, [props.currentData, editor]);
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setRow(prevRow => ({
       ...prevRow,
-      [name]: value
+      [name]: name === "editor" ? editor: value
     }));
   };
   
@@ -179,7 +192,7 @@ const EditModal = (props) => {
           <label className="floating-label">Parole Fee</label>
         </div>
         <div className="txtInputGrp">
-          <select className="inputSelect" onChange={handleInputChange} value={row.status_paid}>
+          <select className="inputSelect" name="status_paid" onChange={handleInputChange} value={row.status_paid}>
             <option value=""></option>
             <option value="Unpaid">Unpaid</option>
             <option value="Pending">Pending</option>

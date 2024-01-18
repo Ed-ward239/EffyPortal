@@ -26,11 +26,17 @@
 }
 
 .addBtn{
-  background-color: transparent;
   border-radius: 30px !important;
-  width: 90px !important;
+  width: 85px !important;
   height: 25px !important;
   margin-left: 20px !important;
+  box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
+}
+
+.refreshBtn{
+  border-radius: 30px !important;
+  height: 25px !important;
+  margin-left: 87% !important ;
   box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
 }
 
