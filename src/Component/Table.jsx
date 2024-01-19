@@ -77,7 +77,7 @@ class Table extends React.Component {
         res.parole_fee,
         res.cash_adv,
         res.cash_paid,
-        ""
+        "",
       ]);
     }
 
@@ -91,47 +91,74 @@ class Table extends React.Component {
     // Submit button from addModal
     const handleAddModal = (data) => {
       data.id = data.length + 1;
-      const addUser = [data.ship_name, data.voyage_num, data.date, data.effy_share, data.status_paid, data.editor, 
-                       data.rev_ss, data.rev_cc, data.eu_vat, data.carnival_share, data.office_supp, data.discounts, 
-                       data.exec_folio, data.ss_fee, data.cc_fee, data.meal_charge, data.parole_fee, data.cash_adv, data.cash_paid, ""];
+      const addUser = [
+        data.ship_name,
+        data.voyage_num,
+        data.date,
+        data.effy_share,
+        data.status_paid,
+        data.editor,
+        data.rev_ss,
+        data.rev_cc,
+        data.eu_vat,
+        data.carnival_share,
+        data.office_supp,
+        data.discounts,
+        data.exec_folio,
+        data.ss_fee,
+        data.cc_fee,
+        data.meal_charge,
+        data.parole_fee,
+        data.cash_adv,
+        data.cash_paid,
+        "",
+      ];
       this.setState({ array: data.concat([addUser]) });
       this.handleClose();
     };
-    
+
     // addButton was called in addModal.jsx
     const addButton = () => {
       this.setState({ edit: false });
       this.handleOpen();
       this.setState({
-        modalType: 'addModal',
+        modalType: "addModal",
         currentData: {},
-        open: true
+        open: true,
       });
     };
 
-    // Delete Data 
-    const handleDeleteRow = (voyage_num) => {
-      this.setState({ edit: false });
-      const url = `http://localhost:8081/del/${voyage_num}`;
+    // Delete Data
+    const handleDeleteRow = (rowData) => {
+      // Ensure you have the correct index for the voyage_num
+      const delVoyageNum = rowData; // This assumes delVoyageNum is at index 1
+
+      if (!delVoyageNum) {
+        alert("Voyage number not found.");
+        return;
+      }
+
+      const url = `http://localhost:8081/del/${delVoyageNum}`;
       fetch(url, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-        }
+        },
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(() => {
-        this.loadContentFromServer();
-        alert("Data deleted successfully");
-      })
-      .catch((error) => {
-        alert(`Error: ${error.message || "Something went wrong"}`);
-      });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(() => {
+          this.loadContentFromServer();
+          alert("Data deleted successfully");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert(`Error: ${error.message}`);
+        });
     };
 
     // Update Table data
@@ -157,50 +184,49 @@ class Table extends React.Component {
         updateData.parole_fee,
         updateData.cash_adv,
         updateData.cash_paid,
-        ""
+        "",
       ];
       this.setState({
-        array: data.map((data) => (data[0] === voyage_num ? editUser : data))
+        array: data.map((data) => (data[0] === voyage_num ? editUser : data)),
       });
       this.handleClose();
     };
 
     // Edit button
     const editButton = (rowData) => {
-      this.setState({ 
-        edit: true, 
-        modalType: 'editModal',
-        currentData: {
-          ship_name: rowData[0],
-          voyage_num: rowData[1],
-          date: rowData[2],
-          effy_share: rowData[3],
-          status_paid: rowData[4],
-          editor: rowData[5],
-          rev_ss: rowData[6],
-          rev_cc: rowData[7],
-          eu_vat: rowData[8],
-          carnival_share: rowData[9],
-          office_supp: rowData[10],
-          discounts: rowData[11],
-          exec_folio: rowData[12],
-          ss_fee: rowData[13],
-          cc_fee: rowData[14],
-          meal_charge: rowData[15],
-          parole_fee: rowData[16],
-          cash_adv: rowData[17],
-          cash_paid: rowData[18],
-          action: ""
+      this.setState(
+        {
+          edit: true,
+          modalType: "editModal",
+          currentData: {
+            ship_name: rowData[0],
+            voyage_num: rowData[1],
+            date: rowData[2],
+            effy_share: rowData[3],
+            status_paid: rowData[4],
+            editor: rowData[5],
+            rev_ss: rowData[6],
+            rev_cc: rowData[7],
+            eu_vat: rowData[8],
+            carnival_share: rowData[9],
+            office_supp: rowData[10],
+            discounts: rowData[11],
+            exec_folio: rowData[12],
+            ss_fee: rowData[13],
+            cc_fee: rowData[14],
+            meal_charge: rowData[15],
+            parole_fee: rowData[16],
+            cash_adv: rowData[17],
+            cash_paid: rowData[18],
+            action: "",
+          },
+          open: true,
         },
-        open: true
-      }, () => {;
-      this.handleOpen();
-    });
+        () => {
+          this.handleOpen();
+        }
+      );
     };
-
-    //editing = this.state.edit;
-    //currentData = this.state.arrayEdit;
-    //console.log(currentData);
 
     // Table Column names
     const columns = [
@@ -208,62 +234,91 @@ class Table extends React.Component {
         name: "Ship Name",
         options: {
           filter: true,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "left", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "Voyage#",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "left", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
-        name: "Date (MM/DD/YYY)",
+        name: "Date",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "left", whiteSpace: "nowrap" },
+          }),
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (!value) return 'N/A'; // Handle invalid or undefined date values
-      
+            if (!value) return "N/A"; // Handle invalid or undefined date values
+
             const date = new Date(value);
-            let month = '' + (date.getMonth() + 1), // Months are zero indexed
-                day = '' + (date.getDate() + 1), // Days are zero indexed
-                year = date.getFullYear();
-      
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day = '0' + day;
-      
-            return [month, day, year].join('/'); // Adjusted to MM/DD/YYYY format
-          }
+            let month = "" + (date.getMonth() + 1), // Months are zero indexed
+              day = "" + (date.getDate() + 1), // Days are zero indexed
+              year = date.getFullYear();
+
+            if (month.length < 2) month = "0" + month;
+            if (day.length < 2) day = "0" + day;
+
+            return [month, day, year].join("/"); // Adjusted to MM/DD/YYYY format
+          },
         },
       },
       {
         name: "Effy Share",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "Status",
         options: {
           filter: true,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
           customBodyRender: (value, tableMeta, updateValue) => {
             let style;
             switch (value) {
-              case 'Paid':
-                style = { color: 'green', border: '1px solid green', borderRadius: '15px', padding: '3px 10px'};
+              case "Paid":
+                style = {
+                  color: "green",
+                  border: "1px solid green",
+                  borderRadius: "15px",
+                  padding: "3px 10px",
+                };
                 break;
-              case 'Pending':
-                style = { color: 'orange', border: '1px solid orange', borderRadius: '15px', padding: '3px 10px'};
+              case "Pending":
+                style = {
+                  color: "orange",
+                  border: "1px solid orange",
+                  borderRadius: "15px",
+                  padding: "3px 10px",
+                };
                 break;
-              case 'Unpaid':
-                style = { color: 'red', border: '1px solid red', borderRadius: '15px', padding: '3px 10px'};
+              case "Unpaid":
+                style = {
+                  color: "red",
+                  border: "1px solid red",
+                  borderRadius: "15px",
+                  padding: "3px 10px",
+                };
                 break;
               default:
-                style = { border: '1px solid black', borderRadius: '15px', padding: '3px 10px'};
+                style = {
+                  border: "1px solid black",
+                  borderRadius: "15px",
+                  padding: "3px 10px",
+                };
             }
             return <span style={style}>{value}</span>;
           },
@@ -273,98 +328,126 @@ class Table extends React.Component {
         name: "Editor",
         options: {
           filter: true,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "Revenue SS",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "Revenue CC",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "EU VAT",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "Carnival Share",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "Office Supplies",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "Discounts",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "Exec. Folio",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "SS Fee",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "CC Fee",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "Meal Charge",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "Parole Fee",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "Cash Advance",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
         name: "Cash Paid Onboard",
         options: {
           filter: false,
-          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" } }),
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
         },
       },
       {
@@ -372,6 +455,9 @@ class Table extends React.Component {
         options: {
           filter: false,
           sort: false,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
               <p className="edit_delete_btn">
@@ -385,16 +471,14 @@ class Table extends React.Component {
                   }}
                   className="editBtn"
                 >
-                  {" "}
                   <EditNoteIcon />
                 </IconButton>
                 <IconButton
                   onClick={() => {
-                    handleDeleteRow(tableMeta.rowData);
+                    handleDeleteRow(tableMeta.rowData[1]);
                   }}
                   className="deleteBtn"
                 >
-                  {" "}
                   <DeleteForeverIcon style={{ color: "red" }} />
                 </IconButton>
               </p>
@@ -403,6 +487,7 @@ class Table extends React.Component {
         },
       },
     ];
+
     // Table options
     const options = {
       searchPlaceholder: "Type Anything to Search",
@@ -410,48 +495,69 @@ class Table extends React.Component {
       filter: true,
       filterType: "multiselect",
       elevation: 20,
-      responsive: 'vertical',
+      responsive: "vertical",
       rowsPerPage: 50,
       rowsPerPageOptions: [5, 50, 100, 500],
       print: false,
       fixedSelectColumn: false,
-      tableBodyHeight: '65vh',
+      tableBodyHeight: "65vh",
       downloadOptions: {
         filename: "HFC-Voyages.csv",
-        separator: ","
-      }
+        separator: ",",
+      },
     };
 
     return (
       <div className="table">
-        <Button className="addBtn" variant="outlined" startIcon={<PlaylistAddIcon />}
-          onClick={() => { addButton(); }}>Add</Button>
-        <Button className="refreshBtn" variant="outlined" startIcon={<RefreshIcon />}
-          onClick={() => { this.loadContentFromServer(); }}>Refresh</Button>
-        <MUIDataTable className="dataTable" data={data} columns={columns} options={options} />
+        <Button
+          className="addBtn"
+          variant="outlined"
+          startIcon={<PlaylistAddIcon />}
+          onClick={() => {
+            addButton();
+          }}
+        >
+          Add
+        </Button>
+        <Button
+          className="refreshBtn"
+          variant="outlined"
+          startIcon={<RefreshIcon />}
+          onClick={() => {
+            this.loadContentFromServer();
+          }}
+        >
+          Refresh
+        </Button>
+        <MUIDataTable
+          className="dataTable"
+          data={data}
+          columns={columns}
+          options={options}
+        />
         <Modal open={open} onClose={this.handleClose}>
           <div className="modal">
-            {modalType === 'editModal' ? (
+            {modalType === "editModal" ? (
               <Fragment>
-              <div className="modalBackground">
-              <h3 className="modalHeaderTxt">Edit Carnival Data</h3>
-              <EditModal
-                currentData={currentData}
-                updateRow={updateRow}
-                closeModal={this.handleClose}
-              />
-              </div>
-            </Fragment>
-          ) : (
-            <Fragment>
-              <div className="modalBackground">
-              <h3 className="modalHeaderTxt">Carnival Data Entry</h3>
-              <AddModal 
-                addModal={handleAddModal}
-                closeModal={this.handleClose}
-              />
-              </div>
-            </Fragment>
+                <div className="modalBackground">
+                  <h3 className="modalHeaderTxt">Edit Carnival Data</h3>
+                  <EditModal
+                    currentData={currentData}
+                    updateRow={updateRow}
+                    closeModal={this.handleClose}
+                  />
+                </div>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <div className="modalBackground">
+                  <h3 className="modalHeaderTxt">Carnival Data Entry</h3>
+                  <AddModal
+                    addModal={handleAddModal}
+                    closeModal={this.handleClose}
+                  />
+                </div>
+              </Fragment>
             )}
           </div>
         </Modal>
