@@ -151,8 +151,12 @@ const AddModal = ({ closeModal }) => {
     })
       .then(response => response.json())
       .then((data) => {
-        closeModal();
-        alert("Data updated successfully");
+        if (!data.success) {
+          alert(data.alert);
+        } else {
+          closeModal();
+          alert("Data updated successfully");
+        }
       })
       .catch((error) => {
         // If the error has a message property, it's a JSON error from the server

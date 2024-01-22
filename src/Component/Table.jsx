@@ -554,7 +554,7 @@ class Table extends React.Component {
                   <h3 className="modalHeaderTxt">Carnival Data Entry</h3>
                   <AddModal
                     addModal={handleAddModal}
-                    closeModal={this.handleClose}
+                    closeModal={() => this.setState({ open: false })}
                   />
                 </div>
               </Fragment>
