@@ -41,7 +41,7 @@ const extractTextFromPdf = async (file) => {
 
 // Scan Exec.Folio from the pdf, return one if only 1 value, add all if multiple lines
 function sumOfExecFolio(str) {
-  const regex = /LESS EXECUTIVE FOLIO CHARGES[^()]*\(([\d,.]+)\)/g;
+  const regex = /LESS EXECUTIVE FOLIO CHARGES[^()]*\(([\d,.]+)\)/g || /LESS EXECUTIVEFOLIO CHARGES.*?\s*.*\$\d+\.\d+\s*\$(\d+\.\d+)/;
   let total = 0;
   let match;
   while ((match = regex.exec(str)) !== null) {
@@ -76,6 +76,9 @@ function trimDate(inputStr) {
 }
 
 function moneyFormat(value, isNegative = false) {
+  if (value === "0.00" || value === "0"){
+    return ""; 
+  }
   if (value && !isNaN(parseFloat(value.replace(/,/g, "")))) {
     // Remove commas for thousands and convert to float
     let number = parseFloat(value.replace(/,/g, ""));
@@ -104,33 +107,33 @@ const AddModal = ({ closeModal }) => {
     if (!file) return;
     try{
       const extractedData = await extractTextFromPdf(file);
-      //console.log(extractedData);       // Debug
+      console.log(extractedData);       // Debug
       function extractValue(regexPattern) {
         const match = extractedData.match(regexPattern);
         return match ? match[1] : '';
       }
 
       // Retrieve the last word from the first line as ShipName
-      const ship_name = extractValue(/SHIP: CARNIVAL (\w+)/);
+      const ship_name = extractValue(/SHIP: CARNIVAL (\w+)/) || extractValue(/VOYAGE SETTLEMENT - CARNIVAL (\w+)/);
       // Retrieve the last string from the second line as VoyageNum
       const voyage_num = extractValue(/VOYAGE: (\w+)/);
       // Retrieve the date from voyage_num
       const date = trimDate(voyage_num);
       // Initialize the variables to store the data using regular expression
-      const effy_share = moneyFormat(extractValue(/FROM\) EFFY\s+(\d+,\d+\.\d+)/));
-      const rev_ss = moneyFormat(extractValue(/PLUS SAIL AND SIGN REVENUE\s+(\d+,\d+\.\d+)/));
-      const rev_cc = moneyFormat(extractValue(/PLUS DIRECT CC REVENUE\s+(\d+,\d+\.\d+)/));
-      const carnival_share = moneyFormat((extractValue(/LESS CCL SHARE OF REVENUE\s+\((\d+,\d+\.\d+)\)/)), true);
-      const exec_folio = moneyFormat((sumOfExecFolio(extractedData)), true);
-      const ss_fee = moneyFormat((extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE.*?\((\d+\.\d+)\)/)), true);
-      const cc_fee = moneyFormat((extractValue(/LESS DIRECT CREDIT CARD PROCESSING FEE.*?\((\d+\.\d+)\)/)), true);
+      const effy_share = moneyFormat(extractValue(/FROM\) EFFY\s+(\d+,\d+\.\d+)/)) || moneyFormat(extractValue(/Total\s*\$\s*([\d,]+\.\d{2})\s*PAYMENT REQUEST/));
+      const rev_ss = moneyFormat(extractValue(/PLUS SAIL AND SIGN REVENUE\s+(\d+,\d+\.\d+)/)) || moneyFormat(extractValue(/REVENUE\s+-\s+SAIL\s+AND\s+SIGN.*?\$\d{1,3}(?:,\d{3})*\.\d{2}\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$(\d{1,3}(?:,\d{3})*\.\d{2})/)) ;
+      const rev_cc = moneyFormat(extractValue(/PLUS DIRECT CC REVENUE\s+(\d+,\d+\.\d+)/)) || moneyFormat(extractValue(/REVENUE\s+-\s+DIRECT\s+CC.*?\$\d{1,3}(?:,\d{3})*\.\d{2}\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$(\d{1,3}(?:,\d{3})*\.\d{2})/));
+      const carnival_share = moneyFormat(extractValue(/LESS CCL SHARE OF REVENUE\s+\((\d+,\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS CCL SHARE OF REVENUE\s+\$([\d,]+\.\d{2})/));
+      const exec_folio = moneyFormat(sumOfExecFolio(extractedData), true);
+      const ss_fee = moneyFormat(extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE - SAIL\s+AND SIGN CC\s+SAIL\s+AND SIGN CC\s+\d+\.\d+%,\s+CC Fee:\s+\d+\.\d+% of \$\d+\.?\d*\s+\$(\d+,\d+\.\d+)/), true);
+      const cc_fee = moneyFormat(extractValue(/LESS DIRECT CREDIT CARD PROCESSING FEE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS CC PROCESSING FEE - DIRECT\s+CC\s+\d+\.\d+% of \$\d+\.?\d*\s+\$(\d+,\d+\.\d+)/), true);
       const discounts = moneyFormat(extractValue(/PLUS CCL CREW SALES DISCOUNT.*?\((\d+\.\d+)\)/));
-      const meal_charge = moneyFormat((extractValue(/LESS MEAL CHARGE.*?\((\d+\.\d+)\)/)), true);
-      const office_supp = moneyFormat((extractValue(/LESS OFFICE SUPPLIES.*?\((\d+,\d+\.\d+)\)/)), true);
-      const eu_vat = moneyFormat((extractValue(/LESS EU VAT.*?\((\d+,\d+\.\d+)\)/)), true);
-      const parole_fee = moneyFormat((extractValue(/LESS PAROLE FEE.*?\((\d+\.\d+)\)/)), true);
-      const cash_adv = moneyFormat((extractValue(/LESS CASH VISA.*?\((\d+,\d+\.\d+)\)/)), true);
-      const cash_paid = moneyFormat((extractValue(/LESS CASH PAID ON BOARD.*?\((\d+,\d+\.\d+)\)/)), true);
+      const meal_charge = moneyFormat(extractValue(/LESS MEAL CHARGE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS MEAL CHARGE\s*\$\d+\.\d+\s*\(Rate\)\s*X\s*\d+\s*\(Qty\)\s*\$(\d+\.\d+)/), true);
+      const office_supp = moneyFormat(extractValue(/LESS OFFICE SUPPLIES.*?\((\d+,\d+\.\d+)\)/), true);
+      const eu_vat = moneyFormat(extractValue(/LESS EU VAT.*?\((\d+,\d+\.\d+)\)/), true);
+      const parole_fee = moneyFormat(extractValue(/LESS PAROLE FEE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS CREW PAROLE CHARGE\s+\d+% of \$\d+\s+\$(\d+\.?\d+)/), true);
+      const cash_adv = moneyFormat(extractValue(/LESS CASH VISA.*?\((\d+,\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS CASH ADVANCEFOR PAYROLL[^]*?\$\d+\.?\d*\s+\$(\d{1,3}(?:,\d{3})*\.\d{2})/), true);
+      const cash_paid = moneyFormat(extractValue(/LESS CASH PAID ON BOARD.*?\((\d+,\d+\.\d+)\)/), true);
       // Add more conditions here as necessary for other fields.
       setRows({...rows, ship_name, voyage_num, date, effy_share, editor, rev_ss, rev_cc, 
                               discounts, carnival_share, exec_folio, ss_fee, cc_fee, meal_charge, cash_adv, 
@@ -315,7 +318,7 @@ const AddModal = ({ closeModal }) => {
 }
 export default AddModal;
 
-// Example Node.js version with pdf-parse
+// Example test version with pdf-parse
 
 // import React, { useState } from "react";
 // import pdfparse from "pdf-parse";
@@ -331,22 +334,21 @@ export default AddModal;
 //         const buffer = e.target.result;
 //         try {
 //           const data = await pdfparse(buffer);
-// PDF text
+// // PDF text
 //           const pdfdata = data.text.trim();
-// ... rest of your parsing logic ...
 
-// Example: Set Ship Name in state
+// // Example: Set Ship Name in state
 //           const lines = pdfdata.split("\n");
 //           const shipNameLine = lines[0].trim();
 //           const ship_name = shipNameLine.split(" ").pop();
 //           setPdfContent(`Ship Name: ${ship_name}`);
 
-// Retrieve the last string from the second line as VoyageNum
+// // Retrieve the last string from the second line as VoyageNum
 //           const voyageLine = lines[1].trim();
 //           const voyage_num = voyageLine.split(" ").pop();
 //           setPdfContent(`Voyage #: ${voyage_num}`);
 
-// Date trimming (Accept 2 type of voyage numbers and convert to date)
+// // Date trimming (Accept 2 type of voyage numbers and convert to date)
 //           function trimDate(inputStr) {
 //             let year, month, day;
 //             if (inputStr.length === 13) {
@@ -365,12 +367,12 @@ export default AddModal;
 //           const date = trimDate(voyage_num);
 //           setPdfContent(`Date: ${date}`);
 
-// Initialize the variables to store the data
+// // Initialize the variables to store the data
 //           let effy_share, rev_ss, rev_cc, discounts = null, carnival_share,
 //             exec_folio, eu_vat = null, ss_fee, cc_fee, meal_charge = null, parole_fee = null,
 //             cash_adv = null, office_supp = null, cash_paid = null;
 
-// Get the last string of numbers from the line "NET AMOUNT DUE" as effy_share
+// // Get the last string of numbers from the line "NET AMOUNT DUE" as effy_share
 //           const netAmountLine = lines.find((line) =>
 //             line.includes("NET AMOUNT DUE")
 //           );
@@ -378,7 +380,7 @@ export default AddModal;
 //           effy_share = netAmountMatches[netAmountMatches.length - 1];
 //           setPdfContent(`Effy Share: ${effy_share}`);
 
-// Go through all the lines between "REVENUE SETTLEMENT" and "NET AMOUNT"
+// // Go through all the lines between "REVENUE SETTLEMENT" and "NET AMOUNT"
 //           const revenueSettlementIndex = lines.findIndex((line) =>
 //             line.includes("REVENUE SETTLEMENT")
 //           );
@@ -413,8 +415,8 @@ export default AddModal;
 //             if (line.startsWith(" LESS EUROPE")) eu_vat = amount;
 //             if (line.startsWith(" LESS CASH PAID ON BOARD")) cash_paid = amount;
 //             if (line.startsWith(" LESS OFFICE SUPPLIES")) office_supp = amount;
-// Add more conditions here as necessary for other fields.
-// setPdfContent() to return
+// // Add more conditions here as necessary for other fields.
+// // setPdfContent() to return
 //             setPdfContent(`Ship Name: ${ship_name}`);
 //             setPdfContent(`Voyage#: ${voyage_num}`);
 //             setPdfContent(`Date: ${date}`);
@@ -433,8 +435,7 @@ export default AddModal;
 //             setPdfContent(`Parole Fee: ${parole_fee}`);
 //             setPdfContent(`Cash Paid Onboard: ${cash_paid}`);
 //           });
-// Log other variables as they are captured
-// catch error
+// //Log other variables as they are captured catch error
 //         } catch (error) {
 //           console.error("Error parsing the pdf:", error);
 //           setPdfContent("Error parsing the PDF");
