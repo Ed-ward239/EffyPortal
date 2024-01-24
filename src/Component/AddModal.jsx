@@ -41,12 +41,24 @@ const extractTextFromPdf = async (file) => {
 
 // Scan Exec.Folio from the pdf, return one if only 1 value, add all if multiple lines
 function sumOfExecFolio(str) {
-  const regex = /LESS EXECUTIVE FOLIO CHARGES[^()]*\(([\d,.]+)\)/g || /LESS EXECUTIVEFOLIO CHARGES.*?\s*.*\$\d+\.\d+\s*\$(\d+\.\d+)/;
+  // Using two simpler regex patterns for different PDF types
+  const regexPattern1 = /LESS EXECUTIVE FOLIO CHARGES[^()]*\(([\d,.]+)\)/g;
+  const regexPattern2 = /LESS EXECUTIVEFOLIO CHARGES.*?\s*.*\$\d+\.\d+\s*\$(\d+\.\d+)/g;
+
   let total = 0;
-  let match;
-  while ((match = regex.exec(str)) !== null) {
-    total += parseFloat(match[1].replace(/,/g, ""));
-  }
+
+  // Function to process matches for a given regex
+  const processMatches = (regex) => {
+    let match;
+    while ((match = regex.exec(str)) !== null) {
+      total += parseFloat(match[1].replace(/,/g, ""));
+    }
+  };
+
+  // Process matches for each pattern
+  processMatches(regexPattern1);
+  processMatches(regexPattern2);
+
   return total === 0 ? "" : total.toFixed(2);
 }
 
