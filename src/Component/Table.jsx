@@ -235,7 +235,7 @@ class Table extends React.Component {
         options: {
           filter: true,
           setCellProps: () => ({
-            style: { textAlign: "left", whiteSpace: "nowrap" },
+            style: { textAlign: "left", whiteSpace: "nowrap", paddingLeft: "35px"},
           }),
         },
       },
@@ -276,7 +276,7 @@ class Table extends React.Component {
         options: {
           filter: false,
           setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
+            style: { textAlign: "left", whiteSpace: "nowrap", paddingLeft: "35px" },
           }),
         },
       },
@@ -285,7 +285,7 @@ class Table extends React.Component {
         options: {
           filter: true,
           setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
+            style: { textAlign: "left", whiteSpace: "nowrap"},
           }),
           // Coloured status tag
           customBodyRender: (value, tableMeta, updateValue) => {
@@ -331,7 +331,7 @@ class Table extends React.Component {
         options: {
           filter: true,
           setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
+            style: { textAlign: "left", whiteSpace: "nowrap", paddingLeft: "35px" },
           }),
         },
       },
@@ -339,6 +339,7 @@ class Table extends React.Component {
         name: "Revenue SS",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -348,6 +349,7 @@ class Table extends React.Component {
         name: "Revenue CC",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -357,6 +359,7 @@ class Table extends React.Component {
         name: "EU VAT",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -366,6 +369,7 @@ class Table extends React.Component {
         name: "Carnival Share",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -375,6 +379,7 @@ class Table extends React.Component {
         name: "Office Supplies",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -384,6 +389,7 @@ class Table extends React.Component {
         name: "Discounts",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -393,6 +399,7 @@ class Table extends React.Component {
         name: "Exec. Folio",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -402,6 +409,7 @@ class Table extends React.Component {
         name: "SS Fee",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -411,6 +419,7 @@ class Table extends React.Component {
         name: "CC Fee",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -420,6 +429,7 @@ class Table extends React.Component {
         name: "Meal Charge",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -429,6 +439,7 @@ class Table extends React.Component {
         name: "Parole Fee",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -438,6 +449,7 @@ class Table extends React.Component {
         name: "Cash Advance",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -447,6 +459,7 @@ class Table extends React.Component {
         name: "Cash Paid Onboard",
         options: {
           filter: false,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -495,6 +508,7 @@ class Table extends React.Component {
       searchPlaceholder: "Type Anything to Search",
       sort: true,
       filter: true,
+      textAlign: 'center',
       filterType: "multiselect",
       elevation: 20,
       responsive: "vertical",

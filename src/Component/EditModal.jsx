@@ -206,48 +206,4 @@ const EditModal = (props) => {
 };
   
   export default EditModal;
-
-
-        // <form 
-        //   onSubmit={e => {
-        //     e.preventDefault()
-        //     if(!row.name) return
-        //     editModal.EditModal(row)
-        //     setRow(initFormState)
-        //   }}>
-        //   <div className="inputs">
-        //     <input name="ship_name" placeholder="Ship Name" onChange={handleInputChange} value={row.ship_name} />
-        //     <input name="voyage_num" placeholder="Voyage #" onChange={handleInputChange} value={row.voyage_num} />
-        //     <input name="date" placeholder="Date (mm/dd/yyyy)" onChange={handleInputChange} value={row.date} />
-        //     <input name="effy_share" placeholder="Effy Share" onChange={handleInputChange} value={row.effy_share} />
-        //     <input name="editor" placeholder="Edited By" onChange={handleInputChange} value={row.editor} readOnly /> 
-        //     <input name="rev_ss" placeholder="Revenue S&S" onChange={handleInputChange} value={row.rev_ss} /> 
-        //     <input name="rev_cc" placeholder="Revenue CC" onChange={handleInputChange} value={row.rev_cc} />
-        //     <input name="ss_fee" placeholder="S&S Fee" onChange={handleInputChange} value={row.ss_fee} />
-        //     <input name="cc_fee" placeholder="CC Fee" onChange={handleInputChange} value={row.cc_fee} />
-        //     <input name="euRev" placeholder="EU VAT" onChange={handleInputChange} value={row.eu_vat} />
-        //     <input name="discounts" placeholder="Discount" onChange={handleInputChange} value={row.discounts} />
-        //     <input name="carnival_share" placeholder="Carnival Share" onChange={handleInputChange} value={row.carnival_share} />          
-        //     <input name="exec_folio" placeholder="Exec. Folio" onChange={handleInputChange} value={row.exec_folio} />          
-        //     <input name="meal_charge" placeholder="Meal Charge" onChange={handleInputChange} value={row.meal_charge} />          
-        //     <input name="office_supp" placeholder="Office Supplies" onChange={handleInputChange} value={row.office_supp} />          
-        //     <input name="cash_paid" placeholder="Cash Paid on Board" onChange={handleInputChange} value={row.cash_paid} />          
-        //     <input name="cash_adv" placeholder="Cash Advance" onChange={handleInputChange} value={row.cash_adv} />          
-        //     <input name="parole_fee" placeholder="Parole Fee" onChange={handleInputChange} value={row.parole_fee} />
-        //     <label className="statusPaidLabel">Status</label>
-        //     <select 
-        //       label="Status"
-        //       name="statusPaid"
-        //       onChange={handleInputChange}
-        //       value={row.statusPaid}
-        //     >
-        //       <option value="paid">Paid</option>
-        //       <option value="pending">Pending</option>
-        //       <option value="unpaid">Unpaid</option>
-        //     </select>
-        //     </div>
-        //   <div className="btns">
-        //     <button className="submitBtn">Submit</button>
-        //   </div>
-        // </form>
   
