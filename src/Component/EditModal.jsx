@@ -105,28 +105,28 @@ const EditModal = (props) => {
             <div className="dollarSign">$</div>
           </span>
           <input className="inputTxt" type="text" placeholder=" " name="rev_ss" label="Revenue S&S" onChange={handleInputChange} value={row.rev_ss}/>
-          <label className="floating-label">Revenue S&S</label>
+          <label className="floating-label">Revenue Sail & Sign</label>
         </div>
         <div className="txtInputGrp input-group">
           <span className="inputGrp">
             <div className="dollarSign">$</div>
           </span>
           <input className="inputTxt" type="text" placeholder=" " name="rev_cc" label="Revenue CC" onChange={handleInputChange} value={row.rev_cc}/>
-          <label className="floating-label">Revenue CC</label>
+          <label className="floating-label">Revenue Direct CC</label>
         </div>
         <div className="txtInputGrp input-group">
           <span className="inputGrp">
             <div className="dollarSign">$</div>
           </span>
           <input className="inputTxt" type="text" placeholder=" " name="ss_fee" label="S&S Fee" onChange={handleInputChange} value={row.ss_fee}/>
-          <label className="floating-label">S&S Fee</label>
+          <label className="floating-label">Sail & Sign Processing Fee</label>
         </div>
         <div className="txtInputGrp input-group">
           <span className="inputGrp">
             <div className="dollarSign">$</div>
           </span>
           <input className="inputTxt" type="text" placeholder=" " name="cc_fee" label="CC Fee" onChange={handleInputChange} value={row.cc_fee}/>
-          <label className="floating-label">CC Fee</label>
+          <label className="floating-label">CC Processing Fee</label>
         </div>
         <div className="txtInputGrp input-group">
           <span className="inputGrp">
@@ -193,7 +193,6 @@ const EditModal = (props) => {
         </div>
         <div className="txtInputGrp">
           <select className="inputSelect" name="status_paid" onChange={handleInputChange} value={row.status_paid}>
-            <option value=""></option>
             <option value="Unpaid">Unpaid</option>
             <option value="Pending">Pending</option>
             <option value="Paid">Paid</option>

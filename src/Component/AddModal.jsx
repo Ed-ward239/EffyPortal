@@ -225,28 +225,28 @@ const AddModal = ({ closeModal }) => {
               <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="rev_ss" label="Revenue S&S" onChange={(e) => setRows({ ...rows, rev_ss: e.target.value })} value={rows.rev_ss || null}/>
-            <label className="floating-label">Revenue S&S</label>
+            <label className="floating-label">Revenue Sail & Sign</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="rev_cc" label="Revenue CC" onChange={(e) => setRows({ ...rows, rev_cc: e.target.value })} value={rows.rev_cc || null}/>
-            <label className="floating-label">Revenue CC</label>
+            <label className="floating-label">Revenue Direct CC</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="ss_fee" label="S&S Fee" onChange={(e) => setRows({ ...rows, ss_fee: e.target.value })} value={rows.ss_fee || null}/>
-            <label className="floating-label">S&S Fee</label>
+            <label className="floating-label">Sail & Sign Processing Fee</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="cc_fee" label="CC Fee" onChange={(e) => setRows({ ...rows, cc_fee: e.target.value })} value={rows.cc_fee || null}/>
-            <label className="floating-label">CC Fee</label>
+            <label className="floating-label">CC Processing Fee</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
@@ -313,7 +313,6 @@ const AddModal = ({ closeModal }) => {
           </div>
           <div className="txtInputGrp">
             <select className="inputSelect" onChange={(e) => setRows({ ...rows, status_paid: e.target.value })} value={rows.status_paid}>
-              <option value=""></option>
               <option value="Unpaid">Unpaid</option>
               <option value="Pending">Pending</option>
               <option value="Paid">Paid</option>
