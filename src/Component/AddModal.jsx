@@ -41,12 +41,24 @@ const extractTextFromPdf = async (file) => {
 
 // Scan Exec.Folio from the pdf, return one if only 1 value, add all if multiple lines
 function sumOfExecFolio(str) {
-  const regex = /LESS EXECUTIVE FOLIO CHARGES[^()]*\(([\d,.]+)\)/g || /LESS EXECUTIVEFOLIO CHARGES.*?\s*.*\$\d+\.\d+\s*\$(\d+\.\d+)/;
+  // Using two simpler regex patterns for different PDF types
+  const regexPattern1 = /LESS EXECUTIVE FOLIO CHARGES[^()]*\(([\d,.]+)\)/g;
+  const regexPattern2 = /LESS EXECUTIVEFOLIO CHARGES.*?\$.*?\$.*?\$(\d{1,3}(?:,\d{3})*\.\d{2})/g;
+
   let total = 0;
-  let match;
-  while ((match = regex.exec(str)) !== null) {
-    total += parseFloat(match[1].replace(/,/g, ""));
-  }
+
+  // Function to process matches for a given regex
+  const processMatches = (regex) => {
+    let match;
+    while ((match = regex.exec(str)) !== null) {
+      total += parseFloat(match[1].replace(/,/g, ""));
+    }
+  };
+
+  // Process matches for each pattern
+  processMatches(regexPattern1);
+  processMatches(regexPattern2);
+
   return total === 0 ? "" : total.toFixed(2);
 }
 
@@ -107,7 +119,7 @@ const AddModal = ({ closeModal }) => {
     if (!file) return;
     try{
       const extractedData = await extractTextFromPdf(file);
-      console.log(extractedData);       // Debug
+      //console.log(extractedData);       // Debug
       function extractValue(regexPattern) {
         const match = extractedData.match(regexPattern);
         return match ? match[1] : '';
@@ -123,10 +135,10 @@ const AddModal = ({ closeModal }) => {
       const effy_share = moneyFormat(extractValue(/FROM\) EFFY\s+(\d+,\d+\.\d+)/)) || moneyFormat(extractValue(/Total\s*\$\s*([\d,]+\.\d{2})\s*PAYMENT REQUEST/));
       const rev_ss = moneyFormat(extractValue(/PLUS SAIL AND SIGN REVENUE\s+(\d+,\d+\.\d+)/)) || moneyFormat(extractValue(/REVENUE\s+-\s+SAIL\s+AND\s+SIGN.*?\$\d{1,3}(?:,\d{3})*\.\d{2}\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$(\d{1,3}(?:,\d{3})*\.\d{2})/)) ;
       const rev_cc = moneyFormat(extractValue(/PLUS DIRECT CC REVENUE\s+(\d+,\d+\.\d+)/)) || moneyFormat(extractValue(/REVENUE\s+-\s+DIRECT\s+CC.*?\$\d{1,3}(?:,\d{3})*\.\d{2}\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$(\d{1,3}(?:,\d{3})*\.\d{2})/));
-      const carnival_share = moneyFormat(extractValue(/LESS CCL SHARE OF REVENUE\s+\((\d+,\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS CCL SHARE OF REVENUE\s+\$([\d,]+\.\d{2})/));
+      const carnival_share = moneyFormat(extractValue(/LESS CCL SHARE OF REVENUE\s+\((\d+,\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS CCL SHARE OF REVENUE\s+\$([\d,]+\.\d{2})/), true);
       const exec_folio = moneyFormat(sumOfExecFolio(extractedData), true);
-      const ss_fee = moneyFormat(extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE - SAIL\s+AND SIGN CC\s+SAIL\s+AND SIGN CC\s+\d+\.\d+%,\s+CC Fee:\s+\d+\.\d+% of \$\d+\.?\d*\s+\$(\d+,\d+\.\d+)/), true);
-      const cc_fee = moneyFormat(extractValue(/LESS DIRECT CREDIT CARD PROCESSING FEE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS CC PROCESSING FEE - DIRECT\s+CC\s+\d+\.\d+% of \$\d+\.?\d*\s+\$(\d+,\d+\.\d+)/), true);
+      const ss_fee = moneyFormat(extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE - SAIL\s+AND SIGN CC.*?\$(\d{1,3}(?:,\d{3})*\.\d{2})/), true);
+      const cc_fee = moneyFormat(extractValue(/LESS DIRECT CREDIT CARD PROCESSING FEE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS CC PROCESSING FEE - DIRECT\s+CC.*?\$(\d{1,3}(?:,\d{3})*\.\d{2})/), true);
       const discounts = moneyFormat(extractValue(/PLUS CCL CREW SALES DISCOUNT.*?\((\d+\.\d+)\)/));
       const meal_charge = moneyFormat(extractValue(/LESS MEAL CHARGE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS MEAL CHARGE\s*\$\d+\.\d+\s*\(Rate\)\s*X\s*\d+\s*\(Qty\)\s*\$(\d+\.\d+)/), true);
       const office_supp = moneyFormat(extractValue(/LESS OFFICE SUPPLIES.*?\((\d+,\d+\.\d+)\)/), true);
