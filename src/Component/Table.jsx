@@ -255,6 +255,7 @@ class Table extends React.Component {
           setCellProps: () => ({
             style: { textAlign: "left", whiteSpace: "nowrap" },
           }),
+          // Dates in DB were stored as YYYY-MM-DD, for UX and readability use function to render MM/DD/YYYY
           customBodyRender: (value, tableMeta, updateValue) => {
             if (!value) return "N/A"; // Handle invalid or undefined date values
 
@@ -286,6 +287,7 @@ class Table extends React.Component {
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Coloured status tag
           customBodyRender: (value, tableMeta, updateValue) => {
             let style;
             switch (value) {
