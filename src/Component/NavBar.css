@@ -6,9 +6,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;  
-    height: 4vw;
+    height: 5vh;
     background-color: #4EB5AB;
     margin-top: 1rem;
+    margin-bottom: 1rem;
     border-radius: 50px;
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -20,8 +21,8 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    height: 3vw;
-    width: 5vw;
+    height: 2vh;
+    width: 4vh;
   }
   
   .pfpIcon{
@@ -42,7 +43,7 @@
   }
 
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 768px) {
     .navbar-logo {
       font-size: 1rem;
       padding: 1rem;

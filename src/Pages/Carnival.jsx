@@ -9,10 +9,7 @@ function Carnival() {
     return (
         <div>
             <Navbar/>
-            <div className='pageHeader'>
-                <div className='carnivalTxt'>CARNIVAL DATA</div>
-            </div>
-                <Table/>
+            <Table/>
         </div>
     )
 }

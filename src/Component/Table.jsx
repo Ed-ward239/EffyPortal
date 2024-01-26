@@ -235,7 +235,11 @@ class Table extends React.Component {
         options: {
           filter: true,
           setCellProps: () => ({
-            style: { textAlign: "left", whiteSpace: "nowrap", paddingLeft: "35px"},
+            style: {
+              textAlign: "left",
+              whiteSpace: "nowrap",
+              paddingLeft: "35px",
+            },
           }),
         },
       },
@@ -276,8 +280,22 @@ class Table extends React.Component {
         options: {
           filter: false,
           setCellProps: () => ({
-            style: { textAlign: "left", whiteSpace: "nowrap", paddingLeft: "35px" },
+            style: {
+              textAlign: "left",
+              whiteSpace: "nowrap",
+              paddingLeft: "35px",
+            },
           }),
+          // Adding commas
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
@@ -285,7 +303,7 @@ class Table extends React.Component {
         options: {
           filter: true,
           setCellProps: () => ({
-            style: { textAlign: "left", whiteSpace: "nowrap"},
+            style: { textAlign: "left", whiteSpace: "nowrap" },
           }),
           // Coloured status tag
           customBodyRender: (value, tableMeta, updateValue) => {
@@ -331,28 +349,52 @@ class Table extends React.Component {
         options: {
           filter: true,
           setCellProps: () => ({
-            style: { textAlign: "left", whiteSpace: "nowrap", paddingLeft: "35px" },
+            style: {
+              textAlign: "left",
+              whiteSpace: "nowrap",
+              paddingLeft: "35px",
+            },
           }),
         },
       },
       {
-        name: "Revenue SS",
+        name: "Revenue Sail & Sign",
         options: {
           filter: false,
           display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
-        name: "Revenue CC",
+        name: "Revenue Direct CC",
         options: {
           filter: false,
           display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
@@ -363,6 +405,16 @@ class Table extends React.Component {
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
@@ -373,6 +425,16 @@ class Table extends React.Component {
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
@@ -383,6 +445,16 @@ class Table extends React.Component {
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
@@ -393,6 +465,16 @@ class Table extends React.Component {
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
@@ -403,26 +485,56 @@ class Table extends React.Component {
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
-        name: "SS Fee",
+        name: "Sail & Sign Processing Fee",
         options: {
           filter: false,
           display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
-        name: "CC Fee",
+        name: "CC Processing Fee",
         options: {
           filter: false,
           display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
@@ -433,6 +545,16 @@ class Table extends React.Component {
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
@@ -443,6 +565,16 @@ class Table extends React.Component {
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
@@ -453,23 +585,42 @@ class Table extends React.Component {
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
-        name: "Cash Paid Onboard",
+        name: "Cash Onboard",
         options: {
           filter: false,
           display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (value !== null && value !== undefined) {
+              // Assuming value is a number or can be converted into one.
+              const formattedValue = Number(value).toLocaleString();
+              return formattedValue;
+            } else {
+              return ""; // or some placeholder like 'N/A' if the value is not available
+            }
+          },
         },
       },
       {
         name: "Action",
         options: {
-          filter: false,
-          sort: false,
+          textAlign: "right",
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -486,7 +637,7 @@ class Table extends React.Component {
                   }}
                   className="editBtn"
                 >
-                  <EditNoteIcon />
+                  <EditNoteIcon style={{ color: "#6495ED", paddingLeft: "0px" }}  />
                 </IconButton>
                 <IconButton
                   onClick={() => {
@@ -494,7 +645,7 @@ class Table extends React.Component {
                   }}
                   className="deleteBtn"
                 >
-                  <DeleteForeverIcon style={{ color: "red" }} />
+                  <DeleteForeverIcon style={{ color: "red", paddingLeft: "0px" }} />
                 </IconButton>
               </p>
             );
@@ -514,9 +665,9 @@ class Table extends React.Component {
       responsive: "vertical",
       rowsPerPage: 50,
       rowsPerPageOptions: [5, 50, 100, 500],
-      print: false,
-      fixedSelectColumn: false,
-      tableBodyHeight: "65vh",
+      //print: false,
+      fixedSelectColumn: true,
+      tableBodyHeight: "74vh",
       downloadOptions: {
         filename: "HFC-Voyages.csv",
         separator: ",",
@@ -525,6 +676,7 @@ class Table extends React.Component {
 
     return (
       <div className="table">
+        <div className="btnDiv">
         <Button
           className="addBtn"
           variant="outlined"
@@ -545,12 +697,18 @@ class Table extends React.Component {
         >
           Refresh
         </Button>
-        <MUIDataTable
-          className="dataTable"
-          data={data}
-          columns={columns}
-          options={options}
-        />
+        </div>
+          <MUIDataTable
+            className="dataTable"
+            title={
+              <div className="pageHeader">
+                <div className="carnivalTxt">CARNIVAL DATA</div>
+              </div>
+            }
+            data={data}
+            columns={columns}
+            options={options}
+          />
         <Modal open={open} onClose={this.handleClose}>
           <div className="modal">
             {modalType === "editModal" ? (
@@ -581,4 +739,5 @@ class Table extends React.Component {
     );
   }
 }
+
 export default Table;

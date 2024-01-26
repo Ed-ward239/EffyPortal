@@ -328,3 +328,49 @@ const AddModal = ({ closeModal }) => {
     );
 }
 export default AddModal;
+
+
+// Future Optimization 
+/*
+  function extractAndFormatValue(extractedData, patterns, isNegative = false) {
+  for (const pattern of patterns) {
+    const match = extractedData.match(pattern);
+    if (match && match[1]) {
+      return moneyFormat(match[1], isNegative);
+    }
+  }
+  return null;
+}
+
+const AddModal = ({ closeModal }) => {
+  // ... other code ...
+
+  const handleFileChange = async (event) => {
+    // ... other code ...
+
+    // Define patterns for each field
+    const patterns = {
+      effy_share: [/FROM\) EFFY\s+(\d+,\d+\.\d+)/, /Total\s*\$\s*([\d,]+\.\d{2})\s*PAYMENT REQUEST/],
+      rev_ss: [/PLUS SAIL AND SIGN REVENUE\s+(\d+,\d+\.\d+)/, /REVENUE\s+-\s+SAIL\s+AND\s+SIGN.*?\$\d{1,3}(?:,\d{3})*\.\d{2}\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$(\d{1,3}(?:,\d{3})*\.\d{2})/],
+      // ... other patterns ...
+    };
+
+    // Extract and format values
+    const effy_share = extractAndFormatValue(extractedData, patterns.effy_share);
+    const rev_ss = extractAndFormatValue(extractedData, patterns.rev_ss);
+    const rev_cc = extractAndFormatValue(extractedData, patterns.rev_cc);
+    const carnival_share = extractAndFormatValue(extractedData, patterns.carnival_share, true);
+    const exec_folio = moneyFormat(sumOfExecFolio(extractedData), true);
+    const ss_fee = extractAndFormatValue(extractedData, patterns.ss_fee, true);
+    // ... other fields ...
+
+    setRows({...rows, ship_name, voyage_num, date, effy_share, editor, rev_ss, rev_cc, 
+                          discounts, carnival_share, exec_folio, ss_fee, cc_fee, meal_charge, cash_adv, 
+                          parole_fee, eu_vat, cash_paid, office_supp})
+    // ... other code ...
+  };
+
+  // ... other code ...
+}
+
+*/
