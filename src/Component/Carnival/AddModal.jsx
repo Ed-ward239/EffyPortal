@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { getDocument } from "pdfjs-dist/legacy/build/pdf";
 import "pdfjs-dist/build/pdf.worker.entry";
 import "./Modal.css";
-import { useUsername } from "./useUsername";
+import { useUsername } from "../useUsername";
 
 // Const function to extract text from the uploaded pdf file
 const extractTextFromPdf = async (file) => {

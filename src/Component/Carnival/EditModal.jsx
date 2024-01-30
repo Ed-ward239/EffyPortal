@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Modal.css";
-import { useUsername } from "./useUsername";
+import { useUsername } from "../useUsername";
 
 const EditModal = (props) => {
   const editor = useUsername();

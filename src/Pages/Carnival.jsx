@@ -3,7 +3,7 @@ import React from 'react';
 import Navbar from '../Component/NavBar';
 //import Button from '@mui/material/Button';
 import "./Carnival.css";
-import Table from "../Component/Table";
+import Table from "../Component/Carnival/Table.jsx";
 
 function Carnival() {
     return (

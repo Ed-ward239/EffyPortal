@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
-import Button from '@mui/material/Button';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
-import EditNoteIcon from '@mui/icons-material/EditNote';
-import IconButton from '@mui/material/IconButton';
-import AddModal from "../Component/AddModal";
-import EditModal from "../Component/EditModal";
+import Button from "@mui/material/Button";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import IconButton from "@mui/material/IconButton";
+import AddModal from "./AddModal.jsx";
+import EditModal from "./EditModal.jsx";
 import Modal from "@mui/material/Modal";
 import MUIDataTable from "mui-datatables";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 import "./Table.css";
 class Table extends React.Component {
@@ -16,15 +16,16 @@ class Table extends React.Component {
     super(props);
 
     this.open = false;
-    this.state = { 
+    this.state = {
       open: false,
-      modalType: 'addModal', 
-      edit: false };
+      modalType: "addModal",
+      edit: false,
+    };
     this.array = [];
     this.currentData = [];
     this.editing = false;
   }
-  
+
   loadContentFromServer() {
     // Back-end server
     const url = "http://localhost:8081/get";
@@ -228,6 +229,16 @@ class Table extends React.Component {
       );
     };
 
+    const formatValue = (value) => {
+      if (value !== null && value !== undefined) {
+        // Assuming value is a number or can be converted into one.
+        const formattedValue = Number(value).toLocaleString();
+        return formattedValue;
+      } else {
+        return ""; // or some placeholder like 'N/A' if the value is not available
+      }
+    };
+
     // Table Column names
     const columns = [
       {
@@ -238,7 +249,7 @@ class Table extends React.Component {
             style: {
               textAlign: "left",
               whiteSpace: "nowrap",
-              paddingLeft: "35px",
+              paddingLeft: "20px",
             },
           }),
         },
@@ -257,7 +268,11 @@ class Table extends React.Component {
         options: {
           filter: false,
           setCellProps: () => ({
-            style: { textAlign: "left", whiteSpace: "nowrap" },
+            style: {
+              textAlign: "left",
+              whiteSpace: "nowrap",
+              paddingLeft: "5px",
+            },
           }),
           // Dates in DB were stored as YYYY-MM-DD, for UX and readability use function to render MM/DD/YYYY
           customBodyRender: (value, tableMeta, updateValue) => {
@@ -283,18 +298,12 @@ class Table extends React.Component {
             style: {
               textAlign: "left",
               whiteSpace: "nowrap",
-              paddingLeft: "35px",
+              paddingLeft: "20px",
             },
           }),
           // Adding commas
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -352,7 +361,7 @@ class Table extends React.Component {
             style: {
               textAlign: "left",
               whiteSpace: "nowrap",
-              paddingLeft: "35px",
+              paddingLeft: "15px",
             },
           }),
         },
@@ -367,13 +376,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -387,13 +390,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -407,13 +404,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -427,13 +418,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -447,13 +432,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -467,13 +446,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -487,13 +460,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -507,13 +474,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -527,13 +488,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -547,13 +502,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -567,13 +516,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -587,13 +530,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -607,13 +544,7 @@ class Table extends React.Component {
           }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (value !== null && value !== undefined) {
-              // Assuming value is a number or can be converted into one.
-              const formattedValue = Number(value).toLocaleString();
-              return formattedValue;
-            } else {
-              return ""; // or some placeholder like 'N/A' if the value is not available
-            }
+            return formatValue(value);
           },
         },
       },
@@ -637,7 +568,9 @@ class Table extends React.Component {
                   }}
                   className="editBtn"
                 >
-                  <EditNoteIcon style={{ color: "#6495ED", paddingLeft: "0px" }}  />
+                  <EditNoteIcon
+                    style={{ color: "#6495ED", paddingLeft: "0px" }}
+                  />
                 </IconButton>
                 <IconButton
                   onClick={() => {
@@ -645,7 +578,9 @@ class Table extends React.Component {
                   }}
                   className="deleteBtn"
                 >
-                  <DeleteForeverIcon style={{ color: "red", paddingLeft: "0px" }} />
+                  <DeleteForeverIcon
+                    style={{ color: "red", paddingLeft: "0px" }}
+                  />
                 </IconButton>
               </p>
             );
@@ -659,15 +594,16 @@ class Table extends React.Component {
       searchPlaceholder: "Type Anything to Search",
       sort: true,
       filter: true,
-      textAlign: 'center',
+      textAlign: "center",
       filterType: "multiselect",
       elevation: 20,
-      responsive: "vertical",
+      responsive: "simple",
       rowsPerPage: 50,
       rowsPerPageOptions: [5, 50, 100, 500],
-      //print: false,
+      print: "disabled",
       fixedSelectColumn: true,
-      tableBodyHeight: "74vh",
+      tableBodyHeight: "100%",
+      tableBodyMaxHeight: "75vh",
       downloadOptions: {
         filename: "HFC-Voyages.csv",
         separator: ",",
@@ -677,38 +613,38 @@ class Table extends React.Component {
     return (
       <div className="table">
         <div className="btnDiv">
-        <Button
-          className="addBtn"
-          variant="outlined"
-          startIcon={<PlaylistAddIcon />}
-          onClick={() => {
-            addButton();
-          }}
-        >
-          Add
-        </Button>
-        <Button
-          className="refreshBtn"
-          variant="outlined"
-          startIcon={<RefreshIcon />}
-          onClick={() => {
-            this.loadContentFromServer();
-          }}
-        >
-          Refresh
-        </Button>
+          <Button
+            className="addBtn"
+            variant="outlined"
+            startIcon={<PlaylistAddIcon />}
+            onClick={() => {
+              addButton();
+            }}
+          >
+            Add
+          </Button>
+          <Button
+            className="refreshBtn"
+            variant="outlined"
+            startIcon={<RefreshIcon />}
+            onClick={() => {
+              this.loadContentFromServer();
+            }}
+          >
+            Refresh
+          </Button>
         </div>
-          <MUIDataTable
-            className="dataTable"
-            title={
-              <div className="pageHeader">
-                <div className="carnivalTxt">CARNIVAL DATA</div>
-              </div>
-            }
-            data={data}
-            columns={columns}
-            options={options}
-          />
+        <MUIDataTable
+          className="dataTable"
+          title={
+            <div className="pageHeader">
+              <div className="carnivalTxt">CARNIVAL DATA</div>
+            </div>
+          }
+          data={data}
+          columns={columns}
+          options={options}
+        />
         <Modal open={open} onClose={this.handleClose}>
           <div className="modal">
             {modalType === "editModal" ? (
