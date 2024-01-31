@@ -6,42 +6,53 @@
     padding: none;
 }
 
+.btnContainer{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    border: 1px solid red;
+    width: 50%;
+    height: 60%;
+}
+
 .carnivalBox{
     background-color: white;
-    background-image: url("../Image/Carnival.png");
+    background-image: url("../Image/ccl.jpg");
     background-repeat: no-repeat;
-    background-size: 104%;
+    background-size: 150%;
     background-position: center;
-    height: 90px;
-    width: 150px;
-    color: white;
-    font-size: 25px;
-    border-radius: 15px !important;
+    height: 100%;
+    width: 100%;
+    border: 1px solid rgb(55, 0, 255) !important;
+    font-size: 60px !important;
+    color: white !important;
 }
 
 .nclBox{
-    background-image: url("../Image/NCL.png");
+    background-image: url("../Image/ncl.jpg");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 60%;
-    height: 90px;
-    width: 150px;
-    color: white;
-    font-size: 25px;
-    border-radius: 15px !important;
+    background-size: 155%;
+    background-color: rgba(83, 83, 83, 0.514) !important;
+    height: 100%;
+    width: 100%;
+    border: 1px solid rgb(187, 255, 0) !important;
+    font-size: 60px !important;
+    color: white !important;
+
 }
 
 .functionalBoxes{
-    width: 70%;
-    height: 40vh;
+    width: 98%;
+    height: 70vh;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    margin: auto;
-    padding: 10%;
     background-color: rgba(128, 128, 128, 0.316);
     border-radius: 15px;
-    margin-top: 5rem;
+    margin-top: 2rem;
     margin-left: auto;
     margin-right: auto;
+
 }
+

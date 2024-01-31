@@ -3,7 +3,7 @@ import { SHA256 } from 'crypto-js';
 import { useMsal } from '@azure/msal-react';
 import './LogIn.css';
 import Particle from "../Particles";
-import LoginIcon from '@mui/icons-material/Login';
+import Fingerprint from '@mui/icons-material/Fingerprint';
 import Effy from '../Image/Effy.png';
 
 export default function LogIn() {
@@ -52,7 +52,7 @@ export default function LogIn() {
     <>
       <div className="headerDiv">
         <div className="header"><h2 className="headerTxt"><img alt="Login" src={Effy}/>Portal</h2></div>
-            <button className="signInBtn" onClick={handleSignIn}><LoginIcon/> Log In</button>
+            <button className="signInBtn" onClick={handleSignIn}><Fingerprint/> Log In</button>
       </div>
       <Particle/>
       <div className="devWatermark">Developed by Edward Lee</div>
