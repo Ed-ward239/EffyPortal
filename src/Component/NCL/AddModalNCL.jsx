@@ -2,7 +2,7 @@ import React, { useState } from "react";
 //import { pdfjs } from "pdfjs-dist";
 import { getDocument } from "pdfjs-dist/legacy/build/pdf";
 import "pdfjs-dist/build/pdf.worker.entry";
-import "./Modal.css";
+import "./ModalNCL.css";
 import { useUsername } from "../useUsername";
 
 // Const function to extract text from the uploaded pdf file
@@ -20,13 +20,13 @@ const extractTextFromPdf = async (file) => {
           const page = await pdf.getPage(pageNum);
           const textContent = await page.getTextContent();
           const pageText = textContent.items.map((item) => item.str).join(" ");
-          //console.log(pageText); // Check the text of each page
+          console.log(pageText); // Check the text of each page
           extractedText += pageText + " ";
-          //console.log(extractedText) // Debug
+          console.log(extractedText) // Debug
         }
         resolve(extractedText);
       } catch (error) {
-        reject(error);
+        reject(alert(error));
       }
     };
 
@@ -39,8 +39,8 @@ const extractTextFromPdf = async (file) => {
   });
 };
 
-// Scan Exec.Folio from the pdf, return one if only 1 value, add all if multiple lines
-function sumOfExecFolio(str) {
+// Scan Misc.Charges from the pdf, return one if only 1 value, add all if multiple lines
+function sumOfMisc(str) {
   // Using two simpler regex patterns for different PDF types
   const regexPattern1 = /LESS EXECUTIVE FOLIO CHARGES[^()]*\(([\d,.]+)\)/g;
   const regexPattern2 = /LESS EXECUTIVEFOLIO CHARGES.*?\$.*?\$.*?\$(\d{1,3}(?:,\d{3})*\.\d{2})/g;
@@ -60,31 +60,6 @@ function sumOfExecFolio(str) {
   processMatches(regexPattern2);
 
   return total === 0 ? "" : total.toFixed(2);
-}
-
-// Date trimming (Accept 2 type of voyage numbers and convert to date)
-function trimDate(inputStr) {
-  if (inputStr.length === 13) {
-    // Assuming the format is two letters followed by YYYYMMDD and three additional characters
-    // Extract the year, month, and day using substring
-    let year = inputStr.substring(2, 6);
-    let month = inputStr.substring(6, 8);
-    let day = inputStr.substring(8, 10);
-
-    // Format and return the date
-    return year + "/" + month + "/" + day;
-  } else if (inputStr.length === 10) {
-    // Assuming the format is two letters followed by MMDD20YY
-    // Extract the year, month, and day using substring
-    let month = inputStr.substring(4, 6);
-    let day = inputStr.substring(6, 8);
-    let year = "20" + inputStr.substring(8, 10);
-
-    // Format and return the date
-    return year + "/" + month + "/" + day;
-  } else {
-    return "Invalid input length";
-  }
 }
 
 function moneyFormat(value, isNegative = false) {
@@ -109,9 +84,8 @@ const AddModal = ({ closeModal }) => {
   const editor = useUsername();
   
   const [ rows, setRows ] = useState({
-    ship_name: '', voyage_num: '', date: '', effy_share: '', editor: editor, rev_ss: '',
-    rev_cc: '', ss_fee: '', cc_fee: '', eu_vat: '', discounts: '', carnival_share: '', exec_folio: '',
-    meal_charge: '', office_supp: '', cash_adv: '', cash_paid: '', parole_fee: '', status_paid: ''
+    ship_name: '', voyage_num: '', start_date: '', end_date: '', revenue: '', plcc: '', dpa: '', plcc_dpa: '', reg_commission: '', vip_commission: '', effy_rev: '', editor: editor, vip_sales: '', food: '', beverages: '', 
+    discounts: '', cc_fee: '', cash_adv: '', supplies: '', misc_charges: '', vat: '', medical_charges: '', printing: '', prize_voucher: '', status_paid: ''
   });
   
   const handleFileChange = async (event) => {
@@ -126,30 +100,37 @@ const AddModal = ({ closeModal }) => {
       }
 
       // Retrieve the last word from the first line as ShipName
-      const ship_name = extractValue(/SHIP: CARNIVAL (\w+)/) || extractValue(/VOYAGE SETTLEMENT - CARNIVAL (\w+)/);
+      const ship_name = extractValue(/SHIP Name: Norwegian (\w+)/) || extractValue(/VOYAGE SETTLEMENT - CARNIVAL (\w+)/);
       // Retrieve the last string from the second line as VoyageNum
-      const voyage_num = extractValue(/VOYAGE: (\w+)/);
+      const voyage_num = extractValue(/VOYAGE #: (\w+)/);
       // Retrieve the date from voyage_num
-      const date = trimDate(voyage_num);
+      const start_date = extractValue();
+      const end_date = extractValue();
       // Initialize the variables to store the data using regular expression
-      const effy_share = moneyFormat(extractValue(/FROM\) EFFY\s+(\d+,\d+\.\d+)/)) || moneyFormat(extractValue(/Total\s*\$\s*([\d,]+\.\d{2})\s*PAYMENT REQUEST/));
-      const rev_ss = moneyFormat(extractValue(/PLUS SAIL AND SIGN REVENUE\s+(\d+,\d+\.\d+)/)) || moneyFormat(extractValue(/REVENUE\s+-\s+SAIL\s+AND\s+SIGN.*?\$\d{1,3}(?:,\d{3})*\.\d{2}\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$(\d{1,3}(?:,\d{3})*\.\d{2})/)) ;
-      const rev_cc = moneyFormat(extractValue(/PLUS DIRECT CC REVENUE\s+(\d+,\d+\.\d+)/)) || moneyFormat(extractValue(/REVENUE\s+-\s+DIRECT\s+CC.*?\$\d{1,3}(?:,\d{3})*\.\d{2}\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$0\.00\s+\$(\d{1,3}(?:,\d{3})*\.\d{2})/));
-      const carnival_share = moneyFormat(extractValue(/LESS CCL SHARE OF REVENUE\s+\((\d+,\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS CCL SHARE OF REVENUE\s+\$([\d,]+\.\d{2})/), true);
-      const exec_folio = moneyFormat(sumOfExecFolio(extractedData), true);
-      const ss_fee = moneyFormat(extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS SAIL AND SIGN CC PROCESSING FEE - SAIL\s+AND SIGN CC.*?\$(\d{1,3}(?:,\d{3})*\.\d{2})/), true);
-      const cc_fee = moneyFormat(extractValue(/LESS DIRECT CREDIT CARD PROCESSING FEE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS CC PROCESSING FEE - DIRECT\s+CC.*?\$(\d{1,3}(?:,\d{3})*\.\d{2})/), true);
-      const discounts = moneyFormat(extractValue(/PLUS CCL CREW SALES DISCOUNT.*?\((\d+\.\d+)\)/));
-      const meal_charge = moneyFormat(extractValue(/LESS MEAL CHARGE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS MEAL CHARGE\s*\$\d+\.\d+\s*\(Rate\)\s*X\s*\d+\s*\(Qty\)\s*\$(\d+\.\d+)/), true);
-      const office_supp = moneyFormat(extractValue(/LESS OFFICE SUPPLIES.*?\((\d+,\d+\.\d+)\)/), true);
-      const eu_vat = moneyFormat(extractValue(/LESS EU VAT.*?\((\d+,\d+\.\d+)\)/), true);
-      const parole_fee = moneyFormat(extractValue(/LESS PAROLE FEE.*?\((\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS CREW PAROLE CHARGE\s+\d+% of \$\d+\s+\$(\d+\.?\d+)/), true);
-      const cash_adv = moneyFormat(extractValue(/LESS CASH VISA.*?\((\d+,\d+\.\d+)\)/), true) || moneyFormat(extractValue(/LESS CASH ADVANCEFOR PAYROLL[^]*?\$\d+\.?\d*\s+\$(\d{1,3}(?:,\d{3})*\.\d{2})/), true);
-      const cash_paid = moneyFormat(extractValue(/LESS CASH PAID ON BOARD.*?\((\d+,\d+\.\d+)\)/), true);
+        const FJ_GuestRev = extractValue();
+        const FJ_CrewRev = extractValue();
+      const revenue = FJ_GuestRev + FJ_CrewRev;
+      const vip_sales = extractValue();
+      const plcc = extractValue();
+      const dpa = extractValue();
+      const plcc_dpa = moneyFormat((plcc + dpa), true);
+      const vat = moneyFormat(extractValue());
+      const reg_commission = moneyFormat((revenue * (1 + 0.36)), true);
+      const vip_commission = moneyFormat((vip_sales * (1 + 0.2)), true);
+      const discounts = moneyFormat(extractValue());
+      const food = moneyFormat(extractValue(), true);
+      const beverages = moneyFormat(extractValue(), true);
+      const cc_fee = moneyFormat(extractValue(), true);
+      const supplies = moneyFormat(extractValue(), true);
+      const misc_charges = moneyFormat(sumOfMisc(extractedData), true);
+      const cash_adv = moneyFormat(extractValue(), true);
+      const medical_charges = moneyFormat(extractValue(), true);
+      const printing = moneyFormat(extractValue(), true);
+      const prize_voucher = moneyFormat(extractValue());
+      const effy_rev = moneyFormat(extractValue());
       // Add more conditions here as necessary for other fields.
-      setRows({...rows, ship_name, voyage_num, date, effy_share, editor, rev_ss, rev_cc, 
-                              discounts, carnival_share, exec_folio, ss_fee, cc_fee, meal_charge, cash_adv, 
-                              parole_fee, eu_vat, cash_paid, office_supp})
+      setRows({...rows, ship_name, voyage_num, start_date, end_date, revenue, plcc, dpa, plcc_dpa, reg_commission, vip_commission, effy_rev, editor, vip_sales, food, beverages, 
+                        discounts, cc_fee, cash_adv, supplies, misc_charges, vat, medical_charges, printing, prize_voucher})
     }catch (error){
       console.error('Error parsing the PDF: ', error);
     }
@@ -217,47 +198,57 @@ const AddModal = ({ closeModal }) => {
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="effy_share" label="Effy Share" onChange={(e) => setRows({ ...rows, effy_share: e.target.value })} value={rows.effy_share}/>
-            <label className="floating-label">Effy Share</label>
-          </div>
-          <div className="txtInputGrp">
-            <input className="inputTxt" type="text" placeholder=" " name="editor" label="Editor" value={rows.editor} readOnly/>
-            <label className="floating-label">Editor</label>
+            <input className="inputTxt" type="text" placeholder=" " name="revenue" label="Revenue" onChange={(e) => setRows({ ...rows, revenue: e.target.value })} value={rows.revenue}/>
+            <label className="floating-label">Revenue</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="rev_ss" label="Revenue S&S" onChange={(e) => setRows({ ...rows, rev_ss: e.target.value })} value={rows.rev_ss || null}/>
-            <label className="floating-label">Revenue Sail & Sign</label>
+            <input className="inputTxt" type="text" placeholder=" " name="vip_sales" label="VIP Sales" onChange={(e) => setRows({ ...rows, vip_sales: e.target.value })} value={rows.vip_sales || null}/>
+            <label className="floating-label">VIP Sales</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="rev_cc" label="Revenue CC" onChange={(e) => setRows({ ...rows, rev_cc: e.target.value })} value={rows.rev_cc || null}/>
-            <label className="floating-label">Revenue Direct CC</label>
+            <input className="inputTxt" type="text" placeholder=" " name="plcc_dpa" label="PLCC & DPA" onChange={(e) => setRows({ ...rows, plcc_dpa: e.target.value })} value={rows.plcc_dpa || null}/>
+            <label className="floating-label">PLCC & DPA</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="ss_fee" label="S&S Fee" onChange={(e) => setRows({ ...rows, ss_fee: e.target.value })} value={rows.ss_fee || null}/>
-            <label className="floating-label">Sail & Sign Processing Fee</label>
+            <input className="inputTxt" type="text" placeholder=" " name="plcc" label="PLCC" onChange={(e) => setRows({ ...rows, plcc: e.target.value })} value={rows.plcc || null}/>
+            <label className="floating-label">PLCC</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="cc_fee" label="CC Fee" onChange={(e) => setRows({ ...rows, cc_fee: e.target.value })} value={rows.cc_fee || null}/>
-            <label className="floating-label">CC Processing Fee</label>
+            <input className="inputTxt" type="text" placeholder=" " name="dpa" label="DPA" onChange={(e) => setRows({ ...rows, dpa: e.target.value })} value={rows.dpa || null}/>
+            <label className="floating-label">DPA</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="eu_vat" label="EU VAT" onChange={(e) => setRows({ ...rows, eu_vat: e.target.value })} value={rows.eu_vat || null}/>
-            <label className="floating-label">EU VAT</label>
+            <input className="inputTxt" type="text" placeholder=" " name="vat" label="VAT" onChange={(e) => setRows({ ...rows, vat: e.target.value })} value={rows.vat || null}/>
+            <label className="floating-label">VAT</label>
+          </div>
+          <div className="txtInputGrp input-group">
+            <span className="inputGrp">
+              <div className="dollarSign">$</div>
+            </span>
+            <input className="inputTxt" type="text" placeholder=" " name="reg_commission" label="Cruise Commission" onChange={(e) => setRows({ ...rows, reg_commission: e.target.value })} value={rows.reg_commission || null}/>
+            <label className="floating-label">Cruise Commission</label>
+          </div>
+          <div className="txtInputGrp input-group">
+            <span className="inputGrp">
+              <div className="dollarSign">$</div>
+            </span>
+            <input className="inputTxt" type="text" placeholder=" " name="vip_commission" label="VIP Commission" onChange={(e) => setRows({ ...rows, vip_commission: e.target.value })} value={rows.vip_commission || null}/>
+            <label className="floating-label">VIP Commission</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
@@ -270,36 +261,36 @@ const AddModal = ({ closeModal }) => {
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="carnival_share" label="Carnival Share" onChange={(e) => setRows({ ...rows, carnival_share: e.target.value })} value={rows.carnival_share || null}/>
-            <label className="floating-label">Carnival Share</label>
+            <input className="inputTxt" type="text" placeholder=" " name="food" label="Food" onChange={(e) => setRows({ ...rows, food: e.target.value })} value={rows.food || null}/>
+            <label className="floating-label">Food</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="exec_folio" label="Exec. Folio" onChange={(e) => setRows({ ...rows, exec_folio: e.target.value })} value={rows.exec_folio || null}/>
-            <label className="floating-label">Exec. Folio</label>
+            <input className="inputTxt" type="text" placeholder=" " name="beverages" label="Beverages" onChange={(e) => setRows({ ...rows, beverages: e.target.value })} value={rows.beverages || null}/>
+            <label className="floating-label">Beverages</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="meal_charge" label="Meal Charge" onChange={(e) => setRows({ ...rows, meal_charge: e.target.value })} value={rows.meal_charge || null}/>
-            <label className="floating-label">Meal Charge</label>
+            <input className="inputTxt" type="text" placeholder=" " name="cc_fee" label="CC Fee" onChange={(e) => setRows({ ...rows, cc_fee: e.target.value })} value={rows.cc_fee || null}/>
+            <label className="floating-label">CC Fee</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="office_supp" label="Office Supplies" onChange={(e) => setRows({ ...rows, office_supp: e.target.value })} value={rows.office_supp || null}/>
-            <label className="floating-label">Office Supplies</label>
+            <input className="inputTxt" type="text" placeholder=" " name="supplies" label="Supplies" onChange={(e) => setRows({ ...rows, supplies: e.target.value })} value={rows.supplies || null}/>
+            <label className="floating-label">Supplies</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="cash_paid" label="Cash Paid Onboard" onChange={(e) => setRows({ ...rows, cash_paid: e.target.value })} value={rows.cash_paid || null}/>
-            <label className="floating-label">Cash Paid Onboard</label>
+            <input className="inputTxt" type="text" placeholder=" " name="misc_charges" label="Misc. Charges" onChange={(e) => setRows({ ...rows, misc_charges: e.target.value })} value={rows.misc_charges || null}/>
+            <label className="floating-label">Misc. Charges</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
@@ -312,8 +303,33 @@ const AddModal = ({ closeModal }) => {
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="parole_fee" label="Parole Fee" onChange={(e) => setRows({ ...rows, parole_fee: e.target.value })} value={rows.parole_fee || null}/>
-            <label className="floating-label">Parole Fee</label>
+            <input className="inputTxt" type="text" placeholder=" " name="medical_charges" label="Medical Charges" onChange={(e) => setRows({ ...rows, medical_charges: e.target.value })} value={rows.medical_charges || null}/>
+            <label className="floating-label">Medical Charges</label>
+          </div>
+          <div className="txtInputGrp input-group">
+            <span className="inputGrp">
+              <div className="dollarSign">$</div>
+            </span>
+            <input className="inputTxt" type="text" placeholder=" " name="printing" label="Printing" onChange={(e) => setRows({ ...rows, printing: e.target.value })} value={rows.printing || null}/>
+            <label className="floating-label">Printing</label>
+          </div>
+          <div className="txtInputGrp input-group">
+            <span className="inputGrp">
+              <div className="dollarSign">$</div>
+            </span>
+            <input className="inputTxt" type="text" placeholder=" " name="prize_voucher" label="Prize Voucher" onChange={(e) => setRows({ ...rows, prize_voucher: e.target.value })} value={rows.prize_voucher || null}/>
+            <label className="floating-label">Prize Voucher</label>
+          </div>
+          <div className="txtInputGrp input-group">
+            <span className="inputGrp">
+              <div className="dollarSign">$</div>
+            </span>
+            <input className="inputTxt" type="text" placeholder=" " name="effy_rev" label="Effy Revenue" onChange={(e) => setRows({ ...rows, effy_rev: e.target.value })} value={rows.effy_rev || null}/>
+            <label className="floating-label">Effy Revenue</label>
+          </div>
+          <div className="txtInputGrp">
+            <input className="inputTxt" type="text" placeholder=" " name="editor" label="Editor" value={rows.editor} readOnly/>
+            <label className="floating-label">Editor</label>
           </div>
           <div className="txtInputGrp">
             <select className="inputSelect" onChange={(e) => setRows({ ...rows, status_paid: e.target.value })} value={rows.status_paid}>
@@ -370,7 +386,7 @@ const AddModal = ({ closeModal }) => {
 
     setRows({...rows, ship_name, voyage_num, date, effy_share, editor, rev_ss, rev_cc, 
                           discounts, carnival_share, exec_folio, ss_fee, cc_fee, meal_charge, cash_adv, 
-                          parole_fee, eu_vat, cash_paid, office_supp})
+                          parole_fee, vat, cash_paid, office_supp})
     // ... other code ...
   };
 

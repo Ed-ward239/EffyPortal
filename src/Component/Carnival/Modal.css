@@ -14,7 +14,7 @@
 .modalBackground{
   background-color: white;
   border-radius: 15px;
-  height: 65vh;
+  height: 75vh;
   width: 70%;
   display: flex;
   align-items: center;
@@ -26,6 +26,11 @@
 
 .modal .btn {
   display: block;
+}
+
+.inputSelect{
+  width: 25vh !important;
+  margin-left: 2px;
 }
 
 .inputForm{

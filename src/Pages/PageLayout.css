@@ -1,48 +1,116 @@
-*{
-    margin: 0;
-    /*border: 1px solid red;*/
-}
-.root{
-    padding: none;
-}
-
 .btnContainer{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     flex-direction: row;
-    border: 1px solid red;
-    width: 50%;
+    width: 80%;
     height: 60%;
 }
 
 .carnivalBox{
-    background-color: white;
     background-image: url("../Image/ccl.jpg");
-    background-repeat: no-repeat;
-    background-size: 150%;
-    background-position: center;
-    height: 100%;
-    width: 100%;
-    border: 1px solid rgb(55, 0, 255) !important;
-    font-size: 60px !important;
-    color: white !important;
+    background-size: 155%;
+    filter: blur(1.5px);
+    background-position: 50% 95% !important;
 }
 
 .nclBox{
     background-image: url("../Image/ncl.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
     background-size: 155%;
-    background-color: rgba(83, 83, 83, 0.514) !important;
-    height: 100%;
-    width: 100%;
-    border: 1px solid rgb(187, 255, 0) !important;
-    font-size: 60px !important;
-    color: white !important;
-
+    filter: blur(1.5px);
 }
 
-.functionalBoxes{
+.otherBox{
+    background-image: url("../Image/pizza.jpg");
+    background-size: 145%;
+    filter: blur(1.5px);
+}
+
+.nclBox,
+.carnivalBox,
+.otherBox{
+    cursor: pointer;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
+    z-index: 1;
+}
+
+.nclBox:hover,
+.carnivalBox:hover{
+    filter: brightness(100%);
+    background-size: 170%;
+    border-radius: 15px;
+}
+
+.otherBox:hover{
+    filter: brightness(100%);
+    background-size: 160%;
+    border-radius: 15px;
+}
+
+.ccl,
+.ncl,
+.other {
+    font-size: 60px;
+    color: rgb(0, 255, 179);
+    margin-top: 26rem;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    position: relative;
+    padding: 10px 20px;
+    font-size: 35px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    transition: all 1s;
+    z-index: 3;
+    &:after,
+    &:before {
+        content: " ";
+        width: 15px;
+        height: 15px;
+        position: absolute;
+        transition: all 1s;
+    }
+
+    &:after {
+        top: -1px;
+        left: -1px;
+        border-top: 5px solid rgb(255, 255, 255);
+        border-left: 5px solid rgb(255, 255, 255);
+    }
+
+    &:before {
+        bottom: -1px;
+        right: -1px;
+        border-bottom: 5px solid rgb(255, 255, 255);
+        border-right: 5px solid rgb(255, 255, 255);
+    }
+
+    &:hover {
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+        background:rgb(255, 255, 255);
+        margin-left: 5rem;
+        margin-right: 5rem;
+        /* color:white; */
+        &:before,
+        &:after {
+            width: 105%;
+            height: 105%;
+            border-color:rgb(0, 255, 179);
+        }
+    }
+}
+
+
+.greyBox{
     width: 98%;
     height: 70vh;
     display: flex;
@@ -53,6 +121,5 @@
     margin-top: 2rem;
     margin-left: auto;
     margin-right: auto;
-
 }
 

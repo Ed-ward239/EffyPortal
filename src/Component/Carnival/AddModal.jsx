@@ -26,7 +26,7 @@ const extractTextFromPdf = async (file) => {
         }
         resolve(extractedText);
       } catch (error) {
-        reject(error);
+        reject(alert(error));
       }
     };
 

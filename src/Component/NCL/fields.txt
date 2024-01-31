@@ -17,7 +17,7 @@ cc_fee
 supplies
 medical_charges
 printing
-wheel_of_fortune (wof)
+wheel_of_fortune (wof) prize_voucher
 misc_charges(add all misc)
 cash_adv
 effy_rev

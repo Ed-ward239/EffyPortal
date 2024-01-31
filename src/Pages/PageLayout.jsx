@@ -4,8 +4,8 @@ import NavBar from "../Component/NavBar";
 import LogIn from "../Component/LogIn";
 import { useIsAuthenticated } from "@azure/msal-react";
 import { useNavigate } from 'react-router-dom';
-import Particles from '../Particles';
-import { Button } from '@mui/material';
+//import Particles from '../Particles';
+//import { Button } from '@mui/material';
 
 const PageLayout = () => {
     const isAuthenticated = useIsAuthenticated();
@@ -28,18 +28,24 @@ const BodyPage = () =>{
         event.preventDefault();
         navigate('/NCL');
     }
+    function clickOther(event){
+      event.preventDefault()
+      alert("Coming Soon!")
+    }
+
     return (
-      <div className="container">
+      <>
         <NavBar />
-        <div className="functionalBoxes">
+        <div className="greyBox">
           {/* Render two buttons for Carnival and NCL functionalities. When clicked, navigate to the respective pages. */}
           <div className='btnContainer'>
-            <Button className="carnivalBox" onClick={clickCarnival}>Carnival</Button>
-            <Button className="nclBox" onClick={clickNCL}>NCL</Button>
+            <button className="carnivalBox" onClick={clickCarnival}><p className='ccl'>Carnival</p></button>
+            <button className="nclBox" onClick={clickNCL}><p className='ncl'>NCL</p></button>
+            <button className="otherBox" onClick={clickOther}><p className='other'>Other</p></button>
           </div>
         </div>
-        <Particles />
-      </div>
+        {/*<Particles />*/}
+      </>
     );
 }
 

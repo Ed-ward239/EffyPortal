@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Modal.css";
+import "./ModalNCL.css";
 import { useUsername } from "../useUsername";
 
 const EditModal = (props) => {

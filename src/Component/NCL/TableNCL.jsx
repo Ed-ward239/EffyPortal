@@ -3,14 +3,15 @@ import Button from "@mui/material/Button";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import IconButton from "@mui/material/IconButton";
-import AddModal from "./AddModal.jsx";
-import EditModal from "./EditModal.jsx";
+import AddModal from "./AddModalNCL.jsx";
+import EditModal from "./EditModalNCL.jsx";
 import Modal from "@mui/material/Modal";
 import MUIDataTable from "mui-datatables";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import "./TableNCL.css";
 
-import "./Table.css";
+
 class Table extends React.Component {
   constructor(props) {
     super(props);
@@ -198,7 +199,7 @@ class Table extends React.Component {
       this.setState(
         {
           edit: true,
-          modalType: "editModal",
+          modalType: "editModalNCL",
           currentData: {
             ship_name: rowData[0],
             voyage_num: rowData[1],
@@ -591,6 +592,7 @@ class Table extends React.Component {
 
     // Table options
     const options = {
+      expandableRows: true,
       searchPlaceholder: "Type Anything to Search",
       sort: true,
       filter: true,
@@ -638,7 +640,7 @@ class Table extends React.Component {
           className="dataTable"
           title={
             <div className="pageHeader">
-              <div className="carnivalTxt">CARNIVAL DATA</div>
+              <div className="carnivalTxt">NCL DATA</div>
             </div>
           }
           data={data}
@@ -647,10 +649,10 @@ class Table extends React.Component {
         />
         <Modal open={open} onClose={this.handleClose}>
           <div className="modal">
-            {modalType === "editModal" ? (
+            {modalType === "editModalNCL" ? (
               <Fragment>
-                <div className="modalBackground">
-                  <h3 className="modalHeaderTxt">Edit Carnival Data</h3>
+                <div className="modalBackgroundNCL">
+                  <h3 className="modalHeaderTxt">Edit NCL Data</h3>
                   <EditModal
                     currentData={currentData}
                     updateRow={updateRow}
@@ -660,8 +662,8 @@ class Table extends React.Component {
               </Fragment>
             ) : (
               <Fragment>
-                <div className="modalBackground">
-                  <h3 className="modalHeaderTxt">Carnival Data Entry</h3>
+                <div className="modalBackgroundNCL">
+                  <h3 className="modalHeaderTxt">NCL Data Entry</h3>
                   <AddModal
                     addModal={handleAddModal}
                     closeModal={() => this.setState({ open: false })}
@@ -677,3 +679,243 @@ class Table extends React.Component {
 }
 
 export default Table;
+
+
+/*
+import React from "react";
+import MUIDataTable from "mui-datatables";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+
+const ExpandableRowTable = (props) => {
+  var data = [];
+  var open = false;
+  var editing = false;
+  var currentUser = [];
+
+  const handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  const handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  open = this.state.open;
+  editing = this.state.edit;
+  currentUser = this.state.arrayEdit;
+
+  if (!!this.state.results) {
+    this.array = this.state.results.map((result) => [
+      result.id,
+      result.name,
+      result.username,
+      result.email,
+      ""
+    ]);
+  }
+
+  if (!!this.state.array) {
+    data = this.state.array;
+  } else {
+    data = this.array;
+  }
+
+  // CRUD operations
+  const addUser = (user) => {
+    user.id = data.length + 1;
+    const addUser = [user.id, user.name, user.username, user.email, ""];
+    this.setState({ array: data.concat([addUser]) });
+    handleClose();
+  };
+
+  const addButton = () => {
+    this.setState({ edit: false });
+    handleOpen();
+  };
+
+  const updateUser = (id, updatedUser) => {
+    this.setState({ edit: false });
+    const editUser = [
+      updatedUser.id,
+      updatedUser.name,
+      updatedUser.username,
+      updatedUser.email,
+      ""
+    ];
+    this.setState({
+      array: data.map((user) => (user[0] === id ? editUser : user))
+    });
+    handleClose();
+  };
+
+  const editButton = (user) => {
+    this.setState({ edit: true });
+    this.setState({
+      arrayEdit: {
+        id: user[0],
+        name: user[1],
+        username: user[2],
+        email: user[3],
+        acao: ""
+      }
+    });
+    handleOpen();
+  };
+
+  const columns = [
+    {
+      name: "Ship Name"
+    },
+    {
+      name: "Voyage #"
+    },
+    {
+      name: "Date"
+    },
+    {
+      name: "Effy Shares"
+    },
+    {
+      name: "Status"
+    },
+    {
+      name: "Editor"
+    },
+    {
+      name: "Action",
+      options: {
+        filter: true,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <button
+              onClick={() => {
+                editButton(tableMeta.rowData);
+              }}
+              className="button muted-button"
+            >
+              Edit
+            </button>
+          );
+        }
+      }
+    }
+  ];
+
+  const dataMain = [
+    ["Gabby George", "GG984201382", "Minneapolis", 30, 100000],
+    ["Brian Anatoli", "BA92304393", "Dallas", 55, 200000],
+    ["Jaden Collins", "JC89340238", "Santa Ana", 27, 500000],
+    ["Franky Rees", "FR842830405", "St. Petersburg", 22, 50000],
+    ["CONQUEST", "CQ20211220004", "12/27/22", 28, 75000],
+    ["Blake Duncan", "Business Management Analyst", "San Diego", 65, 94000],
+    ["BREEZE", "BR20210821005", "10/16/21", 71, 210000],
+    ["Lane Wilson", "Commercial Specialist", "Omaha", 19, 65000],
+    ["Robin Duncan", "Business Analyst", "Los Angeles", 20, 77000],
+    ["Mel Brooks", "Business Consultant", "Oklahoma City", 37, 135000],
+    ["CELEBRATION", "CB20221227007", "12/27/22", 52, 420000],
+    ["Kris Humphrey", "Legal Counsel", "Laredo", 30, 150000],
+    ["Frankie Long", "Industrial Analyst", "Austin", 31, 170000],
+    ["Brynn Robbins", "Business Analyst", "Norfolk", 22, 90000],
+    ["Justice Mann", "Business Consultant", "Chicago", 24, 133000],
+    ["Addison Navarro", "Business Management Analyst", "New York", 50, 295000],
+    ["Jesse Welch", "Legal Counsel", "Seattle", 28, 200000],
+    ["Eli Mejia", "Commercial Specialist", "Long Beach", 65, 400000],
+    ["Gene Leblanc", "Industrial Analyst", "Hartford", 34, 110000],
+    ["Danny Leon", "Computer Scientist", "Newark", 60, 220000],
+    ["Lane Lee", "Corporate Counselor", "Cincinnati", 52, 180000],
+    ["Jesse Hall", "Business Analyst", "Baltimore", 44, 99000],
+    ["Danni Hudson", "Legal Counsel", "Tampa", 37, 90000],
+    ["Terry Macdonald", "Commercial Specialist", "Miami", 39, 140000],
+    ["Justice Mccarthy", "Attorney", "Tucson", 26, 330000],
+    ["Silver Carey", "Computer Scientist", "Memphis", 47, 250000],
+    ["Franky Miles", "Industrial Analyst", "Buffalo", 49, 190000],
+    ["BREEZE", "BR20211011005", "8/7/21", 44, 80000],
+    ["Gabby Strickland", "Business Consultant", "Scottsdale", 26, 45000],
+    ["Mason Ray", "Computer Scientist", "San Francisco", 39, 142000]
+  ];
+
+  function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+  }
+
+  const rows = [createData(34543, 159, 6.0, 24, 4.0)];
+
+  const options = {
+    print: false,
+    downloadOptions: { filename: "CarnivalData", separator: "," },
+    filter: true,
+    onFilterChange: (changedColumn, filterList) => {
+      console.log(changedColumn, filterList);
+    },
+
+    selectableRows: "multiple",
+    searchPlaceholder: "Search by Main Row Data",
+    filterType: "multiselect",
+    responsive: "standard",
+    rowsPerPage: 10,
+    expandableRows: true,
+    pagination: true,
+    fixedHeader: true,
+    renderExpandableRow: (rowData, rowMeta) => {
+      console.log(rowData, rowMeta);
+      return (
+        <React.Fragment>
+          <tr>
+            <td colSpan={8}>
+              <TableContainer component={Paper}>
+                <Table style={{ minWidth: "650" }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="left">Revenue S&S</TableCell>
+                      <TableCell align="left">Revenue CC</TableCell>
+                      <TableCell align="left">Exec. Folio</TableCell>
+                      <TableCell align="left">Parole Fee</TableCell>
+                      <TableCell align="left">EU Revenue</TableCell>
+                      <TableCell align="left">Carnival Share</TableCell>
+                      <TableCell align="left">Office Supplies</TableCell>
+                      <TableCell align="left">Cash Paid</TableCell>
+                      <TableCell align="left">Discount</TableCell>
+                      <TableCell align="left">S&S Fee</TableCell>
+                      <TableCell align="left">CC Fee</TableCell>
+                      <TableCell align="left">Cash Advance</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {rows.map((row) => (
+                      <TableRow key={row.name}>
+                        <TableCell align="left">{row.name}</TableCell>
+                        <TableCell align="left">{row.calories}</TableCell>
+                        <TableCell align="left">{row.fat}</TableCell>
+                        <TableCell align="left">{row.carbs}</TableCell>
+                        <TableCell align="left">{row.protein}</TableCell>
+                        <TableCell align="left">{row.name}</TableCell>
+                        <TableCell align="left">{row.calories}</TableCell>
+                        <TableCell align="left">{row.fat}</TableCell>
+                        <TableCell align="left">{row.carbs}</TableCell>
+                        <TableCell align="left">{row.protein}</TableCell>
+                        <TableCell align="left">{row.fat}</TableCell>
+                        <TableCell align="left">{row.calories}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </td>
+          </tr>
+        </React.Fragment>
+      );
+    }
+  };
+
+  return <MUIDataTable data={dataMain} columns={columns} options={options} />;
+};
+
+export default ExpandableRowTable;
+
+*/
