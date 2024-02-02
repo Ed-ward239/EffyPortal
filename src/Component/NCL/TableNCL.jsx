@@ -257,12 +257,12 @@ class Table extends React.Component {
     };
 
     const formatValue = (value) => {
-      if (value !== null && value !== undefined) {
+      if (value === null || value === undefined || Number.isNaN(Number(value))) {
+        return ""; // or some placeholder like 'N/A' if the value is not available
+      } else {
         // Assuming value is a number or can be converted into one.
         const formattedValue = Number(value).toLocaleString();
         return formattedValue;
-      } else {
-        return ""; // or some placeholder like 'N/A' if the value is not available
       }
     };
 

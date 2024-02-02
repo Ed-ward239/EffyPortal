@@ -14,7 +14,7 @@
   background-color: rgb(255, 255, 255);
   border-radius: 15px;
   height: 72vh !important;
-  width: 80% !important;
+  width: 70% !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,7 +28,7 @@
 }
 
 .inputSelect{
-  width: 15vh !important;
+  width: 20vh ;
   margin-left: 2px;
 }
 
