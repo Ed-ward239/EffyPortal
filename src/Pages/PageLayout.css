@@ -9,20 +9,20 @@
 .carnivalBox{
     background-image: url("../Image/ccl.jpg");
     background-size: 155%;
-    filter: blur(1.5px);
+    filter: blur(1.3px);
     background-position: 50% 95% !important;
 }
 
 .nclBox{
     background-image: url("../Image/ncl.jpg");
     background-size: 155%;
-    filter: blur(1.5px);
+    filter: blur(1.3px);
 }
 
 .otherBox{
     background-image: url("../Image/pizza.jpg");
     background-size: 145%;
-    filter: blur(1.5px);
+    filter: blur(1.3px);
 }
 
 .nclBox,
@@ -33,7 +33,7 @@
     background-repeat: no-repeat;
     height: 100%;
     width: 100%;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.7s ease-in-out;
     border: none;
     margin-left: 3rem;
     margin-right: 3rem;
@@ -46,19 +46,25 @@
     filter: brightness(100%);
     background-size: 170%;
     border-radius: 15px;
+    -webkit-box-shadow:0px 0px 10px 3px rgba(78,181,171,0.75);
+    -moz-box-shadow: 0px 0px 10px 3px rgba(78,181,171,0.75);
+    box-shadow: 0px 0px 10px 3px rgba(78,181,171,0.75);
 }
 
 .otherBox:hover{
     filter: brightness(100%);
     background-size: 160%;
     border-radius: 15px;
+    -webkit-box-shadow:0px 0px 10px 3px rgba(78,181,171,0.75);
+    -moz-box-shadow: 0px 0px 10px 3px rgba(78,181,171,0.75);
+    box-shadow: 0px 0px 10px 3px rgba(78,181,171,0.75);
 }
 
 .ccl,
 .ncl,
 .other {
     font-size: 60px;
-    color: rgb(0, 255, 179);
+    color: #7e6e5f;
     margin-top: 26rem;
     text-decoration: none;
     position: relative;
@@ -68,15 +74,15 @@
     font-size: 35px;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
-    transition: all 1s;
+    transition: all 1s ease-in-out;
     z-index: 3;
     &:after,
     &:before {
-        content: " ";
-        width: 15px;
-        height: 15px;
+        content: "";
+        width: 18px;
+        height: 18px;
         position: absolute;
-        transition: all 1s;
+        transition: all 1s ease-in-out;
     }
 
     &:after {
@@ -102,12 +108,14 @@
         /* color:white; */
         &:before,
         &:after {
-            width: 105%;
-            height: 105%;
-            border-color:rgb(0, 255, 179);
+            width: 100%;
+            height: 100%;
+            border-color:#4EB5AB;
         }
     }
 }
+
+
 
 
 .greyBox{

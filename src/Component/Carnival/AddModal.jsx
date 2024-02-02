@@ -156,7 +156,7 @@ const AddModal = ({ closeModal }) => {
   };
 
   const handleSubmit_Add = (event) => {
-    const url = `http://localhost:8081/post`
+    const url = `http://localhost:8081/ccl_post`
     fetch(url, {
       method: "POST",
       headers: {

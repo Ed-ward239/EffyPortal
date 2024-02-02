@@ -29,7 +29,7 @@ class Table extends React.Component {
 
   loadContentFromServer() {
     // Back-end server
-    const url = "http://localhost:8081/get";
+    const url = "http://localhost:8081/ncl_get";
 
     fetch(url)
       .then((response) => response.json())
@@ -60,25 +60,33 @@ class Table extends React.Component {
 
     if (!!this.state.results) {
       this.array = this.state.results.map((res) => [
-        res.ship_name,
-        res.voyage_num,
-        res.date,
-        res.effy_share,
-        res.status_paid,
+        res.voyage_num, 
+        res.ship_name, 
+        res.start_date, 
+        res.end_date, 
+        res.revenue, 
+        res.status_paid, 
         res.editor,
-        res.rev_ss,
-        res.rev_cc,
-        res.eu_vat,
-        res.carnival_share,
-        res.office_supp,
-        res.discounts,
-        res.exec_folio,
-        res.ss_fee,
-        res.cc_fee,
-        res.meal_charge,
-        res.parole_fee,
-        res.cash_adv,
-        res.cash_paid,
+        res.vip_sales, 
+        res.plcc, 
+        res.dpa,
+        res.plcc_dpa, 
+        res.vat, 
+        res.reg_commission, 
+        res.vip_commission, 
+        res.discounts, 
+        res.food, 
+        res.beverages, 
+        res.cc_fee, 
+        res.supplies, 
+        res.misc_charges, 
+        res.cash_adv, 
+        res.medical_charges, 
+        res.printing, 
+        res.prize_voucher, 
+        res.effy_rev, 
+        res.status_paid, 
+        res.editor,
         "",
       ]);
     }
@@ -94,25 +102,31 @@ class Table extends React.Component {
     const handleAddModal = (data) => {
       data.id = data.length + 1;
       const addUser = [
-        data.ship_name,
-        data.voyage_num,
-        data.date,
-        data.effy_share,
-        data.status_paid,
+        data.voyage_num, 
+        data.ship_name, 
+        data.start_date, 
+        data.end_date, 
+        data.revenue, 
+        data.vip_sales, 
+        data.plcc, 
+        data.dpa,
+        data.plcc_dpa, 
+        data.vat, 
+        data.reg_commission, 
+        data.vip_commission, 
+        data.discounts, 
+        data.food, 
+        data.beverages, 
+        data.cc_fee, 
+        data.supplies, 
+        data.misc_charges, 
+        data.cash_adv, 
+        data.medical_charges, 
+        data.printing, 
+        data.prize_voucher, 
+        data.effy_rev,
+        data.status_paid, 
         data.editor,
-        data.rev_ss,
-        data.rev_cc,
-        data.eu_vat,
-        data.carnival_share,
-        data.office_supp,
-        data.discounts,
-        data.exec_folio,
-        data.ss_fee,
-        data.cc_fee,
-        data.meal_charge,
-        data.parole_fee,
-        data.cash_adv,
-        data.cash_paid,
         "",
       ];
       this.setState({ array: data.concat([addUser]) });
@@ -140,7 +154,7 @@ class Table extends React.Component {
         return;
       }
 
-      const url = `http://localhost:8081/del/${delVoyageNum}`;
+      const url = `http://localhost:8081/ncl_del/${delVoyageNum}`;
       fetch(url, {
         method: "DELETE",
         headers: {
@@ -167,25 +181,31 @@ class Table extends React.Component {
     const updateRow = (voyage_num, updateData) => {
       this.setState({ edit: false });
       const editUser = [
-        updateData.ship_name,
-        updateData.voyage_num,
-        updateData.date,
-        updateData.effy_share,
-        updateData.status_paid,
+        updateData.voyage_num, 
+        updateData.ship_name, 
+        updateData.start_date, 
+        updateData.end_date, 
+        updateData.revenue, 
+        updateData.vip_sales, 
+        updateData.plcc, 
+        updateData.dpa,
+        updateData.plcc_dpa, 
+        updateData.vat, 
+        updateData.reg_commission, 
+        updateData.vip_commission, 
+        updateData.discounts, 
+        updateData.food, 
+        updateData.beverages, 
+        updateData.cc_fee, 
+        updateData.supplies, 
+        updateData.misc_charges, 
+        updateData.cash_adv, 
+        updateData.medical_charges, 
+        updateData.printing, 
+        updateData.prize_voucher, 
+        updateData.effy_rev,
+        updateData.status_paid, 
         updateData.editor,
-        updateData.rev_ss,
-        updateData.rev_cc,
-        updateData.eu_vat,
-        updateData.carnival_share,
-        updateData.office_supp,
-        updateData.discounts,
-        updateData.exec_folio,
-        updateData.ss_fee,
-        updateData.cc_fee,
-        updateData.meal_charge,
-        updateData.parole_fee,
-        updateData.cash_adv,
-        updateData.cash_paid,
         "",
       ];
       this.setState({
@@ -201,25 +221,31 @@ class Table extends React.Component {
           edit: true,
           modalType: "editModalNCL",
           currentData: {
-            ship_name: rowData[0],
-            voyage_num: rowData[1],
-            date: rowData[2],
-            effy_share: rowData[3],
-            status_paid: rowData[4],
-            editor: rowData[5],
-            rev_ss: rowData[6],
-            rev_cc: rowData[7],
-            eu_vat: rowData[8],
-            carnival_share: rowData[9],
-            office_supp: rowData[10],
-            discounts: rowData[11],
-            exec_folio: rowData[12],
-            ss_fee: rowData[13],
-            cc_fee: rowData[14],
-            meal_charge: rowData[15],
-            parole_fee: rowData[16],
-            cash_adv: rowData[17],
-            cash_paid: rowData[18],
+            voyage_num: rowData[0], 
+            ship_name: rowData[1], 
+            start_date: rowData[2], 
+            end_date: rowData[3], 
+            revenue: rowData[4], 
+            vip_sales: rowData[5], 
+            plcc: rowData[6], 
+            dpa: rowData[7],
+            plcc_dpa: rowData[8], 
+            vat: rowData[9], 
+            reg_commission: rowData[10], 
+            vip_commission: rowData[11], 
+            discounts: rowData[12], 
+            food: rowData[13], 
+            beverages: rowData[14], 
+            cc_fee: rowData[15], 
+            supplies: rowData[16], 
+            misc_charges: rowData[17], 
+            cash_adv: rowData[18], 
+            medical_charges: rowData[19], 
+            printing: rowData[20], 
+            prize_voucher: rowData[21], 
+            effy_rev: rowData[22],
+            status_paid: rowData[23], 
+            editor: rowData[24],
             action: "",
           },
           open: true,
@@ -243,6 +269,15 @@ class Table extends React.Component {
     // Table Column names
     const columns = [
       {
+        name: "Voyage#",
+        options: {
+          filter: false,
+          setCellProps: () => ({
+            style: { textAlign: "left", whiteSpace: "nowrap" },
+          }),
+        },
+      },
+      {
         name: "Ship Name",
         options: {
           filter: true,
@@ -256,16 +291,7 @@ class Table extends React.Component {
         },
       },
       {
-        name: "Voyage#",
-        options: {
-          filter: false,
-          setCellProps: () => ({
-            style: { textAlign: "left", whiteSpace: "nowrap" },
-          }),
-        },
-      },
-      {
-        name: "Date",
+        name: "Start Date",
         options: {
           filter: false,
           setCellProps: () => ({
@@ -277,7 +303,7 @@ class Table extends React.Component {
           }),
           // Dates in DB were stored as YYYY-MM-DD, for UX and readability use function to render MM/DD/YYYY
           customBodyRender: (value, tableMeta, updateValue) => {
-            if (!value) return "N/A"; // Handle invalid or undefined date values
+            if (!value) return ""; // Handle invalid or undefined date values
 
             const date = new Date(value);
             let month = "" + (date.getMonth() + 1), // Months are zero indexed
@@ -292,7 +318,34 @@ class Table extends React.Component {
         },
       },
       {
-        name: "Effy Share",
+        name: "End Date",
+        options: {
+          filter: false,
+          setCellProps: () => ({
+            style: {
+              textAlign: "left",
+              whiteSpace: "nowrap",
+              paddingLeft: "5px",
+            },
+          }),
+          // Dates in DB were stored as YYYY-MM-DD, for UX and readability use function to render MM/DD/YYYY
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (!value) return ""; // Handle invalid or undefined date values
+
+            const date = new Date(value);
+            let month = "" + (date.getMonth() + 1), // Months are zero indexed
+              day = "" + (date.getDate() + 1), // Days are zero indexed
+              year = date.getFullYear();
+
+            if (month.length < 2) month = "0" + month;
+            if (day.length < 2) day = "0" + day;
+
+            return [month, day, year].join("/"); // Adjusted to MM/DD/YYYY format
+          },
+        },
+      },
+      {
+        name: "Revenue",
         options: {
           filter: false,
           setCellProps: () => ({
@@ -303,6 +356,258 @@ class Table extends React.Component {
             },
           }),
           // Adding commas
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "VIP Sales",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "PLCC",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "DPA",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "PLCC & DPA",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "VAT",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "Reg. Commission",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "VIP Commission",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "Discounts",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "Food",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "Beverages",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "CC Fee",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "Supplies",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "Misc. Charges",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "Cash Advance",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "Medical Charges",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "Printing",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "Prize Voucher",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return formatValue(value);
+          },
+        },
+      },
+      {
+        name: "Effy Revenue",
+        options: {
+          filter: false,
+          display: true,
+          setCellProps: () => ({
+            style: { textAlign: "center", whiteSpace: "nowrap" },
+          }),
+          // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
             return formatValue(value);
           },
@@ -345,7 +650,7 @@ class Table extends React.Component {
                 break;
               default:
                 style = {
-                  border: "1px solid black",
+                  border: "1px solid transparent",
                   borderRadius: "15px",
                   padding: "3px 10px",
                 };
@@ -365,188 +670,6 @@ class Table extends React.Component {
               paddingLeft: "15px",
             },
           }),
-        },
-      },
-      {
-        name: "Revenue Sail & Sign",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
-        },
-      },
-      {
-        name: "Revenue Direct CC",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
-        },
-      },
-      {
-        name: "EU VAT",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
-        },
-      },
-      {
-        name: "Carnival Share",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
-        },
-      },
-      {
-        name: "Office Supplies",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
-        },
-      },
-      {
-        name: "Discounts",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
-        },
-      },
-      {
-        name: "Exec. Folio",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
-        },
-      },
-      {
-        name: "Sail & Sign Processing Fee",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
-        },
-      },
-      {
-        name: "CC Processing Fee",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
-        },
-      },
-      {
-        name: "Meal Charge",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
-        },
-      },
-      {
-        name: "Parole Fee",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
-        },
-      },
-      {
-        name: "Cash Advance",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
-        },
-      },
-      {
-        name: "Cash Onboard",
-        options: {
-          filter: false,
-          display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
-          // Adding commas for display
-          customBodyRender: (value, tableMeta, updateValue) => {
-            return formatValue(value);
-          },
         },
       },
       {
@@ -592,7 +715,7 @@ class Table extends React.Component {
 
     // Table options
     const options = {
-      expandableRows: true,
+      //expandableRows: true,
       searchPlaceholder: "Type Anything to Search",
       sort: true,
       filter: true,

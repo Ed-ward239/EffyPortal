@@ -109,11 +109,11 @@ const AddModal = ({ closeModal }) => {
       // Initialize the variables to store the data using regular expression
         const FJ_GuestRev = extractValue();
         const FJ_CrewRev = extractValue();
-      const revenue = FJ_GuestRev + FJ_CrewRev;
-      const vip_sales = extractValue();
-      const plcc = extractValue();
-      const dpa = extractValue();
-      const plcc_dpa = moneyFormat((plcc + dpa), true);
+      const revenue = moneyFormat(FJ_GuestRev + FJ_CrewRev);
+      const vip_sales = moneyFormat(extractValue());
+      const plcc = moneyFormat(extractValue(), true);
+      const dpa = moneyFormat(extractValue(), true);
+      const plcc_dpa = moneyFormat((plcc + dpa)); // Neg value but already converted in previous plcc and dpa 
       const vat = moneyFormat(extractValue());
       const reg_commission = moneyFormat((revenue * (1 + 0.36)), true);
       const vip_commission = moneyFormat((vip_sales * (1 + 0.2)), true);
@@ -212,7 +212,7 @@ const AddModal = ({ closeModal }) => {
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="plcc_dpa" label="PLCC & DPA" onChange={(e) => setRows({ ...rows, plcc_dpa: e.target.value })} value={rows.plcc_dpa || null}/>
+            <input className="inputTxt" type="text" placeholder=" " name="plcc_dpa" label="PLCC & DPA" onChange={(e) => setRows({ ...rows, plcc_dpa: e.target.value })} readOnly value={rows.plcc_dpa || null}/>
             <label className="floating-label">PLCC & DPA</label>
           </div>
           <div className="txtInputGrp input-group">
@@ -240,14 +240,14 @@ const AddModal = ({ closeModal }) => {
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="reg_commission" label="Cruise Commission" onChange={(e) => setRows({ ...rows, reg_commission: e.target.value })} value={rows.reg_commission || null}/>
+            <input className="inputTxt" type="text" placeholder=" " name="reg_commission" label="Cruise Commission" onChange={(e) => setRows({ ...rows, reg_commission: e.target.value })} readOnly value={rows.reg_commission || null}/>
             <label className="floating-label">Cruise Commission</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
-            <input className="inputTxt" type="text" placeholder=" " name="vip_commission" label="VIP Commission" onChange={(e) => setRows({ ...rows, vip_commission: e.target.value })} value={rows.vip_commission || null}/>
+            <input className="inputTxt" type="text" placeholder=" " name="vip_commission" label="VIP Commission" onChange={(e) => setRows({ ...rows, vip_commission: e.target.value })} readOnly value={rows.vip_commission || null}/>
             <label className="floating-label">VIP Commission</label>
           </div>
           <div className="txtInputGrp input-group">
@@ -328,16 +328,16 @@ const AddModal = ({ closeModal }) => {
             <label className="floating-label">Effy Revenue</label>
           </div>
           <div className="txtInputGrp">
-            <input className="inputTxt" type="text" placeholder=" " name="editor" label="Editor" value={rows.editor} readOnly/>
-            <label className="floating-label">Editor</label>
-          </div>
-          <div className="txtInputGrp">
             <select className="inputSelect" onChange={(e) => setRows({ ...rows, status_paid: e.target.value })} value={rows.status_paid}>
               <option value="Unpaid">Unpaid</option>
               <option value="Pending">Pending</option>
               <option value="Paid">Paid</option>
             </select>
             <label className="floating-label">Status</label>
+          </div>
+          <div className="txtInputGrp">
+            <input className="inputTxt" type="text" placeholder=" " name="editor" label="Editor" value={rows.editor} readOnly/>
+            <label className="floating-label">Editor</label>
           </div>
         </form>
         <div className="btns" onDrop={handleDrop} onDragOver={handleDragOver} >

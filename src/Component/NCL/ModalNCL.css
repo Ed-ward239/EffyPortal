@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Mono:400');
 
-
 .modal {
   background-color: rgba(255, 255, 255, 0.067);
   backdrop-filter: blur(4px);
@@ -14,8 +13,8 @@
 .modalBackgroundNCL{
   background-color: rgb(255, 255, 255);
   border-radius: 15px;
-  height: 80vh !important;
-  width: 85% !important;
+  height: 72vh !important;
+  width: 80% !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,13 +28,13 @@
 }
 
 .inputSelect{
-  width: 25vh;
+  width: 15vh !important;
   margin-left: 2px;
 }
 
 .inputForm{
   padding: 10px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Courier New', Courier, monospace;
   display: flex; /* Enable Flexbox */
   flex-wrap: wrap; /* Allow the items to wrap to the next line */
   justify-content: space-between; /* Space out items */
@@ -49,7 +48,9 @@
 }
 .txtInputGrp { 
   position:relative; 
-  margin-bottom:20px; 
+  margin-bottom:15px; 
+  width: 20vh;
+
 }
 
 .floating-label {
@@ -73,7 +74,7 @@
     height: 38px;
     color: #323840;
     padding: 0 5px 0 20px;
-  font-size:14px;
+    font-size:14px;
     text-align: center;
     white-space: nowrap;
     border: 1px solid #3D85D8;
