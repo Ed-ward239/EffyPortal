@@ -28,7 +28,7 @@ class Table extends React.Component {
 
   loadContentFromServer() {
     // Back-end server
-    const url = "http://localhost:8081/ccl_get";
+    const url = "http://ec2-3-141-229-218.us-east-2.compute.amazonaws.com:8081/ccl_get";
 
     fetch(url)
       .then((response) => response.json())
@@ -139,7 +139,7 @@ class Table extends React.Component {
         return;
       }
 
-      const url = `http://localhost:8081/ccl_del/${delVoyageNum}`;
+      const url = `http://ec2-3-141-229-218.us-east-2.compute.amazonaws.com:8081/ccl_del/${delVoyageNum}`;
       fetch(url, {
         method: "DELETE",
         headers: {
@@ -607,6 +607,10 @@ class Table extends React.Component {
       downloadOptions: {
         filename: "HFC-Voyages.csv",
         separator: ",",
+      },
+      sortOrder:{
+        name: 'Date',
+        direction: 'desc'
       },
     };
 

@@ -65,7 +65,9 @@
 .other {
     font-size: 60px;
     color: #7e6e5f;
-    margin-top: 26rem;
+    background-color: transparent;
+    background-size: auto;
+    /* margin-top: 26rem; */
     text-decoration: none;
     position: relative;
     cursor: pointer;
@@ -114,9 +116,6 @@
         }
     }
 }
-
-
-
 
 .greyBox{
     width: 98%;

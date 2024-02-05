@@ -35,7 +35,7 @@ const EditModal = (props) => {
   // HandleSummit function
   const handleSubmit_Edit = (event) => {
     event.preventDefault();
-    fetch(`http://localhost:8081/ncl_put/${props.currentData.voyage_num}`, {
+    fetch(`http://ec2-3-141-229-218.us-east-2.compute.amazonaws.com:8081/ncl_put/${props.currentData.voyage_num}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +122,7 @@ const EditModal = (props) => {
           <span className="inputGrp">
             <div className="dollarSign">$</div>
           </span>
-          <input className="inputTxt" type="text" placeholder=" " name="plcc_dpa" label="PLCC & DPA" onChange={handleInputChange} readOnly value={row.plcc_dpa}/>
+          <input className="inputTxt" type="text" placeholder=" " name="plcc_dpa" label="PLCC & DPA" onChange={handleInputChange} value={row.plcc_dpa}/>
           <label className="floating-label">PLCC & DPA</label>
         </div>
         <div className="txtInputGrp input-group">
@@ -150,14 +150,14 @@ const EditModal = (props) => {
           <span className="inputGrp">
             <div className="dollarSign">$</div>
           </span>
-          <input className="inputTxt" type="text" placeholder=" " name="reg_commission" label="Cruise Commission" onChange={handleInputChange} readOnly value={row.reg_commission}/>
+          <input className="inputTxt" type="text" placeholder=" " name="reg_commission" label="Cruise Commission" onChange={handleInputChange} value={row.reg_commission}/>
           <label className="floating-label">Cruise Commission</label>
         </div>
         <div className="txtInputGrp input-group">
           <span className="inputGrp">
             <div className="dollarSign">$</div>
           </span>
-          <input className="inputTxt" type="text" placeholder=" " name="vip_commission" label="VIP Commission" onChange={handleInputChange} readOnly value={row.vip_commission}/>
+          <input className="inputTxt" type="text" placeholder=" " name="vip_commission" label="VIP Commission" onChange={handleInputChange} value={row.vip_commission}/>
           <label className="floating-label">VIP Commission</label>
         </div>
         <div className="txtInputGrp input-group">

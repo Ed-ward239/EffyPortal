@@ -156,7 +156,7 @@ const AddModal = ({ closeModal }) => {
   };
 
   const handleSubmit_Add = (event) => {
-    const url = `http://localhost:8081/ccl_post`
+    const url = `http://ec2-3-141-229-218.us-east-2.compute.amazonaws.com:8081/ccl_post`
     fetch(url, {
       method: "POST",
       headers: {

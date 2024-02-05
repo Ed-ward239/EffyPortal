@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { getDocument } from "pdfjs-dist/legacy/build/pdf";
 import "pdfjs-dist/build/pdf.worker.entry";
 import "./ModalNCL.css";
+import Tesseract from 'tesseract.js';
 import { useUsername } from "../useUsername";
 
 // Const function to extract text from the uploaded pdf file
@@ -91,53 +92,69 @@ const AddModal = ({ closeModal }) => {
   const handleFileChange = async (event) => {
     const file =  event.target.files[0];
     if (!file) return;
-    try{
-      const extractedData = await extractTextFromPdf(file);
-      //console.log(extractedData);       // Debug
-      function extractValue(regexPattern) {
-        const match = extractedData.match(regexPattern);
-        return match ? match[1] : '';
-      }
 
-      // Retrieve the last word from the first line as ShipName
-      const ship_name = extractValue(/SHIP Name: Norwegian (\w+)/) || extractValue(/VOYAGE SETTLEMENT - CARNIVAL (\w+)/);
-      // Retrieve the last string from the second line as VoyageNum
-      const voyage_num = extractValue(/VOYAGE #: (\w+)/);
-      // Retrieve the date from voyage_num
-      const start_date = extractValue();
-      const end_date = extractValue();
-      // Initialize the variables to store the data using regular expression
-        const FJ_GuestRev = extractValue();
-        const FJ_CrewRev = extractValue();
-      const revenue = moneyFormat(FJ_GuestRev + FJ_CrewRev);
-      const vip_sales = moneyFormat(extractValue());
-      const plcc = moneyFormat(extractValue(), true);
-      const dpa = moneyFormat(extractValue(), true);
-      const plcc_dpa = moneyFormat((plcc + dpa)); // Neg value but already converted in previous plcc and dpa 
-      const vat = moneyFormat(extractValue());
-      const reg_commission = moneyFormat((revenue * (1 + 0.36)), true);
-      const vip_commission = moneyFormat((vip_sales * (1 + 0.2)), true);
-      const discounts = moneyFormat(extractValue());
-      const food = moneyFormat(extractValue(), true);
-      const beverages = moneyFormat(extractValue(), true);
-      const cc_fee = moneyFormat(extractValue(), true);
-      const supplies = moneyFormat(extractValue(), true);
-      const misc_charges = moneyFormat(sumOfMisc(extractedData), true);
-      const cash_adv = moneyFormat(extractValue(), true);
-      const medical_charges = moneyFormat(extractValue(), true);
-      const printing = moneyFormat(extractValue(), true);
-      const prize_voucher = moneyFormat(extractValue());
-      const effy_rev = moneyFormat(extractValue());
-      // Add more conditions here as necessary for other fields.
-      setRows({...rows, ship_name, voyage_num, start_date, end_date, revenue, plcc, dpa, plcc_dpa, reg_commission, vip_commission, effy_rev, editor, vip_sales, food, beverages, 
-                        discounts, cc_fee, cash_adv, supplies, misc_charges, vat, medical_charges, printing, prize_voucher})
-    }catch (error){
-      console.error('Error parsing the PDF: ', error);
+    if (file.type.includes("image" || "pdf")) {
+      // If the file is an image or pdf, use Tesseract.js for OCR
+      Tesseract.recognize(file, 'eng', {
+        logger: m => console.log(m),
+      }).then(({ data: { text } }) => {
+        // Process the text data as needed
+        console.log(text);
+      }).catch(error => {
+        console.error('OCR error:', error);
+      });
+    } else if (file.type === "application/pdf") {
+      // If the file is a PDF, use pdf.js as before
+      try {
+        const extractedData = await extractTextFromPdf(file);
+        //console.log(extractedData);       // Debug
+        function extractValue(regexPattern) {
+          const match = extractedData.match(regexPattern);
+          return match ? match[1] : '';
+        }
+  
+        // Retrieve the last word from the first line as ShipName
+        const ship_name = extractValue(/SHIP Name: Norwegian (\w+)/);
+        // Retrieve the last string from the second line as VoyageNum
+        const voyage_num = extractValue(/VOYAGE #: (\w+)/);
+        // Retrieve the date from voyage_num
+        const start_date = extractValue();
+        const end_date = extractValue();
+        // Initialize the variables to store the data using regular expression
+          const FJ_GuestRev = extractValue();
+          const FJ_CrewRev = extractValue();
+        const revenue = moneyFormat(FJ_GuestRev + FJ_CrewRev);
+        const vip_sales = moneyFormat(extractValue());
+        const plcc = moneyFormat(extractValue(), true);
+        const dpa = moneyFormat(extractValue(), true);
+        const plcc_dpa = moneyFormat((plcc + dpa)); // Neg value but already converted in previous plcc and dpa 
+        const vat = moneyFormat(extractValue());
+        const reg_commission = moneyFormat((revenue * (1 + 0.36)), true);
+        const vip_commission = moneyFormat((vip_sales * (1 + 0.2)), true);
+        const discounts = moneyFormat(extractValue());
+        const food = moneyFormat(extractValue(), true);
+        const beverages = moneyFormat(extractValue(), true);
+        const cc_fee = moneyFormat(extractValue(), true);
+        const supplies = moneyFormat(extractValue(), true);
+        const misc_charges = moneyFormat(sumOfMisc(extractedData), true);
+        const cash_adv = moneyFormat(extractValue(), true);
+        const medical_charges = moneyFormat(extractValue(), true);
+        const printing = moneyFormat(extractValue(), true);
+        const prize_voucher = moneyFormat(extractValue());
+        const effy_rev = moneyFormat(extractValue());
+        // Add more conditions here as necessary for other fields.
+        setRows({...rows, ship_name, voyage_num, start_date, end_date, revenue, plcc, dpa, plcc_dpa, reg_commission, vip_commission, effy_rev, editor, vip_sales, food, beverages, 
+                          discounts, cc_fee, cash_adv, supplies, misc_charges, vat, medical_charges, printing, prize_voucher})
+      }catch (error){
+        console.error('Error parsing the PDF: ', error);
+      }
+    } else {
+      alert("Unsupported file type.");
     }
   };
 
   const handleSubmit_Add = (event) => {
-    const url = `http://localhost:8081/post`
+    const url = `http://ec2-3-141-229-218.us-east-2.compute.amazonaws.com:8081/ncl_post`
     fetch(url, {
       method: "POST",
       headers: {
