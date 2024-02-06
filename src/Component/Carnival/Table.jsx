@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import Button from "@mui/material/Button";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import IconButton from "@mui/material/IconButton";
@@ -34,8 +33,7 @@ class Table extends React.Component {
       .then((response) => response.json())
       .then((json) => {
         this.setState({ results: json });
-      });
-  }
+      });  }
 
   componentDidMount() {
     this.loadContentFromServer();
@@ -617,26 +615,24 @@ class Table extends React.Component {
     return (
       <div className="table">
         <div className="btnDiv">
-          <Button
-            className="addBtn"
-            variant="outlined"
+          <button
+            className="addBtn_ccl"
             startIcon={<PlaylistAddIcon />}
             onClick={() => {
               addButton();
             }}
           >
             Add
-          </Button>
-          <Button
-            className="refreshBtn"
-            variant="outlined"
+          </button>
+          <button
+            className="refreshBtn_ccl"
             startIcon={<RefreshIcon />}
             onClick={() => {
               this.loadContentFromServer();
             }}
           >
             Refresh
-          </Button>
+          </button>
         </div>
         <MUIDataTable
           className="dataTable"

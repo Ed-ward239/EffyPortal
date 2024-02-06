@@ -24,21 +24,47 @@
   /*border: 1px solid blue*/
 }
 
-.addBtn{
-  border-radius: 30px !important;
-  width: 85px !important;
-  height: 25px !important;
-  box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
-  position: absolute !important;
-  left: 0 !important;
+.addBtn_ncl{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 70px;
+  height: 30px;
+  background: rgb(214, 214, 214);
+  border: none;
+  border-radius: 25px;
+  color: rgb(50, 207, 207);
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: -7px -7px 20px 0 rgba(255, 255, 255, 0.7),
+    7px 7px 20px 0 rgba(0, 0, 0, 0.6);
 }
 
-.refreshBtn{
-  border-radius: 30px !important;
-  height: 25px !important;
-  box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
-  position: absolute !important;
-  right: 0 !important;
+.refreshBtn_ncl{
+  margin-left: 176vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 120px;
+  height: 30px;
+  background: rgb(214, 214, 214);
+  border: none;
+  border-radius: 25px;
+  color: rgb(50, 207, 207);
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: -7px -7px 20px 0 rgba(255, 255, 255, 0.7),
+    7px 7px 20px 0 rgba(0, 0, 0, 0.6);
+}
+
+.addBtn_ncl:hover,
+.refreshBtn_ncl:hover{
+  box-shadow: inset -7px -7px 20px 0 rgba(255, 255, 255, 0.7),
+    inset 7px 7px 20px 0 rgba(0, 0, 0, 0.2);
 }
 
 .edit_delete_btn{

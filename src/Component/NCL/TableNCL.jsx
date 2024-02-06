@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import Button from "@mui/material/Button";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import IconButton from "@mui/material/IconButton";
@@ -740,8 +739,8 @@ class Table extends React.Component {
     return (
       <div className="table">
         <div className="btnDiv">
-          <Button
-            className="addBtn"
+          <button
+            className="addBtn_ncl"
             variant="outlined"
             startIcon={<PlaylistAddIcon />}
             onClick={() => {
@@ -749,9 +748,9 @@ class Table extends React.Component {
             }}
           >
             Add
-          </Button>
-          <Button
-            className="refreshBtn"
+          </button>
+          <button
+            className="refreshBtn_ncl"
             variant="outlined"
             startIcon={<RefreshIcon />}
             onClick={() => {
@@ -759,7 +758,7 @@ class Table extends React.Component {
             }}
           >
             Refresh
-          </Button>
+          </button>
         </div>
         <MUIDataTable
           className="dataTable"

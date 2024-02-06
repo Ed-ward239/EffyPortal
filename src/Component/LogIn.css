@@ -10,7 +10,7 @@
 
 .header{
     margin-right: 3px;
-    background-color: #4EB5AB;
+    background-color: #32cfcf;
     height: 300px;
     width: 500px;
     border-radius: 30px;
@@ -58,29 +58,35 @@
     rgba(19, 26, 32, 0.08) 0px 35px 75px -35px;
 }
 
+body {
+    font-family: sans-serif;
+    background: rgb(214, 214, 214);
+    min-height: 100vh;
+  }
 
-.signInBtn{
+.signInBtn {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 20px;
-    height: 40px;
-    width: 150px;
-    box-shadow: none;
+    min-width: 150px;
+    height: 50px;
+    margin: 20px;
+    background: rgb(214, 214, 214);
     border: none;
-    color: white;
-    background-color: #4EB5AB;
-    font-size: 20px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    &:hover{
-        background-color: rgb(225, 225, 225);
-        color: #4EB5AB;
-        border: 1px solid #4EB5AB;
-    }
-    &:active{
-        transform: scale(.95); 
-    }
-}
+    border-radius: 25px;
+    color: rgb(50, 207, 207);
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: -7px -7px 20px 0 rgba(255, 255, 255, 0.7),
+      7px 7px 20px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .signInBtn:hover {
+    box-shadow: inset -7px -7px 20px 0 rgba(255, 255, 255, 0.7),
+      inset 7px 7px 20px 0 rgba(0, 0, 0, 0.2);
+  }
 
 .devWatermark{
     display: flex;

@@ -14,63 +14,64 @@ import Effy from '../Image/Effy.png';
 
 
 export default function Navbar() {
-    const navigate = useNavigate();
-    const [anchorEl, setAnchorEl] = useState('');
-    const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState("");
+  const open = Boolean(anchorEl);
 
-    // Logo Home Btn
-    function handleClick(event) {
-        event.preventDefault();
-        navigate('/');
-    }
-    // Menu bar onClick Functions
-    const handleClickMenu = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
+  // Logo Home Btn
+  function handleClick(event) {
+    event.preventDefault();
+    navigate("/");
+  }
+  // Menu bar onClick Functions
+  const handleClickMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
- return (
+  return (
     <nav className="navbar">
       <div className="navbar-logo" onClick={handleClick}>
-        <img alt="Effy Jewelery" src={Effy}/>
+        <img alt="Effy Jewelery" src={Effy} />
       </div>
 
       <div className="pfpIcon">
-      <React.Fragment>
-            <PersonIcon 
+        <React.Fragment>
+          <PersonIcon
             className="iconBtn"
             onClick={handleClickMenu}
             size="medium"
-            sx={{ width: 32, height: 32, ml: 2 }}>
+            sx={{ width: 32, height: 32, ml: 2 }}
+          >
             aria-controls={open ? "account-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
+            aria-haspopup="true" aria-expanded={open ? "true" : undefined}
             &gt;
-            </PersonIcon>
-            {<WelcomeName/>}
+          </PersonIcon>
+          {<WelcomeName />}
 
-      <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      >
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Logout fontSize="small"/><SignOut/>
-          </ListItemIcon> 
-        </MenuItem>
-      </Menu>
-    </React.Fragment>
+          <Menu
+            anchorEl={anchorEl}
+            id="account-menu"
+            open={open}
+            onClose={handleClose}
+            onClick={handleClose}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            <MenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <Logout fontSize="small" />
+                <SignOut />
+              </ListItemIcon>
+            </MenuItem>
+          </Menu>
+        </React.Fragment>
       </div>
     </nav>
- );
- }
+  );
+}
 
 // In this code, we have a `Navbar` component that renders a navigation bar with a logo, a welcome name, and a profile picture (PFP) icon.
 //
