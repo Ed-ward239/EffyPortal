@@ -1,48 +1,148 @@
+
+.layoutBackground{
+    /* background-color: #282A3A; */
+    background:
+        url(https://images.unsplash.com/photo-1474540412665-1cdae210ae6b?q=80&w=2083&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
+        center / cover no-repeat fixed;
+    height: 200vh;
+    width: 100%;
+}
+
 .btnContainer{
     display: flex;
+    align-items: center;
     justify-content: space-around;
     flex-direction: row;
     width: 80%;
-    height: 60%;
+    height: 50%;
+    z-index: 3;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.carnivalBox{
-    background-image: url("../Image/ccl.jpg");
-    background-size: 155%;
-    filter: blur(1.3px);
-    background-position: 50% 95% !important;
+.glassmorphic {
+	position: relative;
+	display: flex;
+    flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	z-index: 3;
+	width: 320px;
+	height: 350px;
+	padding: 40px 20px;
+	margin: 100px;
+    margin-top: none;
+	box-shadow: 20px 20px 50px rgba(0,0,0, 0.5);
+	border-radius: 15px;
+	border-top: 1px solid rgba(255,255,255,0.5);
+	border-left: 1px solid rgba(255,255,255,0.5);
+	background: rgba(255,255,255,0.2);
+	backdrop-filter: blur(4px);
+	overflow: hidden;
+}
+.imgBox {
+	position: relative;
+	text-align: center;
 }
 
-.nclBox{
-    background-image: url("../Image/ncl.jpg");
-    background-size: 155%;
-    filter: blur(1.3px);
+.carnivalPic{
+    width: 100px;
+    height: 100px;
 }
 
-.otherBox{
-    background-image: url("../Image/pizza.jpg");
-    background-size: 145%;
-    filter: blur(1.3px);
+.norwegianPic{
+    width: 80px;
+    height: 80px;
+    margin: none;
 }
 
-.nclBox,
-.carnivalBox,
-.otherBox{
-    cursor: pointer;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100%;
+.otherPic{
+    color: grey;
+}
+
+.contentBoxCCL {
+	position: relative;
+	margin-top: 20px;
+	text-align:center;
+	transition: 0.5s;
+}
+.contentBoxCCL:before {
+	content: 'CCL';
+    position: absolute;
+    top: -230px;
+    left: -130px;
     width: 100%;
-    transition: all 0.7s ease-in-out;
-    border: none;
-    margin-left: 3rem;
-    margin-right: 3rem;
-    box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
-    z-index: 1;
+    font-size: 4em;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 2px;
+    transform: rotate(-90deg);
+    color: rgba(0,0,0,0.2);
 }
 
-.nclBox:hover,
-.carnivalBox:hover{
+.contentBoxNCL {
+	position: relative;
+	margin-top: 20px;
+	text-align:center;
+	transition: 0.5s;
+}
+.contentBoxNCL:before {
+	content: 'NCL';
+    position: absolute;
+    top: -230px;
+    left: -130px;
+    width: 100%;
+    font-size: 4em;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 2px;
+    transform: rotate(-90deg);
+    color: rgba(0,0,0,0.2);
+}
+
+.contentBoxOther {
+	position: relative;
+	margin-top: 20px;
+	text-align:center;
+	transition: 0.5s;
+}
+.contentBoxOther:before {
+	content: 'Other';
+    position: absolute;
+    top: -60px;
+    left: -130px;
+    width: 100%;
+    font-size: 4em;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 2px;
+    transform: rotate(-90deg);
+    color: rgba(0,0,0,0.2);
+}
+
+h3 {
+	font-size: 1.2em;
+    font-weight: 300;
+	color: #7a7a7a;
+	z-index: 1;
+    text-align: center;
+}
+button {
+	position: relative;
+	display: inline-block;
+	padding: 8px 20px;
+	margin-top: 15px;
+	background: #fff;
+    border: none;
+	color: #000;
+	border-radius: 20px;
+	text-decoration: none;
+	font-weight: 500;
+	box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.glassmorphic:hover{
     filter: brightness(100%);
     background-size: 170%;
     border-radius: 15px;
@@ -51,71 +151,15 @@
     box-shadow: 0px 0px 10px 3px rgba(78,181,171,0.75);
 }
 
-.otherBox:hover{
+/* .otherBox:hover{
     filter: brightness(100%);
     background-size: 160%;
     border-radius: 15px;
     -webkit-box-shadow:0px 0px 10px 3px rgba(78,181,171,0.75);
     -moz-box-shadow: 0px 0px 10px 3px rgba(78,181,171,0.75);
     box-shadow: 0px 0px 10px 3px rgba(78,181,171,0.75);
-}
+} */
 
-.ccl,
-.ncl,
-.other {
-    font-size: 60px;
-    color: #7e6e5f;
-    background-color: white;
-    background-size: auto;
-    /* margin-top: 26rem; */
-    text-decoration: none;
-    position: relative;
-    cursor: pointer;
-    position: relative;
-    padding: 10px 20px;
-    font-size: 35px;
-    border-top-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-    transition: all 1s ease-in-out;
-    z-index: 3;
-    &:after,
-    &:before {
-        content: "";
-        width: 18px;
-        height: 18px;
-        position: absolute;
-        transition: all 1s ease-in-out;
-    }
-
-    &:after {
-        top: -1px;
-        left: -1px;
-        border-top: 5px solid rgb(255, 255, 255);
-        border-left: 5px solid rgb(255, 255, 255);
-    }
-
-    &:before {
-        bottom: -1px;
-        right: -1px;
-        border-bottom: 5px solid rgb(255, 255, 255);
-        border-right: 5px solid rgb(255, 255, 255);
-    }
-
-    &:hover {
-        border-top-right-radius: 0px;
-        border-bottom-left-radius: 0px;
-        background:rgb(255, 255, 255);
-        margin-left: 5rem;
-        margin-right: 5rem;
-        /* color:white; */
-        &:before,
-        &:after {
-            width: 100%;
-            height: 100%;
-            border-color: #32cfcf;
-        }
-    }
-}
 
 .circles{
     position: absolute;
@@ -133,7 +177,7 @@
     width: 20px;
     height: 20px;
     background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(160, 160, 160, 0.2);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 80px;
@@ -169,7 +213,7 @@
     left: 40%;
     width: 60px;
     height: 60px;
-    animation-delay: 0s;
+    animation-delay: 8s;
     animation-duration: 18s;
 }
 
@@ -191,7 +235,7 @@
     left: 35%;
     width: 150px;
     height: 150px;
-    animation-delay: 7s;
+    animation-delay: 15s;
 }
 
 .circles li:nth-child(8){
@@ -232,25 +276,5 @@
     }
 }
 
-.layoutBackground{
-    background-color: #282A3A;
-    height: 200vh !important;
-    width: 100% !important;
-}
 
-.greyBox{
-    width: 95%;
-    height: 70vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    background-color: rgba(128, 128, 128, 0.316);
-    border-radius: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    position: absolute;
-    top: 20vh;
-    left: 5vh;
-    right: 5vh;
-}
 
