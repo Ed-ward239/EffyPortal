@@ -10,8 +10,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import "./TableNCL.css";
 
-
 class Table extends React.Component {
+  
   constructor(props) {
     super(props);
 
@@ -263,15 +263,32 @@ class Table extends React.Component {
       }
     };
 
+    const columnStyle = (value) => (
+      <div style={{
+        border: '1px solid rgba(255, 255, 255, .25)',
+        borderRadius: '20px',
+        backgroundColor: 'rgba(255, 255, 255, 0.164)',
+        boxShadow: '0 0 10px 1px rgba(0, 0, 0, 0.25)',
+        backdropFilter: 'blur(15px)',
+        WebkitBackdropFilter: 'blur(15px)', // for Safari browsers
+        padding: '10px',
+        boxSizing: 'border-box',
+      }}>
+        {value}
+      </div>
+    );
+
     // Table Column names
     const columns = [
       {
         name: "Voyage#",
         options: {
           filter: false,
+          sort: true,
           setCellProps: () => ({
             style: { textAlign: "left", whiteSpace: "nowrap" },
           }),
+          style: columnStyle(),
         },
       },
       {
@@ -713,9 +730,10 @@ class Table extends React.Component {
     // Table options
     const options = {
       //expandableRows: true,
+      //serverSide: true,
       searchPlaceholder: "Type Anything to Search",
-      sort: true,
-      filter: true,
+      //sort: true,
+      //filter: true,
       textAlign: "center",
       filterType: "multiselect",
       elevation: 20,
@@ -725,15 +743,15 @@ class Table extends React.Component {
       print: "disabled",
       fixedSelectColumn: true,
       tableBodyHeight: "100%",
-      tableBodyMaxHeight: "75vh",
+      tableBodyMaxHeight: "74vh",
       downloadOptions: {
-        filename: "HFC-Voyages.csv",
+        filename: "NCL-Voyages.csv",
         separator: ",",
       },
-      sortOrder:{
-        name: 'Start Date',
-        direction: 'desc'
-      },
+      // sortOrder:{
+      //   name: 'Start Date',
+      //   direction: 'desc'
+      // },
     };
 
     return (
@@ -760,16 +778,16 @@ class Table extends React.Component {
             Refresh
           </button>
         </div>
-        <MUIDataTable
-          className="dataTable"
+        <MUIDataTable className='MUIDataTableNCL'
           title={
             <div className="pageHeader">
-              <div className="carnivalTxt">NCL DATA</div>
+              <div className="nclTxt">NCL DATA</div>
             </div>
           }
           data={data}
           columns={columns}
           options={options}
+          rowHeight={40}
         />
         <Modal open={open} onClose={this.handleClose}>
           <div className="modal">

@@ -15,7 +15,7 @@ const SignOutBtn = () => {
 
     // Return a paragraph element that calls the handleSignOut function when clicked.
     return (
-        <p onClick={handleSignOut}>Log out</p>
+        <p onClick={handleSignOut} style={{ marginTop: 0, marginBottom: 0, marginLeft: '10px' }}>Log out</p>
     )
 }
 

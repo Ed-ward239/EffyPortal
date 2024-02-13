@@ -6,7 +6,7 @@ import Table from '../Component/NCL/TableNCL';
 function NCL(){
 
     return (
-        <div>
+        <div className='nclBackground'>
             <Navbar/>
             <Table/>
         </div>

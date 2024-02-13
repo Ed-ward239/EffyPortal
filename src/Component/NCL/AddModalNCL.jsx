@@ -114,9 +114,9 @@ const AddModal = ({ closeModal }) => {
         }
   
         // Retrieve the last word from the first line as ShipName
-        const ship_name = extractValue(/SHIP Name: Norwegian (\w+)/);
+        const ship_name = extractValue(/Ship Name: Norwegian (\w+)/);
         // Retrieve the last string from the second line as VoyageNum
-        const voyage_num = extractValue(/VOYAGE #: (\w+)/);
+        const voyage_num = extractValue(/Voyage #: (\w+)/);
         // Retrieve the date from voyage_num
         const start_date = extractValue();
         const end_date = extractValue();
@@ -193,7 +193,7 @@ const AddModal = ({ closeModal }) => {
 
   // Return ReactJS format input text
     return (
-      <>
+      <div className="panel">
         <form className="inputForm">
           <div className="txtInputGrp">
             <input className="inputTxt" type="text" placeholder=" " name="ship_name" label="Ship Name" onChange={(e) => setRows({ ...rows, ship_name: e.target.value })} value={rows.ship_name}/>
@@ -361,7 +361,7 @@ const AddModal = ({ closeModal }) => {
           <input className="fileUpload" type="file" onChange={handleFileChange} accept=".pdf"/>
           <button className="submitBtn" onClick={handleSubmit_Add}>Submit</button>
         </div>
-      </>
+      </div>
     );
 }
 export default AddModal;

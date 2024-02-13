@@ -601,9 +601,9 @@ class Table extends React.Component {
       print: "disabled",
       fixedSelectColumn: true,
       tableBodyHeight: "100%",
-      tableBodyMaxHeight: "75vh",
+      tableBodyMaxHeight: "74vh",
       downloadOptions: {
-        filename: "HFC-Voyages.csv",
+        filename: "CCL-Voyages.csv",
         separator: ",",
       },
       sortOrder:{
@@ -635,7 +635,7 @@ class Table extends React.Component {
           </button>
         </div>
         <MUIDataTable
-          className="dataTable"
+          className="CCLDataTable"
           title={
             <div className="pageHeader">
               <div className="carnivalTxt">CARNIVAL DATA</div>

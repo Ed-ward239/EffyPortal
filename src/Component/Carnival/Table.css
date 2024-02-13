@@ -80,6 +80,26 @@
   padding: none;
 }
 
+.CCLDataTable {
+  border: 1px solid rgba(255, 255, 255, .25) !important;
+  border-radius: 20px !important;
+  background-color: rgba(255, 255, 255, 0.164) !important;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25) !important;
+  backdrop-filter: blur(15px) !important;
+}
+
+.CCLDataTable .MuiTableRow-root{
+  height: 25px !important;
+}
+
+.CCLDataTable .MuiTableCell-root{
+  padding: 4px 16px !important;
+}
+
+.CCLDataTable .MuiTableCell-head {
+  background-color: rgba(255, 255, 255, 0.096) !important;
+}
+
 .table{
   border: 1px solid transparent;
   width: 98%;

@@ -7,7 +7,7 @@ import Table from "../Component/Carnival/Table.jsx";
 
 function Carnival() {
     return (
-        <div className='divBackground'>
+        <div className='cclBackground'>
             <Navbar/>
             <Table/>
         </div>

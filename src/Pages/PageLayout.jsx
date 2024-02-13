@@ -34,18 +34,35 @@ const BodyPage = () =>{
     }
 
     return (
-      <>
+      <div className="layoutBackground">
         <NavBar />
         <div className="greyBox">
           {/* Render two buttons for Carnival and NCL functionalities. When clicked, navigate to the respective pages. */}
-          <div className='btnContainer'>
-            <button className="carnivalBox" onClick={clickCarnival}><p className='ccl'>Carnival</p></button>
-            <button className="nclBox" onClick={clickNCL}><p className='ncl'>NCL</p></button>
-            <button className="otherBox" onClick={clickOther}><p className='other'>Other</p></button>
+          <div className="btnContainer">
+            <button className="carnivalBox" onClick={clickCarnival}>
+              <p className="ccl">Carnival</p>
+            </button>
+            <button className="nclBox" onClick={clickNCL}>
+              <p className="ncl">NCL</p>
+            </button>
+            <button className="otherBox" onClick={clickOther}>
+              <p className="other">Other</p>
+            </button>
           </div>
         </div>
-        {/*<Particles />*/}
-      </>
+        <ul class="circles">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
     );
 }
 
