@@ -736,7 +736,6 @@ class Table extends React.Component {
       //filter: true,
       textAlign: "center",
       filterType: "multiselect",
-      elevation: 20,
       responsive: "simple",
       rowsPerPage: 50,
       rowsPerPageOptions: [5, 50, 100, 500],
@@ -755,7 +754,7 @@ class Table extends React.Component {
     };
 
     return (
-      <div className="table">
+      <div className="tableNCL">
         <div className="btnDiv">
           <button
             className="addBtn_ncl"

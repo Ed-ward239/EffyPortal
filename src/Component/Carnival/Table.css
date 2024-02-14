@@ -1,27 +1,10 @@
-.tableContainer{
-    border: 1px solid rgb(136, 136, 136);
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    align-items: center;
-    color: white;
-    width: 98% !important;
-    border-top-left-radius: 15px !important;
-    border-top-right-radius: 15px !important;
-    box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 5px 5px 15px;
-    height: 100%;
-    margin-top: 1rem;
-}
-
-.dataTable{
-  height: 100% !important;
-  max-height: 100% !important;
-  border-radius: 15px !important;
-  box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  /*border: 1px solid blue*/
+.btnDiv {
+  position: relative !important;
+  height: 24px;
+  margin-bottom: 1vh ;
+  display: flex;
+  flex-direction: row;
+  margin-top: 0;
 }
 
 .addBtn_ccl{
@@ -30,33 +13,33 @@
   align-items: center;
   min-width: 70px;
   height: 30px;
+  margin-top: 0;
   background: rgb(214, 214, 214);
   border: none;
   border-radius: 25px;
   color: rgb(50, 207, 207);
   font-size: 15px;
-  font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   box-shadow: -7px -7px 20px 0 rgba(255, 255, 255, 0.7),
     7px 7px 20px 0 rgba(0, 0, 0, 0.6);
 }
 
 .refreshBtn_ccl{
-  margin-left: 176vh;
+  margin-left: 175.7vh;
   display: flex;
   justify-content: center;
   align-items: center;
   min-width: 120px;
   height: 30px;
+  margin-top: 0;
   background: rgb(214, 214, 214);
   border: none;
   border-radius: 25px;
   color: rgb(50, 207, 207);
   font-size: 15px;
-  font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   box-shadow: -7px -7px 20px 0 rgba(255, 255, 255, 0.7),
     7px 7px 20px 0 rgba(0, 0, 0, 0.6);
 }
@@ -66,7 +49,6 @@
   box-shadow: inset -7px -7px 20px 0 rgba(255, 255, 255, 0.7),
     inset 7px 7px 20px 0 rgba(0, 0, 0, 0.2);
 }
-
 
 .edit_delete_btn{
   background-color: transparent;
@@ -80,12 +62,23 @@
   padding: none;
 }
 
+/* .dataTable{
+  height: 100% !important;
+  max-height: 100% !important;
+  border-radius: 15px !important;
+  box-shadow: rgba(0.55, 0.55, 0.55, 0.55) 0px 5px 15px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+} */
+
 .CCLDataTable {
   border: 1px solid rgba(255, 255, 255, .25) !important;
   border-radius: 20px !important;
   background-color: rgba(255, 255, 255, 0.164) !important;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25) !important;
   backdrop-filter: blur(15px) !important;
+  margin-top: 20px !important
 }
 
 .CCLDataTable .MuiTableRow-root{
@@ -100,7 +93,11 @@
   background-color: rgba(255, 255, 255, 0.096) !important;
 }
 
-.table{
+.CCLDataTable .MuiTableHeead-root{
+  box-shadow: none !important;
+}
+
+.tableCCL{
   border: 1px solid transparent;
   width: 98%;
   margin-left: auto;
@@ -109,15 +106,7 @@
   border-bottom-left-radius: 15px !important;
   border-bottom-right-radius: 15px !important;
   position: relative;
-}
-
-.btnDiv {
-  position: relative !important;
-  height: 24px;
-  margin-bottom: 1vh ;
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 2vh;
+    top: 80px;
 }
 
 /* Coloured Title Text */

@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import IconButton from "@mui/material/IconButton";
 import AddModal from "./AddModal.jsx";
@@ -7,7 +6,6 @@ import EditModal from "./EditModal.jsx";
 import Modal from "@mui/material/Modal";
 import MUIDataTable from "mui-datatables";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import RefreshIcon from "@mui/icons-material/Refresh";
 
 import "./Table.css";
 class Table extends React.Component {
@@ -594,7 +592,6 @@ class Table extends React.Component {
       filter: true,
       textAlign: "center",
       filterType: "multiselect",
-      elevation: 20,
       responsive: "simple",
       rowsPerPage: 50,
       rowsPerPageOptions: [5, 50, 100, 500],
@@ -613,11 +610,10 @@ class Table extends React.Component {
     };
 
     return (
-      <div className="table">
+      <div className="tableCCL">
         <div className="btnDiv">
           <button
             className="addBtn_ccl"
-            startIcon={<PlaylistAddIcon />}
             onClick={() => {
               addButton();
             }}
@@ -626,7 +622,6 @@ class Table extends React.Component {
           </button>
           <button
             className="refreshBtn_ccl"
-            startIcon={<RefreshIcon />}
             onClick={() => {
               this.loadContentFromServer();
             }}
