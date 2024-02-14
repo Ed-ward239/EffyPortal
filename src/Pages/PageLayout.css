@@ -70,7 +70,7 @@
 .contentBoxCCL:before {
 	content: 'CCL';
     position: absolute;
-    top: -230px;
+    top: -240px;
     left: -130px;
     width: 100%;
     font-size: 4em;
@@ -90,7 +90,7 @@
 .contentBoxNCL:before {
 	content: 'NCL';
     position: absolute;
-    top: -230px;
+    top: -240px;
     left: -130px;
     width: 100%;
     font-size: 4em;
@@ -110,7 +110,7 @@
 .contentBoxOther:before {
 	content: 'Other';
     position: absolute;
-    top: -60px;
+    top: -100px;
     left: -130px;
     width: 100%;
     font-size: 4em;
@@ -128,18 +128,28 @@ h3 {
 	z-index: 1;
     text-align: center;
 }
-button {
+.buttons {
 	position: relative;
 	display: inline-block;
 	padding: 8px 20px;
 	margin-top: 15px;
-	background: #fff;
+    box-shadow: -7px -7px 20px 0 rgba(226, 226, 226, 0.7),
+    7px 7px 20px 0 rgba(0, 0, 0, 0.2);
     border: none;
-	color: #000;
+    background: rgb(204, 204, 204);
+    text-transform: uppercase;
+	color: #32cfcf;
 	border-radius: 20px;
 	text-decoration: none;
 	font-weight: 500;
-	box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    width: 150px;
+    height: 35px;
+    font-size: 15px;
+}
+
+.buttons:hover {
+    box-shadow: inset -7px -7px 20px 0 rgba(255, 255, 255, 0.7),
+    inset 7px 7px 20px 0 rgba(0, 0, 0, 0.2);
 }
 
 .glassmorphic:hover{
