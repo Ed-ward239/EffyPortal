@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import IconButton from "@mui/material/IconButton";
 import AddModal from "./AddModalNCL.jsx";
@@ -7,7 +6,6 @@ import EditModal from "./EditModalNCL.jsx";
 import Modal from "@mui/material/Modal";
 import MUIDataTable from "mui-datatables";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import RefreshIcon from "@mui/icons-material/Refresh";
 import "./TableNCL.css";
 
 class Table extends React.Component {
@@ -379,7 +377,7 @@ class Table extends React.Component {
         name: "VIP Sales",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -435,7 +433,7 @@ class Table extends React.Component {
         name: "VAT",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -449,7 +447,7 @@ class Table extends React.Component {
         name: "Reg. Commission",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -463,7 +461,7 @@ class Table extends React.Component {
         name: "VIP Commission",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -477,7 +475,7 @@ class Table extends React.Component {
         name: "Discounts",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -491,7 +489,7 @@ class Table extends React.Component {
         name: "Food",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -505,7 +503,7 @@ class Table extends React.Component {
         name: "Beverages",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -519,7 +517,7 @@ class Table extends React.Component {
         name: "CC Fee",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -533,7 +531,7 @@ class Table extends React.Component {
         name: "Supplies",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -547,7 +545,7 @@ class Table extends React.Component {
         name: "Misc. Charges",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -561,7 +559,7 @@ class Table extends React.Component {
         name: "Cash Advance",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -575,7 +573,7 @@ class Table extends React.Component {
         name: "Medical Charges",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -589,7 +587,7 @@ class Table extends React.Component {
         name: "Printing",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -603,7 +601,7 @@ class Table extends React.Component {
         name: "Prize Voucher",
         options: {
           filter: false,
-          display: true,
+          display: false,
           setCellProps: () => ({
             style: { textAlign: "center", whiteSpace: "nowrap" },
           }),
@@ -759,7 +757,6 @@ class Table extends React.Component {
           <button
             className="addBtn_ncl"
             variant="outlined"
-            startIcon={<PlaylistAddIcon />}
             onClick={() => {
               addButton();
             }}
@@ -769,7 +766,6 @@ class Table extends React.Component {
           <button
             className="refreshBtn_ncl"
             variant="outlined"
-            startIcon={<RefreshIcon />}
             onClick={() => {
               this.loadContentFromServer();
             }}
@@ -779,7 +775,7 @@ class Table extends React.Component {
         </div>
         <MUIDataTable className='MUIDataTableNCL'
           title={
-            <div className="pageHeader">
+            <div className="pageHeaderNCL">
               <div className="nclTxt">NCL DATA</div>
             </div>
           }

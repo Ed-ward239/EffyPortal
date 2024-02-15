@@ -100,7 +100,7 @@ cursor: none;
 transition: ease-in-out;
 }
 
-.pageHeader {
+.pageHeaderNCL {
 --border-width: 7px;
 position: relative;
 display: flex;

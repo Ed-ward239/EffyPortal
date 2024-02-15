@@ -633,7 +633,7 @@ class Table extends React.Component {
           className="CCLDataTable"
           title={
             <div className="pageHeader">
-              <div className="carnivalTxt">CARNIVAL DATA</div>
+              <p className="carnivalTxt">CARNIVAL DATA</p>
             </div>
           }
           data={data}
