@@ -25,7 +25,7 @@ class Table extends React.Component {
 
   loadContentFromServer() {
     // Back-end server
-    const url = "http://ec2-3-141-229-218.us-east-2.compute.amazonaws.com:8081/ccl_get";
+    const url = "https://effyaws5.effysystems.com/ccl_get";
 
     fetch(url)
       .then((response) => response.json())
@@ -135,7 +135,7 @@ class Table extends React.Component {
         return;
       }
 
-      const url = `http://ec2-3-141-229-218.us-east-2.compute.amazonaws.com:8081/ccl_del/${delVoyageNum}`;
+      const url = `https://effyaws5.effysystems.com/ccl_del/${delVoyageNum}`;
       fetch(url, {
         method: "DELETE",
         headers: {

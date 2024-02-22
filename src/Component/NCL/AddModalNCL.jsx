@@ -86,9 +86,18 @@ const AddModal = ({ closeModal }) => {
   
   const [ rows, setRows ] = useState({
     ship_name: '', voyage_num: '', start_date: '', end_date: '', revenue: '', plcc: '', dpa: '', plcc_dpa: '', reg_commission: '', vip_commission: '', effy_rev: '', editor: editor, vip_sales: '', food: '', beverages: '', 
-    discounts: '', cc_fee: '', cash_adv: '', supplies: '', misc_charges: '', vat: '', medical_charges: '', printing: '', prize_voucher: '', status_paid: ''
+    discounts: '', cc_fee: '', cash_adv: '', supplies: '', misc_charges: '', vat: '', medical_charges: '', printing: '', prize_voucher: '', status_paid: '', promo_food: '', requisition: ''
   });
   
+  function convertDate(day, monthAbbrev, year) {
+    // Array of month abbreviations for easy lookup; index + 1 gives the month number
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthNumber = months.indexOf(monthAbbrev) + 1;
+    const month = monthNumber < 10 ? `0${monthNumber}` : `${monthNumber}`;
+    const fullYear = `20${year}`;
+    return `${fullYear}-${month}-${day}`;
+  }
+
   const handleFileChange = async (event) => {
     const file =  event.target.files[0];
     if (!file) return;
@@ -116,35 +125,53 @@ const AddModal = ({ closeModal }) => {
         // Retrieve the last word from the first line as ShipName
         const ship_name = extractValue(/Ship Name: Norwegian (\w+)/);
         // Retrieve the last string from the second line as VoyageNum
-        const voyage_num = extractValue(/Voyage #: (\w+)/);
+        const voyage_num = extractValue(/Voyage #\. ([\d\s]+) Voyage Start/);
         // Retrieve the date from voyage_num
-        const start_date = extractValue();
-        const end_date = extractValue();
+        const startDateMatch = extractValue(/Voyage Start: (\d{2})-(\w{3})-(\d{2})/);
+        let start_date = "";
+        if (startDateMatch) {
+          start_date = convertDate(startDateMatch[1], startDateMatch[2], startDateMatch[3]);
+        }
+        // Assume convertDate is a function that converts DD-MMM-YY to MM-DD-YYYY format.
+        const endDateMatch = extractValue(/Voyage End: (\d{2})-(\w{3})-(\d{2})/);
+        let end_date = "";
+        if (endDateMatch) {
+          end_date = convertDate(endDateMatch[1], endDateMatch[2], endDateMatch[3]);
+        }
         // Initialize the variables to store the data using regular expression
-          const FJ_GuestRev = extractValue();
-          const FJ_CrewRev = extractValue();
-        const revenue = moneyFormat(FJ_GuestRev + FJ_CrewRev);
-        const vip_sales = moneyFormat(extractValue());
-        const plcc = moneyFormat(extractValue(), true);
-        const dpa = moneyFormat(extractValue(), true);
+          const FineJewelry_GuestRev = extractValue();
+          const FineJewelry_CrewRev = extractValue();
+        const revenue = moneyFormat(FineJewelry_GuestRev + FineJewelry_CrewRev);
+        // VIP Sales
+        const vip_sales = moneyFormat(extractValue(/VIP Sales \$([\d,]+\.?\d*)/));
+        // PLCC 
+        const plcc = extractValue(/Total Amount charged to PLCC System Account \$([\d,]+\.?\d*)/);
+        // DPA
+        const dpa = extractValue(/Total Amount charged to DPA System Account \$([\d,]+\.?\d*)/);
+        // PLCC + DPA
         const plcc_dpa = moneyFormat((plcc + dpa)); // Neg value but already converted in previous plcc and dpa 
         const vat = moneyFormat(extractValue());
         const reg_commission = moneyFormat((revenue * (1 + 0.36)), true);
         const vip_commission = moneyFormat((vip_sales * (1 + 0.2)), true);
-        const discounts = moneyFormat(extractValue());
-        const food = moneyFormat(extractValue(), true);
-        const beverages = moneyFormat(extractValue(), true);
-        const cc_fee = moneyFormat(extractValue(), true);
+        
+        const food = moneyFormat(extractValue(/Crew Meals \$(\d+)/), true);
+        const beverages = moneyFormat(extractValue(/Champagne Charges - FCR \(Fidelio\) \$(\d+\.\d{2})/), true);
+        const cc_fee = moneyFormat(extractValue(/Credit Card Fees \$([\d,]+\.\d{2})/), true);
         const supplies = moneyFormat(extractValue(), true);
         const misc_charges = moneyFormat(sumOfMisc(extractedData), true);
-        const cash_adv = moneyFormat(extractValue(), true);
-        const medical_charges = moneyFormat(extractValue(), true);
-        const printing = moneyFormat(extractValue(), true);
-        const prize_voucher = moneyFormat(extractValue());
-        const effy_rev = moneyFormat(extractValue());
+        const cash_adv = moneyFormat(extractValue(/Cash Advances & Expenses Paid in Cash \*\*Max \$\d+\/crulse \$(\d+\.\d{2})/), true);
+        const medical_charges = moneyFormat(extractValue(/Medical Charges - FCR \(Fidelio\) \$(\d+\.\d{2})/), true);
+        const printing = moneyFormat(extractValue(/Printing Charges - Cashbook \(FCB\) \$(\d+\.\d{2})/), true);
+        const prize_voucher = moneyFormat(extractValue(/Wheel of Fortune Jewelry Prize Voucher \(Due TO\) \(enter as positive, subtracted from Total - backup from WOF\) \$(\d+\.\d{2})/), true);
+        const requisition = moneyFormat(extractValue());
+        const promo_food = moneyFormat(extractValue());
+        const discounts = extractValue(/Revenue Share Occupan Discount - Due to Effy \$([\d,]+\.\d{2})/);
+        
+        const effy_rev = revenue - ( food + beverages + cc_fee + misc_charges + cash_adv + medical_charges + printing + prize_voucher + requisition + promo_food + discounts);
+
         // Add more conditions here as necessary for other fields.
         setRows({...rows, ship_name, voyage_num, start_date, end_date, revenue, plcc, dpa, plcc_dpa, reg_commission, vip_commission, effy_rev, editor, vip_sales, food, beverages, 
-                          discounts, cc_fee, cash_adv, supplies, misc_charges, vat, medical_charges, printing, prize_voucher})
+                          discounts, cc_fee, cash_adv, supplies, misc_charges, vat, medical_charges, printing, prize_voucher, requisition, promo_food})
       }catch (error){
         console.error('Error parsing the PDF: ', error);
       }
@@ -154,7 +181,7 @@ const AddModal = ({ closeModal }) => {
   };
 
   const handleSubmit_Add = (event) => {
-    const url = `http://ec2-3-141-229-218.us-east-2.compute.amazonaws.com:8081/ncl_post`
+    const url = `http://localhost:3000/ncl_post`
     fetch(url, {
       method: "POST",
       headers: {
@@ -378,12 +405,6 @@ export default AddModal;
   }
   return null;
 }
-
-const AddModal = ({ closeModal }) => {
-  // ... other code ...
-
-  const handleFileChange = async (event) => {
-    // ... other code ...
 
     // Define patterns for each field
     const patterns = {
