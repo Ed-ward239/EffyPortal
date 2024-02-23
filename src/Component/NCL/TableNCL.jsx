@@ -26,7 +26,7 @@ class Table extends React.Component {
 
   loadContentFromServer() {
     // Back-end server
-    const url = "https://effyaws5.effysystems.com/ccl_get";
+    const url = "https://effyaws5.effysystems.com/ncl_get";
 
     fetch(url)
       .then((response) => response.json())

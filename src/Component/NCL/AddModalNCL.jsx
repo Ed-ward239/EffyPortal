@@ -40,6 +40,24 @@ const extractTextFromPdf = async (file) => {
   });
 };
 
+function moneyFormat(value, isNegative = false) {
+  if (value === "0.00" || value === "0"){
+    return ""; 
+  }
+  if (value && !isNaN(parseFloat(value.replace(/,/g, "")))) {
+    // Remove commas for thousands and convert to float
+    let number = parseFloat(value.replace(/,/g, ""));
+    // If the value is supposed to be negative, multiply by -1
+    if (isNegative) {
+      number *= -1;
+    }
+    // Return the number as a string formatted to two decimal places
+    return number.toFixed(2);
+  } else {
+    return null;
+  }
+}
+
 // Scan Misc.Charges from the pdf, return one if only 1 value, add all if multiple lines
 function sumOfMisc(str) {
   // Using two simpler regex patterns for different PDF types
@@ -61,24 +79,6 @@ function sumOfMisc(str) {
   processMatches(regexPattern2);
 
   return total === 0 ? "" : total.toFixed(2);
-}
-
-function moneyFormat(value, isNegative = false) {
-  if (value === "0.00" || value === "0"){
-    return ""; 
-  }
-  if (value && !isNaN(parseFloat(value.replace(/,/g, "")))) {
-    // Remove commas for thousands and convert to float
-    let number = parseFloat(value.replace(/,/g, ""));
-    // If the value is supposed to be negative, multiply by -1
-    if (isNegative) {
-      number *= -1;
-    }
-    // Return the number as a string formatted to two decimal places
-    return number.toFixed(2);
-  } else {
-    return null;
-  }
 }
 
 const AddModal = ({ closeModal }) => {
@@ -145,14 +145,14 @@ const AddModal = ({ closeModal }) => {
         // VIP Sales
         const vip_sales = moneyFormat(extractValue(/VIP Sales \$([\d,]+\.?\d*)/));
         // PLCC 
-        const plcc = extractValue(/Total Amount charged to PLCC System Account \$([\d,]+\.?\d*)/);
+        const plcc = moneyFormat(extractValue(/Total Amount charged to PLCC System Account \$([\d,]+\.?\d*)/));
         // DPA
-        const dpa = extractValue(/Total Amount charged to DPA System Account \$([\d,]+\.?\d*)/);
+        const dpa = moneyFormat(extractValue(/Total Amount charged to DPA System Account \$([\d,]+\.?\d*)/));
         // PLCC + DPA
         const plcc_dpa = moneyFormat((plcc + dpa)); // Neg value but already converted in previous plcc and dpa 
         const vat = moneyFormat(extractValue());
-        const reg_commission = moneyFormat((revenue * (1 + 0.36)), true);
-        const vip_commission = moneyFormat((vip_sales * (1 + 0.2)), true);
+        const reg_commission = moneyFormat((revenue * (0.36)), true); // 36%
+        const vip_commission = moneyFormat((vip_sales * (0.2)), true); // 20%
         
         const food = moneyFormat(extractValue(/Crew Meals \$(\d+)/), true);
         const beverages = moneyFormat(extractValue(/Champagne Charges - FCR \(Fidelio\) \$(\d+\.\d{2})/), true);
@@ -181,7 +181,7 @@ const AddModal = ({ closeModal }) => {
   };
 
   const handleSubmit_Add = (event) => {
-    const url = `http://localhost:3000/ncl_post`
+    const url = `https://effyaws5.effysystems/ncl_post`
     fetch(url, {
       method: "POST",
       headers: {
