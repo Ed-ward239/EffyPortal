@@ -26,7 +26,7 @@ class Table extends React.Component {
 
   loadContentFromServer() {
     // Back-end server
-    const url = "https://effyaws5.effysystems.com/ncl_get";
+    const url = "http://localhost:3000/ncl_get";
 
     fetch(url)
       .then((response) => response.json())
@@ -149,7 +149,7 @@ class Table extends React.Component {
         return;
       }
 
-      const url = `https://effyaws5.effysystems.com/ncl_del/${delVoyageNum}`;
+      const url = `http://localhost:3000/ncl_del/${delVoyageNum}`;
       fetch(url, {
         method: "DELETE",
         headers: {
@@ -756,7 +756,6 @@ class Table extends React.Component {
         <div className="btnDiv">
           <button
             className="addBtn_ncl"
-            variant="outlined"
             onClick={() => {
               addButton();
             }}
@@ -765,7 +764,6 @@ class Table extends React.Component {
           </button>
           <button
             className="refreshBtn_ncl"
-            variant="outlined"
             onClick={() => {
               this.loadContentFromServer();
             }}
@@ -789,6 +787,11 @@ class Table extends React.Component {
             {modalType === "editModalNCL" ? (
               <Fragment>
                 <div className="modalBackgroundNCL">
+                  <div className="outerNCL">
+                    <div className="innerNCL">
+                      <label className="closeLabelNCL" onClick={this.handleClose}>Back</label>
+                    </div>
+                  </div>
                   <h3 className="modalHeaderTxt">Edit NCL Data</h3>
                   <EditModal
                     currentData={currentData}
@@ -800,6 +803,11 @@ class Table extends React.Component {
             ) : (
               <Fragment>
                 <div className="modalBackgroundNCL">
+                  <div className="outerNCL">
+                    <div className="innerNCL">
+                      <label className="closeLabelNCL" onClick={this.handleClose}>Back</label>
+                    </div>
+                  </div>
                   <h3 className="modalHeaderTxt">NCL Data Entry</h3>
                   <AddModal
                     addModal={handleAddModal}

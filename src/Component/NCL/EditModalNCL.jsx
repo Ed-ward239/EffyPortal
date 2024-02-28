@@ -35,7 +35,7 @@ const EditModal = (props) => {
   // HandleSummit function
   const handleSubmit_Edit = (event) => {
     event.preventDefault();
-    fetch(`http://ec2-3-141-229-218.us-east-2.compute.amazonaws.com:8081/ncl_put/${props.currentData.voyage_num}`, {
+    fetch(`http://localhost:3000/ncl_put/${props.currentData.voyage_num}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

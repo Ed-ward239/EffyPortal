@@ -49,14 +49,14 @@ export default function LogIn() {
   }
   
   return (
-    <body className="loginBody">
+    <div className="loginBody">
       <div className="headerDiv">
         <div className="header"><h2 className="headerTxt"><img alt="Login" src={Effy}/>&nbsp;Portal</h2></div>
             <button className="signInBtn" onClick={handleSignIn}><Fingerprint/> Log In</button>
       </div>
       <Particle/>
       <div className="devWatermark">Developed by Edward Lee</div>
-    </body>
+    </div>
 
   );
 };

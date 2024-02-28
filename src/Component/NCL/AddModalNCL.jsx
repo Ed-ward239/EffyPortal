@@ -181,7 +181,7 @@ const AddModal = ({ closeModal }) => {
   };
 
   const handleSubmit_Add = (event) => {
-    const url = `https://effyaws5.effysystems/ncl_post`
+    const url = `http://localhost:3000/ncl_post`
     fetch(url, {
       method: "POST",
       headers: {

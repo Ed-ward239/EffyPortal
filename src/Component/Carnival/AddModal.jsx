@@ -105,13 +105,50 @@ function moneyFormat(value, isNegative = false) {
   }
 }
 
+const shipNameMap = {
+  BR:	"BREEZE",
+  CB:	"CELEBRATION",
+  CQ:	"CONQUEST",
+  DR:	"DREAM",
+  EC:	"ECSTASY",
+  EL:	"ELATION",
+  FD:	"FREEDOM",
+  GL:	"GLORY",
+  HZ:	"HORIZON",
+  JB:	"JUBILEE",
+  LE:	"LEGEND",
+  LI:	"LIBERTY",
+  LM:	"LUMINOSA",
+  MC:	"MAGIC",
+  MD:	"MARDI GRAS",
+  MI:	"MIRACLE",
+  PO:	"PANORAMA",
+  PA:	"PARADISE",
+  PR:	"PRIDE",
+  RD:	"RADIANCE",
+  SE:	"SENSATION",
+  SP:	"SPIRIT",
+  SL:	"SPLENDOR",
+  SN:	"SUNRISE",
+  SH:	"SUNSHINE",
+  VA:	"VALOR",
+  VX:	"VENEZIA",
+  VS:	"VISTA",
+};
+
+// Function to extract the ship name based on the voyage number
+function getShipNameFromVoyageNum(voyageNum) {
+  const abbreviation = voyageNum.substring(0, 2); 
+  return shipNameMap[abbreviation] || "";
+}
+
 const AddModal = ({ closeModal }) => {
   const editor = useUsername();
   
   const [ rows, setRows ] = useState({
     ship_name: '', voyage_num: '', date: '', effy_share: '', editor: editor, rev_ss: '',
     rev_cc: '', ss_fee: '', cc_fee: '', eu_vat: '', discounts: '', carnival_share: '', exec_folio: '',
-    meal_charge: '', office_supp: '', cash_adv: '', cash_paid: '', parole_fee: '', status_paid: ''
+    meal_charge: '', office_supp: '', cash_adv: '', cash_paid: '', parole_fee: '', status_paid: "Unpaid", dt_entry: ''
   });
   
   const handleFileChange = async (event) => {
@@ -124,11 +161,12 @@ const AddModal = ({ closeModal }) => {
         const match = extractedData.match(regexPattern);
         return match ? match[1] : '';
       }
-
       // Retrieve the last word from the first line as ShipName
-      const ship_name = extractValue(/SHIP: CARNIVAL (\w+)/) || extractValue(/VOYAGE SETTLEMENT - CARNIVAL (\w+)/);
+      //const ship_name = extractValue(/SHIP: CARNIVAL (\w+)/) || extractValue(/VOYAGE SETTLEMENT - CARNIVAL (\w+)/);
       // Retrieve the last string from the second line as VoyageNum
       const voyage_num = extractValue(/VOYAGE: (\w+)/);
+      // Retrieve the ship_name from the first 2 letters of Voyage_num
+      const ship_name = getShipNameFromVoyageNum(voyage_num);
       // Retrieve the date from voyage_num
       const date = trimDate(voyage_num);
       // Initialize the variables to store the data using regular expression
@@ -156,7 +194,7 @@ const AddModal = ({ closeModal }) => {
   };
 
   const handleSubmit_Add = (event) => {
-    const url = `https://effyaws5.effysystems.com/ccl_post`
+    const url = `http://localhost:3000/ccl_post`
     fetch(url, {
       method: "POST",
       headers: {
@@ -239,14 +277,14 @@ const AddModal = ({ closeModal }) => {
               <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="ss_fee" label="S&S Fee" onChange={(e) => setRows({ ...rows, ss_fee: e.target.value })} value={rows.ss_fee || null}/>
-            <label className="floating-label">Sail & Sign Processing Fee</label>
+            <label className="floating-label">Sail & Sign Proc. Fee</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">
               <div className="dollarSign">$</div>
             </span>
             <input className="inputTxt" type="text" placeholder=" " name="cc_fee" label="CC Fee" onChange={(e) => setRows({ ...rows, cc_fee: e.target.value })} value={rows.cc_fee || null}/>
-            <label className="floating-label">CC Processing Fee</label>
+            <label className="floating-label">CC Proc. Fee</label>
           </div>
           <div className="txtInputGrp input-group">
             <span className="inputGrp">

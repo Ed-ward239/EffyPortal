@@ -6,6 +6,7 @@ import EditModal from "./EditModal.jsx";
 import Modal from "@mui/material/Modal";
 import MUIDataTable from "mui-datatables";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import moment from 'moment-timezone';
 
 import "./Table.css";
 class Table extends React.Component {
@@ -25,7 +26,7 @@ class Table extends React.Component {
 
   loadContentFromServer() {
     // Back-end server
-    const url = "https://effyaws5.effysystems.com/ccl_get";
+    const url = "http://localhost:3000/ccl_get";
 
     fetch(url)
       .then((response) => response.json())
@@ -74,10 +75,11 @@ class Table extends React.Component {
         res.parole_fee,
         res.cash_adv,
         res.cash_paid,
+        res.dt_entry,
         "",
       ]);
     }
-
+    
     if (!!this.state.array) {
       data = this.state.array;
     } else {
@@ -135,7 +137,7 @@ class Table extends React.Component {
         return;
       }
 
-      const url = `https://effyaws5.effysystems.com/ccl_del/${delVoyageNum}`;
+      const url = `http://localhost:3000/ccl_del/${delVoyageNum}`;
       fetch(url, {
         method: "DELETE",
         headers: {
@@ -233,20 +235,15 @@ class Table extends React.Component {
       } else {
         return ""; // or some placeholder like 'N/A' if the value is not available
       }
-    };
-
-    // Table Column names
+    };    
+   // Table Column names
     const columns = [
       {
         name: "Ship Name",
         options: {
           filter: true,
           setCellProps: () => ({
-            style: {
-              textAlign: "left",
-              whiteSpace: "nowrap",
-              paddingLeft: "20px",
-            },
+            style: { textAlign: "left", whiteSpace: "nowrap", paddingLeft: "20px"},
           }),
         },
       },
@@ -264,25 +261,12 @@ class Table extends React.Component {
         options: {
           filter: false,
           setCellProps: () => ({
-            style: {
-              textAlign: "left",
-              whiteSpace: "nowrap",
-              paddingLeft: "5px",
-            },
+            style: { textAlign: "left", whiteSpace: "nowrap", paddingLeft: "5px"},
           }),
           // Dates in DB were stored as YYYY-MM-DD, for UX and readability use function to render MM/DD/YYYY
           customBodyRender: (value, tableMeta, updateValue) => {
             if (!value) return "N/A"; // Handle invalid or undefined date values
-
-            const date = new Date(value);
-            let month = "" + (date.getMonth() + 1), // Months are zero indexed
-              day = "" + (date.getDate() + 1), // Days are zero indexed
-              year = date.getFullYear();
-
-            if (month.length < 2) month = "0" + month;
-            if (day.length < 2) day = "0" + day;
-
-            return [month, day, year].join("/"); // Adjusted to MM/DD/YYYY format
+            return moment(value).format("MM/DD/YYYY");
           },
         },
       },
@@ -291,11 +275,7 @@ class Table extends React.Component {
         options: {
           filter: false,
           setCellProps: () => ({
-            style: {
-              textAlign: "left",
-              whiteSpace: "nowrap",
-              paddingLeft: "20px",
-            },
+            style: { textAlign: "left", whiteSpace: "nowrap", paddingLeft: "20px"},
           }),
           // Adding commas
           customBodyRender: (value, tableMeta, updateValue) => {
@@ -315,35 +295,16 @@ class Table extends React.Component {
             let style;
             switch (value) {
               case "Paid":
-                style = {
-                  color: "green",
-                  border: "1px solid green",
-                  borderRadius: "15px",
-                  padding: "3px 10px",
-                };
+                style = { color: "green", border: "1px solid green", borderRadius: "15px", padding: "3px 10px"};
                 break;
               case "Pending":
-                style = {
-                  color: "orange",
-                  border: "1px solid orange",
-                  borderRadius: "15px",
-                  padding: "3px 10px",
-                };
+                style = { color: "orange", border: "1px solid orange", borderRadius: "15px", padding: "3px 10px"};
                 break;
               case "Unpaid":
-                style = {
-                  color: "red",
-                  border: "1px solid red",
-                  borderRadius: "15px",
-                  padding: "3px 10px",
-                };
+                style = { color: "red", border: "1px solid red", borderRadius: "15px", padding: "3px 10px"};
                 break;
               default:
-                style = {
-                  border: "1px solid black",
-                  borderRadius: "15px",
-                  padding: "3px 10px",
-                };
+                style = { border: "1px solid blue", borderRadius: "15px", padding: "3px 10px" };
             }
             return <span style={style}>{value}</span>;
           },
@@ -354,12 +315,7 @@ class Table extends React.Component {
         options: {
           filter: true,
           setCellProps: () => ({
-            style: {
-              textAlign: "left",
-              whiteSpace: "nowrap",
-              paddingLeft: "15px",
-            },
-          }),
+            style: { textAlign: "left", whiteSpace: "nowrap", paddingLeft: "15px"},}),
         },
       },
       {
@@ -395,9 +351,7 @@ class Table extends React.Component {
         options: {
           filter: false,
           display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" },}),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
             return formatValue(value);
@@ -409,9 +363,7 @@ class Table extends React.Component {
         options: {
           filter: false,
           display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" },}),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
             return formatValue(value);
@@ -437,9 +389,7 @@ class Table extends React.Component {
         options: {
           filter: false,
           display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" },}),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
             return formatValue(value);
@@ -451,9 +401,7 @@ class Table extends React.Component {
         options: {
           filter: false,
           display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
+          setCellProps: () => ({style: { textAlign: "center", whiteSpace: "nowrap" },}),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
             return formatValue(value);
@@ -465,9 +413,7 @@ class Table extends React.Component {
         options: {
           filter: false,
           display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
+          setCellProps: () => ({style: { textAlign: "center", whiteSpace: "nowrap" },}),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
             return formatValue(value);
@@ -479,9 +425,7 @@ class Table extends React.Component {
         options: {
           filter: false,
           display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
+          setCellProps: () => ({style: { textAlign: "center", whiteSpace: "nowrap" },}),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
             return formatValue(value);
@@ -493,9 +437,7 @@ class Table extends React.Component {
         options: {
           filter: false,
           display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
+          setCellProps: () => ({style: { textAlign: "center", whiteSpace: "nowrap" },}),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
             return formatValue(value);
@@ -507,9 +449,7 @@ class Table extends React.Component {
         options: {
           filter: false,
           display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
+          setCellProps: () => ({style: { textAlign: "center", whiteSpace: "nowrap" },}),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
             return formatValue(value);
@@ -521,9 +461,7 @@ class Table extends React.Component {
         options: {
           filter: false,
           display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" }, }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
             return formatValue(value);
@@ -535,9 +473,7 @@ class Table extends React.Component {
         options: {
           filter: false,
           display: false,
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
+          setCellProps: () => ({style: { textAlign: "center", whiteSpace: "nowrap" }, }),
           // Adding commas for display
           customBodyRender: (value, tableMeta, updateValue) => {
             return formatValue(value);
@@ -545,38 +481,38 @@ class Table extends React.Component {
         },
       },
       {
+        name: "Last Edit",
+        options: {
+          filter: false,
+          setCellProps: () => ({ style: { textAlign: "left", whiteSpace: "nowrap", paddingLeft: "5px" },}),
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (!value) return "N/A"; // Handle invalid or undefined date values
+            const formattedDate = moment.utc(value).format('YYYY-MM-DD HH:mm:ss');
+            return formattedDate;
+          },
+        },
+      },
+      {
         name: "Action",
         options: {
           textAlign: "right",
-          setCellProps: () => ({
-            style: { textAlign: "center", whiteSpace: "nowrap" },
-          }),
+          setCellProps: () => ({ style: { textAlign: "center", whiteSpace: "nowrap" },}),
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
               <p className="edit_delete_btn">
                 <IconButton
                   value={value}
-                  onClick={() => {
-                    editButton(tableMeta.rowData);
-                  }}
-                  onChange={(e) => {
-                    updateValue(e.target.value);
-                  }}
+                  onClick={() => { editButton(tableMeta.rowData); }}
+                  onChange={(e) => { updateValue(e.target.value); }}
                   className="editBtn"
                 >
-                  <EditNoteIcon
-                    style={{ color: "#6495ED", paddingLeft: "0px" }}
-                  />
+                  <EditNoteIcon style={{ color: "#6495ED", paddingLeft: "0px" }}/>
                 </IconButton>
                 <IconButton
-                  onClick={() => {
-                    handleDeleteRow(tableMeta.rowData[1]);
-                  }}
+                  onClick={() => {handleDeleteRow(tableMeta.rowData[1]); }}
                   className="deleteBtn"
                 >
-                  <DeleteForeverIcon
-                    style={{ color: "red", paddingLeft: "0px" }}
-                  />
+                  <DeleteForeverIcon style={{ color: "red", paddingLeft: "0px" }}/>
                 </IconButton>
               </p>
             );
@@ -604,7 +540,7 @@ class Table extends React.Component {
         separator: ",",
       },
       sortOrder:{
-        name: 'Date',
+        name: 'Last Edit',
         direction: 'desc'
       },
     };
@@ -645,6 +581,11 @@ class Table extends React.Component {
             {modalType === "editModal" ? (
               <Fragment>
                 <div className="modalBackground">
+                  <div className="outer">
+                    <div className="inner">
+                      <label className="closeLabel" onClick={this.handleClose}>Back</label>
+                    </div>
+                  </div>
                   <h3 className="modalHeaderTxt">Edit Carnival Data</h3>
                   <EditModal
                     currentData={currentData}
@@ -656,6 +597,11 @@ class Table extends React.Component {
             ) : (
               <Fragment>
                 <div className="modalBackground">
+                  <div className="outer">
+                    <div className="inner">
+                      <label className="closeLabel" onClick={this.handleClose}>Back</label>
+                    </div>
+                  </div>
                   <h3 className="modalHeaderTxt">Carnival Data Entry</h3>
                   <AddModal
                     addModal={handleAddModal}
